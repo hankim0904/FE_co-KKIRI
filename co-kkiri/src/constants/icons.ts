@@ -28,6 +28,7 @@ import manage from "@/assets/icons/manage.svg";
 import pen from "@/assets/icons/pen.svg";
 import link from "@/assets/icons/link.svg";
 import leader from "@/assets/icons/leader.svg";
+import filterReset from "@/assets/icons/filter_reset.svg";
 import { Images } from "@/types/imageTypes";
 
 export const ICONS: Images = {
@@ -74,6 +75,10 @@ export const ICONS: Images = {
   popoverSelected: {
     src: arrowDownColor,
     alt: "선택된 드롭다운",
+  },
+  filterReset: {
+    src: filterReset,
+    alt: "필터 리셋",
   },
   eye: {
     src: eye,

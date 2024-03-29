@@ -8,18 +8,29 @@ interface FilterButtonProps {
   isSelected: boolean;
   isOpen?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onReset?: () => void;
 }
 
-const { popover, popoverSelected } = ICONS;
+const { popover, popoverSelected, filterReset } = ICONS;
 
-export default function FilterButton({ selectOption, onClick, isSelected, isOpen }: FilterButtonProps) {
+export default function FilterButton({ selectOption, onClick, isSelected, isOpen, onReset }: FilterButtonProps) {
   return (
     <Container $isSelected={isSelected} onClick={onClick}>
       {selectOption}
       {isSelected ? (
-        <Arrow $isOpen={isOpen} src={popoverSelected.src} alt={popoverSelected.alt} />
+        onReset ? (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onReset();
+            }}>
+            <Icon src={filterReset.src} alt={filterReset.alt} />
+          </button>
+        ) : (
+          <Icon $isOpen={isOpen} src={popoverSelected.src} alt={popoverSelected.alt} />
+        )
       ) : (
-        <Arrow $isOpen={isOpen} src={popover.src} alt={popover.alt} />
+        <Icon $isOpen={isOpen} src={popover.src} alt={popover.alt} />
       )}
     </Container>
   );
@@ -48,12 +59,11 @@ const Container = styled.button<Container>`
   background: ${color.white};
   ${typography.font12Semibold}
 `;
-
-interface Arrow {
+interface Icon {
   $isOpen?: boolean;
 }
 
-const Arrow = styled.img<Arrow>`
+const Icon = styled.img<Icon>`
   width: 1.2rem;
   height: 1.2rem;
 

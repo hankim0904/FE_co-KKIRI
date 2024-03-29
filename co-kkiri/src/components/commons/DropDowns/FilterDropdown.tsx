@@ -17,7 +17,8 @@ interface FilterDropdownProps {
  * @property {"position"|"progressWay"} menuInfoType
  * */
 export default function FilterDropdown({ placeholder, options, onSelectFilter }: FilterDropdownProps) {
-  const [selectOption, setSelectOption] = useState<Option>({ label: placeholder, value: "" });
+  const defaultOption = { label: placeholder, value: "" };
+  const [selectOption, setSelectOption] = useState<Option>(defaultOption);
   const [isSelected, setIsSelected] = useState(false);
   const { isOpen, openToggle: toggleDropdown, ref } = useOpenToggle();
 
@@ -28,6 +29,12 @@ export default function FilterDropdown({ placeholder, options, onSelectFilter }:
     toggleDropdown();
   };
 
+  const handleReset = () => {
+    setSelectOption(defaultOption);
+    setIsSelected(false);
+    onSelectFilter(defaultOption);
+  };
+
   return (
     <Container ref={ref}>
       <FilterButton
@@ -35,6 +42,7 @@ export default function FilterDropdown({ placeholder, options, onSelectFilter }:
         selectOption={selectOption.label}
         isSelected={isSelected}
         isOpen={isOpen}
+        onReset={handleReset}
       />
       <DropMenu $borderType="round" isOpen={isOpen} handleSelectOption={handleSelectOption} options={options} />
     </Container>

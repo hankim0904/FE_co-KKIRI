@@ -16,6 +16,7 @@ export default function Scout() {
     position: "",
     stacks: [],
   });
+
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 2;
 

@@ -12,17 +12,18 @@ interface ScoutFiltersProps {
 }
 
 export default function ScoutFilters({ selectedFilter, handleStacksChange, handlePositionChange }: ScoutFiltersProps) {
-  const { filter:{
-    position
-  } } = DROPDOWN_FILTER_INFO;
+  const {
+    filter: { position },
+  } = DROPDOWN_FILTER_INFO;
 
   const onSelectPosition = (selectedOption: Option) => {
-    handlePositionChange(selectedOption.label);
+    const selectedPosition = String(selectedOption.value);
+    handlePositionChange(selectedPosition);
   };
 
   return (
     <Container>
-      <FilterDropdown  onSelectFilter={onSelectPosition} placeholder={"포지션"} options={position} />
+      <FilterDropdown onSelectFilter={onSelectPosition} placeholder={"포지션"} options={position} />
       <StacksPopover stacks={selectedFilter.stacks} onStacksChange={(stack) => handleStacksChange(stack)} />
     </Container>
   );

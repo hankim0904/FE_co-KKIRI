@@ -74,7 +74,6 @@ export const DROPDOWN_FORM_INFO: DropdownInfo = {
 export const DROPDOWN_FILTER_INFO: DropdownInfo = {
   filter: {
     position: [
-      { label: "전체", value: "전체" },
       { label: "프론트엔드", value: "프론트엔드" },
       { label: "백엔드", value: "백엔드" },
       { label: "디자이너", value: "디자이너" },
@@ -83,7 +82,6 @@ export const DROPDOWN_FILTER_INFO: DropdownInfo = {
       { label: "데브옵스", value: "데브옵스" },
     ],
     progressWay: [
-      { label: "전체", value: "전체" },
       { label: "온라인", value: "온라인" },
       { label: "오프라인", value: "오프라인" },
       { label: "온/오프라인", value: "온/오프라인" },

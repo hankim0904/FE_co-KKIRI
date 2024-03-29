@@ -16,8 +16,6 @@ body {
   font-family: "Pretendard";
   font-weight: 400;
   overflow-y:scroll;
-  scrollbar-width: thin; /* "auto" 또는 "thin" 사용 가능 */
-  scrollbar-color: ${color.primary[1]} ${color.primary[3]};
 }
 
 body::-webkit-scrollbar {

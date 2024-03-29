@@ -3,12 +3,12 @@ import DESIGN_TOKEN from "@/styles/tokens";
 import { useState } from "react";
 import { styled } from "styled-components";
 import UserProfileModal from "../modals/UserProfileModal";
-import { UserProfile } from "@/types/userTypes";
+
 interface UserInfoProps {
   user: {
     id?: number;
-    nickname: string;
-    profileImageUrl: string;
+    nickname?: string;
+    profileImageUrl?: string;
   };
   nicknameBold?: boolean;
 }

@@ -28,7 +28,9 @@ export type PostInfo = {
   positions: string[];
   stacks: string[];
   memberNickname: string;
-  memberProfileImg: string;
+  memberProfileImageUrl: string;
+  nickname?: string; // 타입 혼재로 추가 API명세 확정시 삭제 필요
+  profileImageUrl?: string; // 타입 혼재로 추가 API명세 확정시 삭제 필요
   viewCount: number;
   commentCount: number;
 };

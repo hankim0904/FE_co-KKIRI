@@ -44,7 +44,9 @@ export default function Card({ page = "home", cardData }: CardProps) {
     stack,
     stacks,
     memberNickname,
-    memberProfileImg,
+    memberProfileImageUrl,
+    nickname, // 타입 혼재로 추가 API명세 확정시 삭제 필요
+    profileImageUrl, // 타입 혼재로 추가 API명세 확정시 삭제 필요
     viewCount,
     commentCount,
   } = cardData;
@@ -72,7 +74,11 @@ export default function Card({ page = "home", cardData }: CardProps) {
         </S.UpperBox>
         <S.BreakLine />
         <S.FooterBox>
-          <UserInfo user={{ nickname: memberNickname, profileImageUrl: memberProfileImg }} />
+          {cardData && (
+            <UserInfo
+              user={{ nickname: memberNickname || nickname, profileImageUrl: memberProfileImageUrl || profileImageUrl }}
+            />
+          )}
           <S.CountWrapper>
             <Count icon={ICONS.eye} count={viewCount} />
             <Count icon={ICONS.comment} count={commentCount} />

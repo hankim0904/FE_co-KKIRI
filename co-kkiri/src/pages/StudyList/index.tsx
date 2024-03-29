@@ -23,6 +23,8 @@ export default function StudyList() {
     placeholderData: keepPreviousData,
   });
 
+  const list = data?.data || [];
+
   if (error) {
     console.error(error);
   }
@@ -57,7 +59,7 @@ export default function StudyList() {
           <SearchInput placeholder="제목을 검색해보세요!" />
         </S.CategoryWrapper>
         {/* <Filters handleFilterChange={handleFilterChange} handleSortChange={handleSortChange} /> */}
-        <Cards data={data?.data} page="studyList" />
+        <Cards data={list} page="studyList" />
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPage} />
       </S.Box>
       <CreatePost />

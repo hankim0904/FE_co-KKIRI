@@ -7,13 +7,14 @@ import { Link } from "react-router-dom";
 
 interface InviteResponseModalProps {
   onClose: () => void;
+  teamInviteId: number;
 }
 const user = {
   nickname: "코끼리",
   profileImageUrl: "",
 };
 
-export default function InviteResponseModal({ onClose }: InviteResponseModalProps) {
+export default function InviteResponseModal({ onClose, teamInviteId }: InviteResponseModalProps) {
   return (
     <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose}>
       <S.Container>

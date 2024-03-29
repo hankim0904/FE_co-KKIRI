@@ -8,15 +8,15 @@ import { statusButtonConfig, StatusButtonConfig } from "@/constants/statusButton
 import { ConfirmType } from "@/components/modals/ConfirmModal";
 import { PostApplyStatus } from "@/lib/api/post/type";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
-import { Variable } from "lucide-react";
 
 interface MappedButtonProps {
   postApplyStatus: PostApplyStatus;
   postId: number;
+  teamInviteId: number;
   className?: string;
 }
 
-export default function StatusBasedButton({ postApplyStatus, postId, className }: MappedButtonProps) {
+export default function StatusBasedButton({ postApplyStatus, postId, teamInviteId, className }: MappedButtonProps) {
   const { isOpen: isConfirmOpen, openToggle: confirmToggle } = useOpenToggle();
   const { isOpen: isInviteResponseOpen, openToggle: inviteResponseToggle } = useOpenToggle();
   const [confirmType, setConfirmType] = useState<ConfirmType>("apply");
@@ -79,7 +79,7 @@ export default function StatusBasedButton({ postApplyStatus, postId, className }
         {statusButtonConfig[postApplyStatus].text}
       </StyledButton>
       {isConfirmOpen && <ConfirmModal type={confirmType} onClose={confirmToggle} onClick={handleConfirmAgreeClick} />}
-      {isInviteResponseOpen && <InviteResponseModal onClose={inviteResponseToggle} />}
+      {isInviteResponseOpen && <InviteResponseModal onClose={inviteResponseToggle} teamInviteId={teamInviteId} />}
     </div>
   );
 }

@@ -22,6 +22,7 @@ export default function Detail() {
     retry: 0,
     refetchOnWindowFocus: false,
     staleTime: 60 * 1000,
+    gcTime: 0,
   });
 
   const cardHeight = useComponentHeight<PostDetailApiResponseDto | undefined>(detailData, cardRef, 407);
@@ -35,17 +36,23 @@ export default function Detail() {
     // 에러 및 로딩 처리 통일
   }
 
-  const { postDetails, isScraped, postApplyStatus } = detailData;
+  const { postDetails, postApplyStatus } = detailData;
+  const teamInviteId = postDetails.teamInviteId ?? NaN;
 
   return (
     <S.Container>
       <S.Box>
         <S.GoBackButton />
-        <S.ShareAndScrapButton isScraped={isScraped} postId={postId} />
+        <S.ShareAndScrapButton isScraped={postDetails.isScraped} postId={postId} />
         <S.PostSection postDetails={postDetails} postApplyStatus={postApplyStatus} />
         <S.DetailCardSection cardRef={cardRef} postDetails={postDetails} />
         <S.CommentsSection postId={postId} />
-        <S.ButtonSection $cardHeight={cardHeight} postApplyStatus={postApplyStatus} postId={postId} />
+        <S.ButtonSection
+          $cardHeight={cardHeight}
+          postApplyStatus={postApplyStatus}
+          postId={postId}
+          teamInviteId={teamInviteId}
+        />
         <ScrollToTop />
       </S.Box>
     </S.Container>

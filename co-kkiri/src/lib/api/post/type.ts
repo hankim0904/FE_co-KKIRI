@@ -70,11 +70,12 @@ export type PostDetails = {
   stacks: string[]; //스택
   commentCount: number; //댓글 수
   link: string; //연락 방법 링크
+  isScraped: boolean;
+  teamInviteId: number | null;
 };
 /**스터디 상세*/
 export type PostDetailApiResponseDto = {
   postDetails: PostDetails;
-  isScraped: boolean; //스크랩 되어있는지 아닌지
   postApplyStatus: PostApplyStatus;
 };
 

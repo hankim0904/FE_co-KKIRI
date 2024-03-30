@@ -14,7 +14,7 @@ interface CardsProps {
 export default function Cards({ data, page }: CardsProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
   return (
-    <Box>
+    <Container>
       {data ? (
         <CardList $isSidebarOpenNarrow={isSidebarOpenNarrow}>
           {data.map((data) => (
@@ -26,13 +26,13 @@ export default function Cards({ data, page }: CardsProps) {
       ) : (
         <NoResultText text="검색 결과가 없어요." padding={120} color="black" />
       )}
-    </Box>
+    </Container>
   );
 }
 
-const { mediaQueries, color } = DESIGN_TOKEN;
+const { mediaQueries } = DESIGN_TOKEN;
 
-const Box = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   ${mediaQueries.tablet} {

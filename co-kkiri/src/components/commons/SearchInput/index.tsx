@@ -1,24 +1,26 @@
 import { useState } from "react";
-
 import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
-
 import Button from "./Button";
 import { ICONS } from "@/constants/icons";
 
 interface SearchInputProps {
   placeholder: string;
+  handleValueChange: (value: string) => void;
 }
 
-export default function SearchInput({ placeholder }: SearchInputProps) {
-  const [inputValue, setInputValue] = useState("");
+export default function SearchInput({ placeholder, handleValueChange }: SearchInputProps) {
+  const [inputValue, setInputValue] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    const newValue = (e.target as HTMLInputElement).value;
+    setInputValue(newValue);
+    handleValueChange(newValue);
   };
 
   const handleDeleteClick = () => {
     setInputValue("");
+    handleValueChange("");
   };
 
   return (

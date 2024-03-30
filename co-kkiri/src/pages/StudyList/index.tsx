@@ -18,7 +18,7 @@ export default function StudyList() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, error, isLoading } = useQuery({
-    queryKey: ["/post/list", { meetingType: currentCategory, page: currentPage, take: 12 }],
+    queryKey: ["/post/list", { meetingType: currentCategory, page: currentPage }],
     queryFn: () => getPostList({ meetingType: currentCategory, page: currentPage, take: 12 }),
     placeholderData: keepPreviousData,
     gcTime: 0,
@@ -57,7 +57,7 @@ export default function StudyList() {
             filters={Object.values(categoryListFilter)}
             onFilterClick={handleCategoryChange}
           />
-          <SearchInput placeholder="제목을 검색해보세요!" />
+          <SearchInput placeholder="제목을 검색해보세요!" handleValueChange={() => {}} />
         </S.CategoryWrapper>
         {/* <Filters handleFilterChange={handleFilterChange} handleSortChange={handleSortChange} /> */}
         <Cards data={list} page="studyList" />

@@ -30,17 +30,25 @@ export const Container = styled.div`
 export const Box = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 112rem;
+
+  ${mediaQueries.tablet} {
+    width: 70.8rem;
+  }
 
   ${mediaQueries.mobile} {
-    width: 100%;
+    width: 36rem;
   }
 `;
 
-export const Wrapper = styled.div`
+export const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2.8rem;
+  width: 100%;
 
   ${mediaQueries.mobile} {
     margin-bottom: 1.8rem;
@@ -51,6 +59,7 @@ export const Wrapper = styled.div`
     gap: 2rem;
     align-items: flex-start;
     margin-bottom: 1.6rem;
+    width: 36rem;
   }
 `;
 

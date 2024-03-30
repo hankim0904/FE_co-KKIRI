@@ -28,11 +28,12 @@ export type SearchedMemberProfile = {
 };
 
 export type SearchedMemberProfileApiResponseDto = {
-  content: SearchedMemberProfile[];
+  data: SearchedMemberProfile[];
   meta: PageMeta;
 };
 
 export type SearchedMemberProfileApiRequestDto = PaginationOptions & {
+  nickname?: string;
   position?: string; // 포지션
   stacks?: string[]; // 스택
 };

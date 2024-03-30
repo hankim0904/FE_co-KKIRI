@@ -1,8 +1,9 @@
-import UserProfileCard from "@/components/commons/UserProfileCard";
 import styled from "styled-components";
 import { SearchedMemberProfile } from "@/lib/api/member/type";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import DESIGN_TOKEN from "@/styles/tokens";
+import NoResultText from "@/components/commons/NoResultText";
+import ScoutCard from "./ScoutCard";
 
 interface ScoutCardsProps {
   userProfiles: SearchedMemberProfile[];
@@ -12,21 +13,21 @@ export default function ScoutCards({ userProfiles }: ScoutCardsProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
 
   return (
-    <Container>
+    <Container $isSidebarOpenNarrow={isSidebarOpenNarrow}>
       {userProfiles.length === 0 ? (
-        <NoResultText $isSidebarOpenNarrow={isSidebarOpenNarrow}>검색 결과가 없어요.</NoResultText>
+        <NoResultText text="검색 결과가 없어요." padding={120} color="black" />
       ) : (
         <Wrapper $isSidebarOpenNarrow={isSidebarOpenNarrow}>
           {userProfiles?.map(({ memberId, profileImageUrl, nickname, position, career, stacks: stacks, score }) => (
-            <UserProfileCard
+            <ScoutCard
               key={memberId}
+              memberId={memberId}
               profileImageUrl={profileImageUrl}
               nickname={nickname}
               position={position}
               career={career}
-              stack={stacks}
+              stacks={stacks}
               score={score}
-              cardType="scout"
             />
           ))}
         </Wrapper>
@@ -35,11 +36,12 @@ export default function ScoutCards({ userProfiles }: ScoutCardsProps) {
   );
 }
 
-const { mediaQueries, color } = DESIGN_TOKEN;
+const { mediaQueries } = DESIGN_TOKEN;
 
-const Container = styled.div`
+const Container = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   margin-top: 4rem;
   margin-bottom: 5.5rem;
+  ${({ $isSidebarOpenNarrow }) => $isSidebarOpenNarrow && `width: 76.8rem;`}
 
   ${mediaQueries.tablet} {
     margin-top: 3rem;
@@ -47,6 +49,7 @@ const Container = styled.div`
 
   ${mediaQueries.mobile} {
     margin-top: 5.2rem;
+    width: 36rem;
   }
 `;
 
@@ -65,22 +68,5 @@ const Wrapper = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   ${mediaQueries.mobile} {
     grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
-  }
-`;
-
-const NoResultText = styled.p<{ $isSidebarOpenNarrow: boolean }>`
-  font-size: 1.2rem;
-  color: ${color.black};
-  text-align: center;
-  margin-top: 2rem;
-  width: 112rem;
-  ${({ $isSidebarOpenNarrow }) => $isSidebarOpenNarrow && `width: 76.8rem;`}
-
-  ${mediaQueries.tablet} {
-    width: 76.8rem;
-  }
-
-  ${mediaQueries.mobile} {
-    width: 34rem;
   }
 `;

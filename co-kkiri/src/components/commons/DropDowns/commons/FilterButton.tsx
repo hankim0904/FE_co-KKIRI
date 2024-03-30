@@ -19,13 +19,13 @@ export default function FilterButton({ selectOption, onClick, isSelected, isOpen
       {selectOption}
       {isSelected ? (
         onReset ? (
-          <button
+          <div
             onClick={(e) => {
               e.stopPropagation();
               onReset();
             }}>
             <Icon src={filterReset.src} alt={filterReset.alt} />
-          </button>
+          </div>
         ) : (
           <Icon $isOpen={isOpen} src={popoverSelected.src} alt={popoverSelected.alt} />
         )

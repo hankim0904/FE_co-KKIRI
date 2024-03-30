@@ -16,9 +16,10 @@ import ScoutUserProfile from "./ScoutUserProfile";
 
 interface ScoutModalProps {
   memberId: number;
+  onClose: () => void;
 }
 
-export default function ScoutModal({ memberId }: ScoutModalProps) {
+export default function ScoutModal({ memberId, onClose }: ScoutModalProps) {
   const values = useQueries<(ScoutListApiResponseDto | MemberProfileApiResponseDto)[], CombinedResults>({
     queries: [
       {
@@ -57,7 +58,7 @@ export default function ScoutModal({ memberId }: ScoutModalProps) {
   };
 
   return (
-    <ModalLayout desktopWidth={430} mobileWidth={320} onClose={() => {}}>
+    <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose}>
       <Title>유저 초대하기</Title>
       <FormBox onSubmit={handleSubmit(onSubmitHandler)}>
         <FormElement label="초대할 유저" FormFieldComponent={<ScoutUserProfile {...values.userInfo} />} />

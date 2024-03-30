@@ -23,14 +23,14 @@ export default function ScoutFilters({ selectedFilter, handleStacksChange, handl
 
   return (
     <Container>
-      <FilterDropdown onSelectFilter={onSelectPosition} placeholder={"포지션"} options={position} />
       <StacksPopover stacks={selectedFilter.stacks} onStacksChange={(stack) => handleStacksChange(stack)} />
+      <FilterDropdown onSelectFilter={onSelectPosition} placeholder={"포지션"} options={position} />
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
-  align-items: center;
   gap: 0.8rem;
+  width: 100%;
 `;

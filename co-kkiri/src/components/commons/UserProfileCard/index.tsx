@@ -31,4 +31,6 @@ const Container = styled.div`
 
   border-radius: 2rem;
   box-shadow: ${boxShadow.content};
+
+  cursor: pointer;
 `;

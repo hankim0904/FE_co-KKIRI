@@ -2,7 +2,7 @@ import { ButtonVariant } from "@/components/commons/Button";
 
 interface ButtonType {
   type: string;
-  isLeader: boolean;
+  isLeader?: boolean;
   label: string;
   variant: ButtonVariant;
   disabled: boolean;
@@ -40,14 +40,12 @@ export const BUTTON_TYPE: ButtonType[] = [
   },
   {
     type: "PROGRESS_END",
-    isLeader: true,
     label: "리뷰 작성",
     variant: "primary",
     disabled: false,
   },
   {
     type: "DONE",
-    isLeader: true,
     label: "리뷰 보기",
     variant: "primary",
     disabled: false,

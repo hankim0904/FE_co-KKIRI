@@ -3,34 +3,37 @@ import { ICONS } from "@/constants/icons";
 import DESIGN_TOKEN from "@/styles/tokens";
 import ProjectDetailCard from "@/components/commons/ProjectDetailCard";
 import { StudyManagementApiResponseDto } from "@/lib/api/post/type";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { formatDate } from "@/utils/formatDate";
+import { ContactWay } from "@/components/commons/ProjectDetailCard/types";
 
 interface DetailProps {
   detailInfo: StudyManagementApiResponseDto;
 }
 
 export default function Detail({ detailInfo }: DetailProps) {
-  const { postTitle, type, recruitEndAt, progressPeriod, progressWay, contactWay, capacity, positions, stacks } =
+  const { postTitle, type, recruitEndAt, progressPeriod, progressWay, contactWay, capacity, positions, stacks, link } =
     detailInfo;
 
   return (
     <Container>
       <Box>
-        <InfoWrapper>
-          <p>스터디/프로젝트 정보</p>
-          <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
-        </InfoWrapper>
+        <Link to={`/list/${detailInfo.postId}`}>
+          <InfoWrapper>
+            <p>스터디/프로젝트 상세글 보기</p>
+            <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
+          </InfoWrapper>
+        </Link>
         <Title>{postTitle}</Title>
       </Box>
-
       <ProjectDetailCard
         type="mystudy"
         ProjectCategory={type}
-        recruitEndAt={recruitEndAt}
+        recruitEndAt={formatDate(recruitEndAt)}
         progressPeriod={progressPeriod}
         positions={positions}
         progressWay={progressWay}
-        contactWay={contactWay}
+        contactWay={{ label: contactWay as ContactWay, content: link }}
         capacity={capacity}
         stacks={stacks}
       />
@@ -59,6 +62,7 @@ const Box = styled.div`
 const InfoWrapper = styled.div`
   ${typography.font16Bold}
   display: flex;
+  align-items: center;
   gap: 0.4rem;
   color: ${color.gray[1]};
 `;

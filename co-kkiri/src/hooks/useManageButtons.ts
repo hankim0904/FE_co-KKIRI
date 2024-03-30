@@ -31,7 +31,7 @@ export default function useManageButtons() {
   });
 
   const goToPostReviewPage = (postId: number) => {
-    navigate(`/review/${postId}`);
+    navigate(`/mystudy/${postId}/review`);
   };
 
   return { goToScoutPage, studyStartMutation, studyEndMutation, goToPostReviewPage };

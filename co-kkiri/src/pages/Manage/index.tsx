@@ -24,6 +24,9 @@ export default function Manage() {
     queryFn: () => getTeamMember(postId, { order: "DESC", page: 1, take: 5 }),
   });
 
+  const appliedMemberListData = appliedMemberList?.data || [];
+  const memberListData = memberList?.data || [];
+
   if (error) {
     console.error(error);
   }
@@ -41,8 +44,8 @@ export default function Manage() {
       <S.Box>
         {detailInfo && <S.DetailSection detailInfo={detailInfo} />}
         <S.ListSection>
-          {appliedMemberList && <AppliedList detailInfo={appliedMemberList.data} />}
-          {memberList && <MemberList detailInfo={memberList.data} />}
+          <AppliedList detailInfo={appliedMemberListData} />
+          <MemberList detailInfo={memberListData} />
         </S.ListSection>
         {detailInfo && (
           <S.ButtonSection

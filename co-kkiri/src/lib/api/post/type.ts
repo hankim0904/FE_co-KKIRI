@@ -108,6 +108,7 @@ export type StudyManagementApiResponseDto = {
   positions: string[]; //포지션
   isLeader: boolean; // 방장인지 아닌지
   stacks: string[];
+  link: string;
 };
 
 export type ScoutPost = {

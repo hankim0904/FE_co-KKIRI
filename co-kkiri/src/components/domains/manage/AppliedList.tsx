@@ -9,11 +9,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { acceptMember, rejectMember } from "@/lib/api/teamMember";
 
 interface AppliedListProps {
-  detailInfo: AppliedMemberListApiResponseDto["data"] | null | undefined;
+  detailInfo: AppliedMemberListApiResponseDto["data"];
 }
 
 export default function AppliedList({ detailInfo }: AppliedListProps) {
   const queryClient = useQueryClient();
+
   const handleAccept = useMutation({
     mutationFn: (teamMemberId: number) => acceptMember(teamMemberId),
     onSuccess: () => {
@@ -45,9 +46,9 @@ export default function AppliedList({ detailInfo }: AppliedListProps) {
 
   return (
     <Container>
-      <SectionTitle title="신청 목록" count={detailInfo?.length || 0} />
+      <SectionTitle title="신청 목록" count={detailInfo.length} />
       <Members>
-        {detailInfo?.map((info) => (
+        {detailInfo.map((info) => (
           <Box key={info.memberId}>
             <MemberWrapper>
               <UserInfo user={{ id: info.memberId, nickname: info.nickname, profileImageUrl: info.profileImageUrl }} />

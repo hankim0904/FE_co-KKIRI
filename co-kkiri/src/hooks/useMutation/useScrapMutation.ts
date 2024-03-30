@@ -12,6 +12,8 @@ function useScrapMutations(postId: number, isScraped: boolean) {
       queryClient.invalidateQueries({ queryKey: ["homeCardList"] });
       queryClient.invalidateQueries({ queryKey: ["/my-page/scrap/list"] });
       queryClient.invalidateQueries({ queryKey: ["postDetail", postId] });
+      queryClient.invalidateQueries({ queryKey: ["/post/list"] });
+
       toggle();
     },
   });
@@ -22,6 +24,8 @@ function useScrapMutations(postId: number, isScraped: boolean) {
       queryClient.invalidateQueries({ queryKey: ["homeCardList"] });
       queryClient.invalidateQueries({ queryKey: ["/my-page/scrap/list"] });
       queryClient.invalidateQueries({ queryKey: ["postDetail", postId] });
+      queryClient.invalidateQueries({ queryKey: ["/post/list"] });
+
       toggle();
     },
   });

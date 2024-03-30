@@ -21,6 +21,7 @@ export default function StudyList() {
     queryKey: ["/post/list", { meetingType: currentCategory, page: currentPage, take: 12 }],
     queryFn: () => getPostList({ meetingType: currentCategory, page: currentPage, take: 12 }),
     placeholderData: keepPreviousData,
+    gcTime: 0,
   });
 
   const list = data?.data || [];

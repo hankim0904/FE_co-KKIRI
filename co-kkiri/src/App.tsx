@@ -4,7 +4,13 @@ import GlobalStyles from "./styles/globals";
 import PageRouter from "./PageRouter";
 import Toasts from "./components/commons/Widgets/Toast";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
   return (

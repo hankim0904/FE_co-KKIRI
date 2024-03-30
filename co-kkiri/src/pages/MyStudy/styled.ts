@@ -16,10 +16,11 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-export const Box = styled.div`
+export const Box = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   display: inline-grid;
   padding-top: 4rem;
   padding-bottom: 6.1rem;
+  min-width: ${({ $isSidebarOpenNarrow }) => ($isSidebarOpenNarrow ? "91rem" : "112rem;")};
 
   ${tablet} {
     padding-top: 3.6rem;

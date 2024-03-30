@@ -1,5 +1,6 @@
 import { myPostAddress } from "../address";
 import { apiRequest } from "../axios";
+import { PaginationOptions } from "../pageMetaType";
 import {
   CompletedListApiResponseDto,
   MyAppliedListApiResponseDto,
@@ -8,17 +9,20 @@ import {
 } from "./type";
 
 /** 내가 신청한 스터디 목록 가져오기 */
-export const getApplyList = (): Promise<MyAppliedListApiResponseDto> => apiRequest("get", myPostAddress.applyList);
+export const getApplyList = (qs: PaginationOptions): Promise<MyAppliedListApiResponseDto> =>
+  apiRequest("get", myPostAddress.applyList, null, qs);
 
 /** 내가 모집한 스터디 목록 가져오기 */
-export const getRecruitList = (): Promise<RecruitedListApiResponseDto> => apiRequest("get", myPostAddress.recruitList);
+export const getRecruitList = (qs: PaginationOptions): Promise<RecruitedListApiResponseDto> =>
+  apiRequest("get", myPostAddress.recruitList, null, qs);
 
 /** 내가 진행중인 스터디 목록 가져오기 */
-export const getOnGoingList = (): Promise<OnGoingListApiResponseDto> => apiRequest("get", myPostAddress.onGoingList);
+export const getOnGoingList = (qs: PaginationOptions): Promise<OnGoingListApiResponseDto> =>
+  apiRequest("get", myPostAddress.onGoingList, null, qs);
 
 /** 내가 완료한 스터디 목록 가져오기 */
-export const getCompletedList = (): Promise<CompletedListApiResponseDto> =>
-  apiRequest("get", myPostAddress.completedList);
+export const getCompletedList = (qs: PaginationOptions): Promise<CompletedListApiResponseDto> =>
+  apiRequest("get", myPostAddress.completedList, null, qs);
 
 /** 진행중인 스터디 완료하기 */
 // data 추가해야 함

@@ -1,43 +1,88 @@
+import { CategoryList } from "@/types/categoryTypes";
+import { PageMeta } from "../pageMetaType";
+
 type MyAppliedPost = {
-  appliedPostId: number;
+  postId: number;
+  type: CategoryList;
+  recruitEndAt: string;
+  isScraped: boolean;
+  progressWay: string;
   title: string;
+  positions: string[];
+  stacks: string[];
+  memberNickname: string;
+  memberProfileImg: string;
+  viewCount: number;
+  commentCount: number;
 };
 
 // 나의 스터디 내가 신청한 스터디 목록
 export type MyAppliedListApiResponseDto = {
-  appliedPostList: MyAppliedPost[];
+  data: MyAppliedPost[];
+  meta: PageMeta;
 };
 
 type RecruitedPost = {
   postId: number;
+  type: CategoryList;
+  recruitEndAt: string;
+  isScraped: boolean;
+  progressWay: string;
   title: string;
-  //status: string; // 필요한지 논의 필요
-  //recruitEndAt: string;
+  positions: string[];
+  stacks: string[];
+  memberNickname: string;
+  memberProfileImg: string;
+  viewCount: number;
+  commentCount: number;
 };
 
 // 나의 스터디 내가 모집한 스터디 목록
 export type RecruitedListApiResponseDto = {
-  recruitedPostList: RecruitedPost[];
+  data: RecruitedPost[];
+  meta: PageMeta;
 };
 
 type OnGoingPost = {
   postId: number;
+  type: CategoryList;
+  recruitEndAt: string;
+  isScraped: boolean;
+  progressWay: string;
   title: string;
+  positions: string[];
+  stacks: string[];
+  memberNickname: string;
+  memberProfileImg: string;
+  viewCount: number;
+  commentCount: number;
 };
 
 // 나의 스터디 내가 진행중인 스터디 목록
 export type OnGoingListApiResponseDto = {
-  onGoingPostList: OnGoingPost[];
+  data: OnGoingPost[];
+  meta: PageMeta;
 };
 
 type CompletedPost = {
   postId: number;
+  type: CategoryList;
+  recruitEndAt: string;
+  isScraped: boolean;
+  progressWay: string;
   title: string;
+  positions: string[];
+  stacks: string[];
+  memberNickname: string;
+  memberProfileImg: string;
+  viewCount: number;
+  commentCount: number;
 };
 
 // 나의 스터디 내가 완료한 스터디 목록
 export type CompletedListApiResponseDto = {
-  completedPostList: CompletedPost[];
+  data: CompletedPost[];
+  meta: PageMeta;
 };
 
 // 진행중인 스터디 완료

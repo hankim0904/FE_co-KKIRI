@@ -15,7 +15,7 @@ export default function Cards({ data, page }: CardsProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
   return (
     <Container>
-      {data ? (
+      {data.length !== 0 ? (
         <CardList $isSidebarOpenNarrow={isSidebarOpenNarrow}>
           {data.map((data) => (
             <div key={data.postId}>

@@ -20,7 +20,6 @@ export default function Detail() {
     queryKey: ["postDetail", postId],
     queryFn: () => getPostDetail(postId),
     retry: 0,
-    refetchOnWindowFocus: false,
     staleTime: 60 * 1000,
     gcTime: 0,
   });

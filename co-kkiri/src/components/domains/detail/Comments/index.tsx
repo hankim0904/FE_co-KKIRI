@@ -28,7 +28,6 @@ export default function Comments({ postId, className }: CommentsProps) {
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       lastPage.meta.hasNextPage ? lastPageParam + 1 : undefined,
     retry: 0,
-    refetchOnWindowFocus: false,
   });
 
   if (isPending) {

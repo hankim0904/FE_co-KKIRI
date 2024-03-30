@@ -1,59 +1,44 @@
-import { useEffect, useState } from "react";
+import useMyStudyStore from "@/stores/myStudyStore";
 
 import * as S from "./styled";
 
 import Cards from "@/components/commons/Cards";
 import ScrollToTop from "@/components/commons/FloatingButton/ScrollToTop";
 
+import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { categoryStudyStatusFilter } from "@/constants/categories";
 import { CategoryStudyStatus } from "@/types/categoryTypes";
 import { getFilterKey } from "@/utils/objectUtils";
-
-//임시
-import { myRecruitingList } from "@/lib/mock/myStudy/recruiting";
-import { myOnGoingList } from "@/lib/mock/myStudy/onGoing";
-import { myCompletedList } from "@/lib/mock/myStudy/completed";
-import { PostInfo, myAppliedList } from "@/lib/mock/myStudy/applied";
-import useMyStudyStore from "@/stores/myStudyStore";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { fetchList } from "@/utils/myStudyPageFetchList";
 
 export default function MyStudy() {
   const { currentCategory, setCurrentCategory } = useMyStudyStore();
-  const [cards, setCards] = useState<PostInfo[]>([]);
+  const isSidebarOpenNarrow = useResponsiveSidebar();
+  const fetchListWithCategory = ({ pageParam = 1 }) => fetchList(currentCategory, { pageParam });
+
+  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ["myStudyList", currentCategory],
+    queryFn: fetchListWithCategory,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam) =>
+      lastPage.meta.hasNextPage ? lastPageParam + 1 : undefined,
+  });
 
   const handleCategoryChange = (category: string) => {
     const filterKey = getFilterKey<CategoryStudyStatus>(categoryStudyStatusFilter, category);
     setCurrentCategory(filterKey as CategoryStudyStatus);
   };
 
-  useEffect(() => {
-    // // API 요청 함수
-    // const fetchCards = async () => {
-    //   try {
-    //     const response = await fetch(`YOUR_API_ENDPOINT?status=${currentCategory}`);
-    //     const data = await response.json();
-    //     setCards(data);
-    //   } catch (error) {
-    //     console.error("API 요청 중 오류 발생:", error);
-    //   }
-    // };
+  const allCards = data?.pages.flatMap((page) => page.data) ?? [];
 
-    // fetchCards();
-
-    // 임시
-    if (currentCategory === "APPLIED") {
-      setCards(myAppliedList);
-    } else if (currentCategory === "RECRUITING") {
-      setCards(myRecruitingList);
-    } else if (currentCategory === "ON_GOING") {
-      setCards(myOnGoingList);
-    } else if (currentCategory === "COMPLETED") {
-      setCards(myCompletedList);
-    }
-  }, [currentCategory]);
+  if (error) {
+    console.error(error);
+  }
 
   return (
     <S.Container>
-      <S.Box>
+      <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
         <S.Title>나의 스터디/프로젝트</S.Title>
         <S.FilterListSection
           type="category"
@@ -61,8 +46,12 @@ export default function MyStudy() {
           filters={Object.values(categoryStudyStatusFilter)}
           onFilterClick={handleCategoryChange}
         />
-        <Cards data={cards} page="myStudy" />
-        <S.ButtonSection variant="ghost">더보기</S.ButtonSection> {/*무한스크롤 로딩 시 disabled*/}
+        <Cards data={allCards} page="myStudy" />
+        {hasNextPage && (
+          <S.ButtonSection variant="ghost" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+            더보기
+          </S.ButtonSection>
+        )}
         <ScrollToTop />
       </S.Box>
     </S.Container>

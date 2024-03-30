@@ -26,12 +26,10 @@ export default function ScoutModal({ memberId, onClose }: ScoutModalProps) {
         //TODO: 스카우트를 위한 현재 초대 가능한 스터디/프로젝트 목록 가져오기
         queryKey: ["post", "scout"],
         initialData: scoutList,
-        refetchOnWindowFocus: false,
       },
       {
         queryKey: ["member", memberId],
         initialData: scoutMember,
-        refetchOnWindowFocus: false,
       },
     ],
     combine: (results) => {

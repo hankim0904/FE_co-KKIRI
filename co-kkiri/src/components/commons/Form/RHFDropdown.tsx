@@ -1,10 +1,6 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import FormDropdown from "./FormDropdown";
-
-export type Option = {
-  label: string;
-  value: unknown;
-};
+import { Option } from "../RecruitmentRequestLayout/PositionChips";
 
 interface RHFDropdownProps<ControlType extends FieldValues> {
   placeholder: string;
@@ -27,7 +23,7 @@ export default function RHFDropdown<ControlType extends FieldValues>({
     <Controller
       name={formFieldName}
       control={control}
-      rules={isEssential ? { required: errorMessage || "필수 입력사항입니다" } : {}}
+      rules={isEssential ? { required: errorMessage || "필수값을 입력해주세요" } : {}}
       render={({ field, fieldState }) => (
         <FormDropdown
           placeholder={placeholder}

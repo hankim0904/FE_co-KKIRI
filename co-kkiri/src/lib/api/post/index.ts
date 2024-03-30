@@ -26,11 +26,11 @@ export const getPostDetail = (postId: number): Promise<PostDetailApiResponseDto>
 
 /** 스터디 글 작성하기 */
 export const createPost = (data: RecruitApiRequestDto): Promise<{ postId: number }> =>
-  apiRequest<{ postId: number }, RecruitApiRequestDto>("post", postAddress.recruit, data);
+  apiRequest("post", postAddress.recruit, data);
 
 /** 스터디 글 수정하기 */
 export const modifyPost = (postId: number, data: RecruitApiRequestDto) =>
-  apiRequest<{ result: { status: 200 } }, RecruitApiRequestDto>("patch", postAddress.modify(postId), data);
+  apiRequest("patch", postAddress.modify(postId), data);
 
 /** 스터디 글 삭제하기 */
 export const deletePost = (postId: number) => apiRequest("delete", postAddress.postId(postId));

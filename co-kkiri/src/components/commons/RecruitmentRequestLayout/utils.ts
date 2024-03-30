@@ -23,7 +23,6 @@ export const findOptionByValue = <ValueType, OptionType>(
 // handleSubmit 요청 실패 처리
 export const handleRecruitFail = (error: FieldErrors<FieldValues>) => {
   if (!validateFormData(error)) {
-    alert("필수값을 입력해주세요");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 };
@@ -76,3 +75,10 @@ export const isButtonDisabled = (title: string, content: string): boolean => {
     return false; // 모든 조건을 통과하면 버튼을 활성화
   }
 };
+
+// const mapRecruitmentData = (data: RecruitApiRequestDto): RecruitApiRequestDto => {
+//   const { recruitEndAt: defaultRecuitEndAt } = data;
+//   const recruitEndAt = defaultRecuitEndAt ? format(defaultRecuitEndAt, "yyyy-MM-dd 23:59:59") : "";
+
+//   return { recruitEndAt, ...data };
+// };

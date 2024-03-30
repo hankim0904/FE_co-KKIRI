@@ -5,6 +5,7 @@ import DefaultSelectLayout from "../StackPopover/SelectLayout";
 import { useRef, useState } from "react";
 import DeleteStackChipList from "../StackPopover/DeleteStackChipList";
 import { useResizeObserver } from "usehooks-ts";
+import DESIGN_TOKEN from "@/styles/tokens";
 
 interface MultiselectDropdownProps {
   selectedOptions: string[];
@@ -53,8 +54,14 @@ export default function MultiselectDropdown({ selectedOptions, limit, onSelectCh
   );
 }
 
+const { mediaQueries } = DESIGN_TOKEN;
 const Container = styled.div`
   position: relative;
+  display: flex;
+
+  ${mediaQueries.tablet} {
+    justify-content: center;
+  }
 `;
 
 interface SelectLayoutProps {

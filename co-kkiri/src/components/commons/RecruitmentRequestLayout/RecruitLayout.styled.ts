@@ -73,6 +73,7 @@ export const GirdContainer = styled.div`
       "d"
       "e"
       "f";
+    grid-template-columns: 46.2rem;
   }
 
   ${mediaQueries.mobile} {
@@ -83,24 +84,25 @@ export const GirdContainer = styled.div`
       "d"
       "e"
       "f";
+    grid-template-columns: 32rem;
+  }
+`;
+export const FormElementBox = styled.div`
+  width: 36.7rem;
+
+  ${mediaQueries.tablet} {
+    width: 46.2rem;
+  }
+
+  ${mediaQueries.mobile} {
+    width: 32rem;
   }
 `;
 
-export const RadioButtonBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.9rem;
-
-  & span {
-    display: flex;
-    gap: 3rem;
+export const ContactWayBox = styled.div`
+  ${mediaQueries.mobile} {
+    width: 32rem;
   }
-`;
-
-export const RadioButtonWarper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
 `;
 
 export const DropdownWrapper = styled.div`
@@ -134,7 +136,6 @@ export const SelectChipBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  height: 9.5rem;
 
   & h3 {
     & span {

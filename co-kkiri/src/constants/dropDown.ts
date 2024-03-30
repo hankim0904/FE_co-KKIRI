@@ -1,4 +1,4 @@
-import { Option } from "@/components/commons/Form/RHFDropdown";
+import { Option } from "@/components/commons/RecruitmentRequestLayout/PositionChips";
 import { ROUTER_PATH } from "@/lib/path";
 
 const { MY_PAGE, MY_STUDY } = ROUTER_PATH;
@@ -67,6 +67,15 @@ export const DROPDOWN_FORM_INFO: DropdownInfo = {
       { label: "카카오 오픈톡", value: "카카오 오픈톡" },
       { label: "이메일", value: "이메일" },
       { label: "구글폼", value: "구글폼" },
+    ],
+    position: [
+      { label: "전체", value: "전체" },
+      { label: "프론트엔드", value: "프론트엔드" },
+      { label: "백엔드", value: "백엔드" },
+      { label: "디자이너", value: "디자이너" },
+      { label: "iOS", value: "iOS" },
+      { label: "안드로이드", value: "안드로이드" },
+      { label: "데브옵스", value: "데브옵스" },
     ],
   },
 };

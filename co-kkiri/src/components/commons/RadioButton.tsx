@@ -12,8 +12,8 @@ interface RadioButtonProps {
 export default function RadioButton({ children, value, defaultChecked, onClick }: RadioButtonProps) {
   return (
     <Label>
-      {children}
       <RadioInput onClick={onClick} type="radio" name="invite" value={value} defaultChecked={defaultChecked} />
+      {children}
     </Label>
   );
 }
@@ -23,6 +23,8 @@ const { color } = DESIGN_TOKEN;
 const Label = styled.label`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
 `; // 폰트는 디자인 추가되면 더 수정해야 할 듯
 
 const RadioInput = styled.input`

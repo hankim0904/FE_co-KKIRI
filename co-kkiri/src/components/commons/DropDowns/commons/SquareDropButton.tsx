@@ -9,8 +9,7 @@ interface DropdownButtonProps {
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
   $iconType: "date" | "default";
   $isSelected: boolean;
-  isError?: boolean;
-  $isDate?: boolean;
+  $isError?: boolean;
   dropButtonRef?: RefObject<HTMLButtonElement> | RefCallBack;
 }
 
@@ -35,9 +34,8 @@ export default function SquareDropButton({
   onClick,
   $iconType,
   $isSelected,
-  isError,
+  $isError,
   dropButtonRef,
-  $isDate,
 }: DropdownButtonProps) {
   const iconSources = {
     date: { src: ICONS.calendar.src, alt: ICONS.calendar.alt },
@@ -51,7 +49,7 @@ export default function SquareDropButton({
       $iconType={$iconType}
       $isSelected={$isSelected}
       $isReactElement={typeof selectOption !== "string"}
-      $isError={isError}
+      $isError={$isError}
       ref={dropButtonRef}>
       <Box>{selectOption}</Box>
       <img src={iconSources[$iconType].src} alt={iconSources[$iconType].alt} />

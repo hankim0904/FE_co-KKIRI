@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
-import { Option } from "../../Form/RHFDropdown";
-
+import { Option } from "../../RecruitmentRequestLayout/PositionChips";
 interface DropdownMenuProps {
   options: Option[];
   handleSelectOption: (option: Option) => void;

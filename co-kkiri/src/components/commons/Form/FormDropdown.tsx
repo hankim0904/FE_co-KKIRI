@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Dropdown from "../DropDowns/Dropdown";
 import { FormFieldProps } from "./FormElement";
 import DESIGN_TOKEN from "@/styles/tokens";
-import { Option } from "./RHFDropdown";
+import { Option } from "../RecruitmentRequestLayout/PositionChips";
 
 interface FormDropdownProps extends FormFieldProps<Option> {
   placeholder: string;

@@ -3,7 +3,7 @@ import DropMenu from "./commons/DropMenu";
 import { useState } from "react";
 import useOpenToggle from "@/hooks/useOpenToggle";
 import TextDropButton from "./commons/TextDropButton";
-import { Option } from "../Form/RHFDropdown";
+import { Option } from "../RecruitmentRequestLayout/PositionChips";
 
 interface SortDropdownProps {
   placeholder: string;

@@ -9,16 +9,17 @@ import SquareDropButton from "../commons/SquareDropButton";
 import { Calendar } from "./ui/calendar";
 interface DeadlineDropdownProps {
   placeholder: string | null;
-  selectedOption: string;
-  onSelect: (option: string) => void;
+  selectedOption?: Date;
+  onChange: (option: Date | undefined) => void;
+  $isError?: boolean;
 }
 
-export default function DeadlineDropdown({ placeholder, selectedOption, onSelect }: DeadlineDropdownProps) {
+export default function DeadlineDropdown({ placeholder, selectedOption, onChange, $isError }: DeadlineDropdownProps) {
   const { isOpen, openToggle: toggleDropdown, ref } = useOpenToggle();
 
   const handleSelectDate = (date: Date | undefined) => {
-    const formattedDate = date ? format(date, "yyyy-MM-dd 23:59:59") : "";
-    onSelect(formattedDate);
+    // const formattedDate = date ? format(date, "yyyy-MM-dd 23:59:59") : "";
+    onChange(date);
   };
 
   return (
@@ -26,8 +27,9 @@ export default function DeadlineDropdown({ placeholder, selectedOption, onSelect
       <SquareDropButton
         $iconType="date"
         onClick={toggleDropdown}
-        selectOption={selectedOption || placeholder || ""}
+        selectOption={selectedOption ? format(selectedOption, "yyyy.MM.dd") : placeholder || ""}
         $isSelected={!!selectedOption}
+        $isError={$isError}
       />
       {isOpen && (
         <CalendarWrapper>

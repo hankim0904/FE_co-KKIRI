@@ -3,7 +3,7 @@ import styled from "styled-components";
 import FilterButton from "./commons/FilterButton";
 import useOpenToggle from "@/hooks/useOpenToggle";
 import DropMenu from "./commons/DropMenu";
-import { Option } from "../Form/RHFDropdown";
+import { Option } from "../RecruitmentRequestLayout/PositionChips";
 
 interface FilterDropdownProps {
   placeholder: string;

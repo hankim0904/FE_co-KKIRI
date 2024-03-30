@@ -3,7 +3,7 @@ import SquareDropButton from "./commons/SquareDropButton";
 import DropMenu from "./commons/DropMenu";
 import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
-import { Option } from "../Form/RHFDropdown";
+import { Option } from "../RecruitmentRequestLayout/PositionChips";
 
 interface DropdownProps {
   placeholder: string;
@@ -37,14 +37,13 @@ export default function Dropdown({
         $isSelected={!!selectedOption}
         $iconType="default"
         dropButtonRef={dropdownRef}
-        isError={isError}
+        $isError={isError}
       />
       <DropMenu isOpen={isOpen} handleSelectOption={handleSelectOption} $borderType="square" options={options} />
     </Container>
   );
 }
 
-const { color, typography } = DESIGN_TOKEN;
 interface ContainerProps {
   $isError?: boolean;
 }

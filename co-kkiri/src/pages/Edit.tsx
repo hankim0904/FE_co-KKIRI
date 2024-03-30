@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPostDetail } from "@/lib/api/post";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
+import { FieldValues } from "react-hook-form";
 
 export default function Edit() {
   const [selectedOptions, setSelectedOptions] = useState<RecruitApiRequestDto>({
@@ -19,6 +20,7 @@ export default function Edit() {
     positions: [],
     title: "",
     content: "",
+    link: "",
   });
 
   const navigate = useNavigate();
@@ -33,9 +35,9 @@ export default function Edit() {
   });
 
   // 수정 요청 처리
-  const handleSubmit = () => {
+  const handleSubmit = (data: FieldValues) => {
     editMutation.mutate(
-      { postId, data: selectedOptions },
+      { postId, data: data as RecruitApiRequestDto },
       {
         onSuccess: () => {
           navigate(`/list/${postId}`);

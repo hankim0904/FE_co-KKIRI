@@ -29,6 +29,10 @@ import pen from "@/assets/icons/pen.svg";
 import link from "@/assets/icons/link.svg";
 import leader from "@/assets/icons/leader.svg";
 import filterReset from "@/assets/icons/filter_reset.svg";
+import infoToast from "@/assets/icons/toastIcons/info.svg";
+import errorToast from "@/assets/icons/toastIcons/error.svg";
+import warnToast from "@/assets/icons/toastIcons/warn.svg";
+import successToast from "@/assets/icons/toastIcons/success.svg";
 import { Images } from "@/types/imageTypes";
 
 export const ICONS: Images = {
@@ -152,5 +156,21 @@ export const ICONS: Images = {
   leader: {
     src: leader,
     alt: "리더 아이콘",
+  },
+  infoToast: {
+    src: infoToast,
+    alt: "정보 토스트",
+  },
+  errorToast: {
+    src: errorToast,
+    alt: "에러 토스트",
+  },
+  warnToast: {
+    src: warnToast,
+    alt: "경고 토스트",
+  },
+  successToast: {
+    src: successToast,
+    alt: "성공 토스트",
   },
 };

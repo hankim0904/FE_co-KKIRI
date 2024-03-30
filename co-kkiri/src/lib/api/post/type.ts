@@ -43,10 +43,11 @@ export type ListApiResponseDto = {
 
 export type ListApiRequestDto = PaginationOptions & {
   meetingType: CategoryListFilter;
-  positions?: string[];
+  position?: string;
   progressWay?: string;
   stacks?: string[];
-  sortBy?: "LATEST" | "BY_DEADLINE" | "BY_VIEW";
+  sortBy?: string;
+  search: string;
 };
 
 export type PostApplyStatus = "OWNER" | "INVITED" | "NOT_APPLIED" | "APPLIED" | "RECRUIT_CLOSED";

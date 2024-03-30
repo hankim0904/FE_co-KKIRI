@@ -11,13 +11,15 @@ export const Container = styled.div`
 `;
 
 export const Box = styled.div`
-  display: inline-grid;
+  display: grid;
   gap: 4rem;
+
   ${mediaQueries.tablet} {
     width: 76.8rem;
   }
   ${mediaQueries.mobile} {
-    width: 34rem;
+    width: 32rem;
+    column-gap: 0;
   }
 `;
 
@@ -32,7 +34,7 @@ export const CategoryWrapper = styled.div`
   }
 
   ${mediaQueries.mobile} {
-    padding: 0 2rem;
+    padding: 0;
     width: 34rem;
     display: flex;
     flex-direction: column;

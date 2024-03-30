@@ -39,7 +39,7 @@ const Container = styled.div`
     width: 76.8rem;
   }
   ${mediaQueries.mobile} {
-    width: 36rem;
+    width: 32rem;
   }
 `;
 

@@ -99,8 +99,8 @@ export const DROPDOWN_FILTER_INFO: DropdownInfo = {
   sort: {
     sort: [
       { label: "최신순", value: "LATEST" },
-      { label: "마감순", value: "BYDEADLINE" },
-      { label: "조회순", value: "BYVIEW" },
+      { label: "마감순", value: "BY_DEADLINE" },
+      { label: "조회순", value: "BY_VIEW" },
     ],
   },
   popover: {

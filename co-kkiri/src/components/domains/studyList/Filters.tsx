@@ -4,25 +4,52 @@ import SortDropdown from "@/components/commons/DropDowns/SortDropdown";
 import DESIGN_TOKEN from "@/styles/tokens";
 import { Option } from "@/components/commons/Form/RHFDropdown";
 import { DROPDOWN_FILTER_INFO } from "@/constants/dropDown";
+import { SelectedFilter } from "@/pages/StudyList";
+import StacksPopover from "@/components/commons/StackPopover";
 
 interface FiltersProps {
-  handleFilterChange: (selectedFilter: Option) => void;
-  handleSortChange: (selectedOption: Option) => void;
+  selectedFilter: SelectedFilter["stacks"];
+  handleStacksChange: (stacks: string[]) => void;
+  handlePositionChange: (positions: string) => void;
+  handleProgressWayChange: (progressWay: string) => void;
+  handleSortByChange: (sortBy: string) => void;
 }
 
-export default function Filters({ handleFilterChange, handleSortChange }: FiltersProps) {
+export default function Filters({
+  selectedFilter,
+  handleStacksChange,
+  handlePositionChange,
+  handleProgressWayChange,
+  handleSortByChange,
+}: FiltersProps) {
   const {
     filter: { position, progressWay },
     sort: { sort },
   } = DROPDOWN_FILTER_INFO;
 
+  const onSelectPosition = (selectedOption: Option) => {
+    const selectedPosition = String(selectedOption.value);
+    handlePositionChange(selectedPosition);
+  };
+
+  const onSelectProgressWay = (selectedOption: Option) => {
+    const selectedProgressWay = String(selectedOption.value);
+    handleProgressWayChange(selectedProgressWay);
+  };
+
+  const onSelectSortBy = (selectedOption: Option) => {
+    const selectedSortBy = String(selectedOption.value);
+    handleSortByChange(selectedSortBy);
+  };
+
   return (
     <Container>
       <FilterWrapper>
-        <FilterDropdown onSelectFilter={handleFilterChange} placeholder={"포지션"} options={position} />
-        <FilterDropdown onSelectFilter={handleFilterChange} placeholder={"진행 방식"} options={progressWay} />
+        <StacksPopover stacks={selectedFilter} onStacksChange={(stacks) => handleStacksChange(stacks)} />
+        <FilterDropdown onSelectFilter={onSelectPosition} placeholder={"포지션"} options={position} />
+        <FilterDropdown onSelectFilter={onSelectProgressWay} placeholder={"진행 방식"} options={progressWay} />
       </FilterWrapper>
-      <SortDropdown handleSortChange={handleSortChange} placeholder={"최신순"} options={sort} />
+      <SortDropdown handleSortChange={onSelectSortBy} placeholder={"최신순"} options={sort} />
     </Container>
   );
 }
@@ -40,12 +67,22 @@ const Container = styled.div`
   }
 
   ${mediaQueries.mobile} {
-    padding: 0 1rem;
-    width: 34rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    width: 32rem;
+    gap: 1.6rem;
+    padding: 0;
   }
 `;
 
 const FilterWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 0.8rem;
+
+  ${mediaQueries.mobile} {
+    gap: 0.4rem;
+  }
 `;

@@ -36,7 +36,7 @@ export default function SearchInput({ placeholder, handleValueChange }: SearchIn
 
 const {
   color,
-  mediaQueries: { tablet, mobile },
+  mediaQueries: { tablet },
 } = DESIGN_TOKEN;
 
 const Container = styled.div`
@@ -45,9 +45,6 @@ const Container = styled.div`
 
   ${tablet} {
     width: 32rem;
-  }
-  ${mobile} {
-    width: 100%;
   }
 `;
 

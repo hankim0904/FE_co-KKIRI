@@ -4,6 +4,7 @@ import UserInfo from "../../commons/UserInfo";
 import Button from "../../commons/Button";
 import { ICONS } from "@/constants/icons";
 import { Link } from "react-router-dom";
+import { useQueries } from "@tanstack/react-query";
 
 interface InviteResponseModalProps {
   onClose: () => void;

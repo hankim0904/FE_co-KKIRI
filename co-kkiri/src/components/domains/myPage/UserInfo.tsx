@@ -1,11 +1,13 @@
 import * as S from "./UserInfo.styled";
 import ToggleButton from "@/components/commons/ToggleButton";
 import UserProfileCard from "@/components/commons/UserProfileCard";
+import ConfirmModal from "@/components/modals/ConfirmModal";
+import useOpenToggle from "@/hooks/useOpenToggle";
 import { deleteUser, editVisibleProfileStatus } from "@/lib/api/myPage";
 import { VisibleProfileStatusApiRequestDto } from "@/lib/api/myPage/type";
 import { useUserInfoStore } from "@/stores/userInfoStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface UserInfoProps {
   visibleProfile: VisibleProfileStatusApiRequestDto;
@@ -13,7 +15,7 @@ interface UserInfoProps {
 
 export default function UserInfo({ visibleProfile }: UserInfoProps) {
   const user = useUserInfoStore();
-
+  const { isOpen: isDeleteUserConfirmModalOpen, openToggle } = useOpenToggle();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -31,9 +33,8 @@ export default function UserInfo({ visibleProfile }: UserInfoProps) {
     mutationFn: () => deleteUser(),
     onSuccess: () => {
       queryClient.invalidateQueries();
-      // navigate("/");
-      console.log("요청 성공");
-      // 콘솔은 잘 찍히는데 왜 회원 탈퇴가 안될까~
+      navigate("/");
+      window.location.reload();
     },
     onError: (error) => {
       console.error(error);
@@ -69,8 +70,11 @@ export default function UserInfo({ visibleProfile }: UserInfoProps) {
             isChecked={visibleProfile.isVisibleProfile}
           />
         </S.Scout>
-        <S.DeleteUser onClick={handleDeleteUser}>회원 탈퇴하기</S.DeleteUser>
+        <S.DeleteUser onClick={openToggle}>회원 탈퇴하기</S.DeleteUser>
       </S.Box>
+      {isDeleteUserConfirmModalOpen && (
+        <ConfirmModal type="deleteUser" onClose={openToggle} onClick={handleDeleteUser} />
+      )}
     </S.Container>
   );
 }

@@ -16,14 +16,20 @@ export default function ConfirmModal({ type, onClose, onClick }: ConfirmModalPro
   return (
     <ModalLayout desktopWidth={430} mobileWidth={320} modalType="confirm" onClose={onClose}>
       <Container>
-        <Message>{CONFIRM_TYPE[type].massage}</Message>
+        <Message>{CONFIRM_TYPE[type].message}</Message>
         <Wrapper>
           <Button variant="primaryLight" onClick={onClose}>
             {CONFIRM_TYPE[type].cancel}
           </Button>
-          <Button variant="primary" onClick={onClick}>
-            {CONFIRM_TYPE[type].agree}
-          </Button>
+          {CONFIRM_TYPE[type].agree ? (
+            <Button variant="primary" onClick={onClick}>
+              {CONFIRM_TYPE[type].agree}
+            </Button>
+          ) : (
+            <Button variant="red" onClick={onClick}>
+              {CONFIRM_TYPE[type].delete}
+            </Button>
+          )}
         </Wrapper>
       </Container>
     </ModalLayout>

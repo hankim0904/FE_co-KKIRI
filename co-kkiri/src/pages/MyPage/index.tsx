@@ -11,7 +11,7 @@ export default function MyPage() {
 
   const { data: invitedTeamList, error: invitedTeamListError } = useQuery({
     queryKey: ["invite/list"],
-    queryFn: () => getInvitedTeamList({ order: "DESC", page: 1, take: 100 }),
+    queryFn: () => getInvitedTeamList({ page: 1, take: 100 }),
     retry: false,
   });
 

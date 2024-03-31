@@ -24,6 +24,7 @@ export default function ScrapList() {
   });
 
   const count = data?.pages[0].meta.totalCount;
+  const allCards = data?.pages.flatMap((page) => page.data) ?? [];
 
   if (error) {
     console.error(error);
@@ -35,24 +36,20 @@ export default function ScrapList() {
       {count ? (
         <S.Box>
           <S.Wrapper>
-            {data?.pages.map((page) =>
-              page.data.map(
-                (scrap) =>
-                  scrap.isScraped && (
-                    <div key={scrap.postId}>
-                      <Card page="studyList" cardData={scrap} />
-                    </div>
-                  ),
-              ),
+            {allCards.map(
+              (scrap) =>
+                scrap.isScraped && (
+                  <div key={scrap.postId}>
+                    <Card page="studyList" cardData={scrap} />
+                  </div>
+                ),
             )}
           </S.Wrapper>
-          <Button
-            variant="ghost"
-            width={158}
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}>
-            더보기
-          </Button>
+          {hasNextPage && (
+            <Button variant="ghost" width={158} onClick={() => fetchNextPage()}>
+              더보기
+            </Button>
+          )}
         </S.Box>
       ) : (
         <NoResultText text="스크랩 목록이 없어요." padding={60} color="gray" />

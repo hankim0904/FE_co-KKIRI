@@ -1,4 +1,4 @@
-import { InviteMemberRequestDto } from "@/lib/api/post/type";
+import { InviteMemberRequestDto } from "@/lib/api/scout/type";
 import { CombinedResults } from "./types";
 
 export const mapSubmitData = (queryData: CombinedResults, formData: InviteMemberRequestDto) => {

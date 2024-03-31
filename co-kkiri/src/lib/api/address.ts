@@ -111,5 +111,12 @@ export const memberAddress = {
   search: "/member/search",
 };
 
+export const scoutAddress = {
+  //get
+  postsForScout: "/scout/post",
+  //post
+  inviteScout: "/scout/invite",
+};
+
 //post
 export const imageAddress = "/image";

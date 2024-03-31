@@ -9,6 +9,7 @@ export type MemberProfile = {
   position: string;
   stacks: string[];
   gauge: number;
+  isVisibleProfile: boolean;
   // tage: Tag // TODO: 추후 작업예정
 };
 

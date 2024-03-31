@@ -1,7 +1,7 @@
-import { Option } from "@/components/commons/Form/RHFDropdown";
-import { MemberProfile } from "@/lib/api/member/type";
+import { SearchedMemberProfile } from "@/lib/api/member/type";
+import { Option } from "@/types/PositionTypes";
 
 export type CombinedResults = {
   options: Option[];
-  userInfo: Pick<MemberProfile, "nickname" | "profileImageUrl" | "position">;
+  userInfo: Pick<SearchedMemberProfile, "nickname" | "profileImageUrl" | "position">;
 };

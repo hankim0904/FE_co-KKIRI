@@ -112,20 +112,7 @@ export type StudyManagementApiResponseDto = {
   link: string;
 };
 
-export type ScoutPost = {
-  postId: number;
-  title: string;
-};
-
-/**스카우트 스터디/프로젝트 목록 -백엔드 확인요망*/
-export type ScoutListApiResponseDto = {
-  data: ScoutPost[];
-  // meta: Pageable  페이지네이션 정보, 추후 추가 예정
-};
-
-/**스카우트하기 */
-export type InviteMemberRequestDto = {
-  postId: number;
-  memberId: number;
-  message: string;
+/**이미지 업로드하기 */
+export type ImageUploadApiResponseDto = {
+  uploadUrl: string;
 };

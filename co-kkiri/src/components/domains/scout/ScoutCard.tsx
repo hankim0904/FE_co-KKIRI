@@ -1,5 +1,5 @@
 import UserProfileCard from "@/components/commons/UserProfileCard";
-import ScoutModal from "@/components/modals/ScoutModal";
+import UserProfileModal from "@/components/modals/UserProfileModal";
 import useOpenToggle from "@/hooks/useOpenToggle";
 import { SearchedMemberProfile } from "@/lib/api/member/type";
 import styled from "styled-components";
@@ -7,11 +7,11 @@ import styled from "styled-components";
 interface ScoutCardProps extends SearchedMemberProfile {}
 
 export default function ScoutCard(props: ScoutCardProps) {
-  const { isOpen: isInvitedModalOpen, openToggle } = useOpenToggle();
+  const { isOpen: isUserProfileModalOpen, openToggle:userProfileModalOpenToggle } = useOpenToggle();
 
   return (
     <>
-      <Container onClick={openToggle}>
+      <Container onClick={userProfileModalOpenToggle}>
         <UserProfileCard
           profileImageUrl={props.profileImageUrl}
           nickname={props.nickname}
@@ -22,7 +22,7 @@ export default function ScoutCard(props: ScoutCardProps) {
           cardType="scout"
         />
       </Container>
-      {isInvitedModalOpen && <ScoutModal memberId={props.memberId} onClose={openToggle} />}
+      {isUserProfileModalOpen && <UserProfileModal userId={props.memberId} onScoutClick={userProfileModalOpenToggle} onClose={userProfileModalOpenToggle}/>}
     </>
   );
 }

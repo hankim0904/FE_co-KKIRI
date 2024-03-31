@@ -12,9 +12,7 @@ export type MemberProfile = {
   // tage: Tag // TODO: 추후 작업예정
 };
 
-export type MemberProfileApiResponseDto = {
-  memberProfile: MemberProfile;
-};
+export type MemberProfileApiResponseDto = MemberProfile;
 
 // 유저 검색
 export type SearchedMemberProfile = {

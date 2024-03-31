@@ -9,46 +9,44 @@ import DefaultCollapseSection from "../commons/CollapseSection";
 import useOpenToggle from "@/hooks/useOpenToggle";
 import EvaluationChip from "../commons/Chips/EvaluationChip";
 import { isEmptyValue } from "@/utils/validationUtils";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getMemberProfile } from "@/lib/api/member";
+import { MemberProfileApiResponseDto } from "@/lib/api/member/type";
+import { memberProfile } from "@/constants/initialDatas";
 
 interface UserProfileModalProps {
   userId: number;
 }
 
 export default function UserProfileModal({ userId }: UserProfileModalProps) {
-  const { data: memberProfile } = useQuery({
+  const queryClient = useQueryClient();
+
+  const { data } = useQuery<MemberProfileApiResponseDto>({
     queryKey: ["memberProfile", userId],
-    initialData: {
-      memberId: 1,
-      profileImageUrl: "",
-      nickname: "김개발",
-      career: NaN,
-      position: "",
-      stack: [],
-      score: 40,
-      link: "",
-      introduce: "",
-      tags: {},
+    queryFn: ({ queryKey }) => getMemberProfile(queryKey[1] as number),
+    initialData: () => {
+      const data = queryClient.getQueryData<MemberProfileApiResponseDto>(["memberProfile", userId]);
+      return data || memberProfile;
     },
+    initialDataUpdatedAt: () => queryClient.getQueryState(["memberProfile", userId])?.dataUpdatedAt,
   });
+
   const { userId: myId } = useUserInfoStore();
-  const { isOpen, setIsOpen } = useOpenToggle();
   return (
     <ModalLayout desktopWidth={430} tabletWidth={430} mobileWidth={320} onClose={() => {}}>
-      <UserProfileCardLayout {...memberProfile} />
+      <UserProfileCardLayout {...data} score={data.gauge} />
       <Divider />
-      <CollapseSection title="유저가 받은 태그" isCollapsed={isOpen} onClick={() => setIsOpen(!isOpen)}>
-        {isEmptyValue(memberProfile.tags) ? (
+      {/* <CollapseSection title="유저가 받은 태그" isCollapsed={isOpen} onClick={() => setIsOpen(!isOpen)}>
+        {isEmptyValue(data?.memberProfile.tags) ? (
           <EmptyCollapseBody>{emptyMessages.tags}</EmptyCollapseBody>
         ) : (
           <CollapseBody>
-            {/*//TODO: 나중에 EvaluationChip mapping한건 밖으로 빼내야합니다, 몇군데에서 써서요.*/}
-            {Object.entries(memberProfile.tags).map(([tag, count]) => (
+            {Object.entries(data?.memberProfile.tags).map(([tag, count]) => (
               <EvaluationChip key={tag} label={`${tag} ${count}`} evaluationWay="compliments" />
             ))}
           </CollapseBody>
         )}
-      </CollapseSection>
+      </CollapseSection> */}
       {myId !== userId && <Button variant="primary">스카우트</Button>}
     </ModalLayout>
   );

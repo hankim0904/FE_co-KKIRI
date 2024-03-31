@@ -19,7 +19,6 @@ export default function RHFLinkInput<ControlType extends FieldValues>({
       name={formFieldName}
       control={control}
       rules={{
-        required: "입력란을 확인해주세요",
         pattern: {
           value:
             placeholder === "이메일"

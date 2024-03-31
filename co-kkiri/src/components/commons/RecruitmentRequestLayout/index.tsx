@@ -53,6 +53,7 @@ export default function RecruitmentRequestLayout({
     if (!validateFormData(errors)) {
       onSubmitClick(data);
     }
+    console.log(data);
   };
 
   const contactWayValue = watch("contactWay");

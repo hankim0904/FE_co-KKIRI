@@ -22,7 +22,9 @@ export default function usePostMutation() {
 
   const editMutation = useMutation({
     mutationFn: ({ postId, data }: ModifyPostPayload) => modifyPost(postId, data),
-    onSuccess: (_, postId) => queryClient.invalidateQueries({ queryKey: ["postDetail", postId] }),
+    onSuccess: (_, postId) => {
+      queryClient.removeQueries({ queryKey: ["postDetail", postId] });
+    },
     onError: (error) => console.error(error, error.message),
   });
 

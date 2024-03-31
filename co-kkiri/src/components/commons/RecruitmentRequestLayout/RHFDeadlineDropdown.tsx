@@ -1,4 +1,4 @@
-import { Controller, Control, FieldValues, Path, FieldErrors, FieldError } from "react-hook-form";
+import { Controller, Control, FieldValues, Path, FieldError } from "react-hook-form";
 
 import FormDeadlinePicker from "./FormDeadlinePicker";
 interface FormDeadlineDropdownProps<ControlType extends FieldValues> {

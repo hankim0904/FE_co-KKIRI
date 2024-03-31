@@ -66,12 +66,7 @@ export default function Edit() {
 
   return (
     <S.Container>
-      <RecruitmentRequestLayout
-        selectedOptions={selectedOptions}
-        setSelectedOptions={setSelectedOptions}
-        onSubmitClick={handleSubmit}
-        buttonText="수정하기"
-      />
+      <RecruitmentRequestLayout selectedOptions={selectedOptions} onSubmitClick={handleSubmit} buttonText="수정하기" />
     </S.Container>
   );
 }

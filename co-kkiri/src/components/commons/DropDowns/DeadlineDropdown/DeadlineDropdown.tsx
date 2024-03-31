@@ -9,8 +9,8 @@ import SquareDropButton from "../commons/SquareDropButton";
 import { Calendar } from "./ui/calendar";
 interface DeadlineDropdownProps {
   placeholder: string | null;
-  selectedOption?: Date;
-  onChange: (option: Date | undefined) => void;
+  selectedOption?: string;
+  onChange: (option: string) => void;
   $isError?: boolean;
 }
 
@@ -18,8 +18,8 @@ export default function DeadlineDropdown({ placeholder, selectedOption, onChange
   const { isOpen, openToggle: toggleDropdown, ref } = useOpenToggle();
 
   const handleSelectDate = (date: Date | undefined) => {
-    // const formattedDate = date ? format(date, "yyyy-MM-dd 23:59:59") : "";
-    onChange(date);
+    const formattedDate = date ? format(date, "yyyy-MM-dd 23:59:58") : "";
+    onChange(formattedDate);
   };
 
   return (

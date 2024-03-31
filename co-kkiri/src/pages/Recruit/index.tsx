@@ -29,13 +29,13 @@ export default function Recruit() {
         navigate(`/list/${data.postId}`);
       },
     });
+    console.log(data);
   };
 
   return (
     <S.Container>
       <RecruitmentRequestLayout
         selectedOptions={selectedOptions}
-        setSelectedOptions={setSelectedOptions}
         onSubmitClick={handleSubmit}
         buttonText="글 등록하기"
       />

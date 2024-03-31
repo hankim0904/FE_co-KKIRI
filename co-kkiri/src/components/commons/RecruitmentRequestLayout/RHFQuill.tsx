@@ -1,9 +1,5 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import LinkInput from "./LinkInput";
-import DESIGN_TOKEN from "@/styles/tokens";
-import { styled } from "styled-components";
 import QuillEditor from "../ReactQuill";
-import { TitleInput } from "./RecruitLayout.styled";
 
 interface REFQuillProps<ControlType extends FieldValues> {
   formFieldName: Path<ControlType>;

@@ -1,7 +1,6 @@
 import { Controller, Control, FieldValues, Path } from "react-hook-form";
 import { Option } from "./PositionChips";
 import PositionChips from "./PositionChips";
-import DESIGN_TOKEN from "@/styles/tokens";
 
 interface PHFPosition<ControlType extends FieldValues> {
   positionCategory: Option[];

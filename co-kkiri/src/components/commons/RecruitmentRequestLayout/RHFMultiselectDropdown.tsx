@@ -1,5 +1,4 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import StacksPopover from "../StackPopover";
 import MultiselectDropdown from "../DropDowns/StackMultiselectDropdown";
 
 interface RHFStackPopoverProps<ControlType extends FieldValues> {

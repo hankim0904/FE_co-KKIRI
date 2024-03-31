@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 
 interface StudyProjectRadioButtonProp {
   selectedValue: string;
-  onChang: (value: string) => void;
+  onChange: (value: string) => void;
 }
 
 export default function StudyProjectRadioButton({ selectedValue, onChange }: StudyProjectRadioButtonProp) {
@@ -14,8 +14,8 @@ export default function StudyProjectRadioButton({ selectedValue, onChange }: Stu
         <RadioButton
           defaultChecked={selectedValue === "STUDY" ? true : false}
           value="STUDY"
-          onClick={(value) => {
-            onChange(value);
+          onClick={() => {
+            onChange("STUDY");
           }}>
           <div>스터디</div>
         </RadioButton>
@@ -24,8 +24,8 @@ export default function StudyProjectRadioButton({ selectedValue, onChange }: Stu
         <RadioButton
           defaultChecked={selectedValue === "PROJECT" ? true : false}
           value="PROJECT"
-          onClick={(value) => {
-            onChange(value);
+          onClick={() => {
+            onChange("PROJECT");
           }}>
           <div>프로젝트</div>
         </RadioButton>

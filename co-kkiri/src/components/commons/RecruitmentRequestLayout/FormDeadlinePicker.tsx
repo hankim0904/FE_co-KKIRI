@@ -3,7 +3,7 @@ import DeadlineDropdown from "../DropDowns/DeadlineDropdown/DeadlineDropdown";
 import { FormFieldProps } from "../Form/FormElement";
 import DESIGN_TOKEN from "@/styles/tokens";
 
-interface FormDeadlinePicker extends FormFieldProps<Date | undefined> {}
+interface FormDeadlinePicker extends FormFieldProps<string> {}
 
 export default function FormDeadlinePicker({ onChange, value, isError, helperText }: FormDeadlinePicker) {
   return (

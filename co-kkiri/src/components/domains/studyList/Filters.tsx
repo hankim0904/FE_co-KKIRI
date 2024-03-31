@@ -2,13 +2,13 @@ import styled from "styled-components";
 import FilterDropdown from "@/components/commons/DropDowns/FilterDropdown";
 import SortDropdown from "@/components/commons/DropDowns/SortDropdown";
 import DESIGN_TOKEN from "@/styles/tokens";
-import { Option } from "@/components/commons/Form/RHFDropdown";
+import { Option } from "@/components/commons/RecruitmentRequestLayout/PositionChips";
 import { DROPDOWN_FILTER_INFO } from "@/constants/dropDown";
-import { SelectedFilter } from "@/pages/StudyList";
 import StacksPopover from "@/components/commons/StackPopover";
+import { listPageSelectedFilter } from "@/types/categoryAndFilterTypes";
 
 interface FiltersProps {
-  selectedFilter: SelectedFilter["stacks"];
+  selectedFilter: listPageSelectedFilter;
   handleStacksChange: (stacks: string[]) => void;
   handlePositionChange: (positions: string) => void;
   handleProgressWayChange: (progressWay: string) => void;
@@ -45,11 +45,26 @@ export default function Filters({
   return (
     <Container>
       <FilterWrapper>
-        <StacksPopover stacks={selectedFilter} onStacksChange={(stacks) => handleStacksChange(stacks)} />
-        <FilterDropdown onSelectFilter={onSelectPosition} placeholder={"포지션"} options={position} />
-        <FilterDropdown onSelectFilter={onSelectProgressWay} placeholder={"진행 방식"} options={progressWay} />
+        <StacksPopover stacks={selectedFilter.stacks} onStacksChange={(stacks) => handleStacksChange(stacks)} />
+        <FilterDropdown
+          currentOption={selectedFilter.position}
+          onSelectFilter={onSelectPosition}
+          placeholder={"포지션"}
+          options={position}
+        />
+        <FilterDropdown
+          currentOption={selectedFilter.progressWay}
+          onSelectFilter={onSelectProgressWay}
+          placeholder={"진행 방식"}
+          options={progressWay}
+        />
       </FilterWrapper>
-      <SortDropdown handleSortChange={onSelectSortBy} placeholder={"최신순"} options={sort} />
+      <SortDropdown
+        currentOption={selectedFilter.sortBy}
+        handleSortChange={onSelectSortBy}
+        placeholder={"최신순"}
+        options={sort}
+      />
     </Container>
   );
 }

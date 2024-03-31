@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CategoryStudyStatus } from "@/types/categoryTypes";
+import { CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
 
 interface MyStudyState {
   currentCategory: CategoryStudyStatus;

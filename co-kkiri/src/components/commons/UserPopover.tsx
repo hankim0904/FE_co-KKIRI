@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { DROPDOWN_INFO } from "@/constants/dropDown";
 import DESIGN_TOKEN from "@/styles/tokens";
 import styled from "styled-components";
+import { MyStudyCondition, useFilterSetting } from "@/hooks/useFilterSetting";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/lib/api/auth";
 import { useUserInfoStore } from "@/stores/userInfoStore";
@@ -13,6 +14,7 @@ interface UserPopoverProps {
 
 export default function UserPopover({ isPopoverOpen, handleSelectOption }: UserPopoverProps) {
   const { popover } = DROPDOWN_INFO;
+  const { getFilterAction } = useFilterSetting();
   const navigate = useNavigate();
   const { resetUserInfo } = useUserInfoStore();
 
@@ -34,13 +36,15 @@ export default function UserPopover({ isPopoverOpen, handleSelectOption }: UserP
   return (
     <Container $isPopoverOpen={isPopoverOpen}>
       <Box>
-        {popover.map((options) =>
-          options.path ? (
-            <Link to={options.path} key={options.option}>
-              <Option
-                onClick={() => {
-                  handleSelectOption(options.option);
-                }}>
+        {popover.map((options) => (
+          <Link to={options.path} key={options.option}>
+            <Option
+              onClick={() => {
+                handleSelectOption(options.option);
+                if (options.filter) {
+                  getFilterAction("myStudy", options.filter as MyStudyCondition)();
+                }
+              }}>
                 {options.option}
               </Option>
             </Link>

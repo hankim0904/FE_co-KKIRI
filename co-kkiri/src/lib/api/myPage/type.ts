@@ -1,4 +1,4 @@
-import { CategoryList } from "@/types/categoryTypes";
+import { CategoryList } from "@/types/categoryAndFilterTypes";
 import { PageMeta, PaginationOptions } from "../pageMetaType";
 
 // 마이 페이지 유저 정보

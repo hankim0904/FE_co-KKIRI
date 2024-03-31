@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
 
@@ -14,14 +13,15 @@ interface Image {
 interface BannerProps {
   image: Image;
   path: string;
+  onClick?: () => void;
 }
 
-export default function Banner({ image, path }: BannerProps) {
+export default function Banner({ image, path, onClick }: BannerProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
 
   return (
     <Link to={path}>
-      <Background $isSidebarOpenNarrow={isSidebarOpenNarrow}>
+      <Background $isSidebarOpenNarrow={isSidebarOpenNarrow} onClick={onClick}>
         <img src={image.src} alt={image.alt} />
       </Background>
     </Link>

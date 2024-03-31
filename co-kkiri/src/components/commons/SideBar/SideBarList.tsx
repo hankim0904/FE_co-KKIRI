@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import useSideBarStore from "@/stores/sideBarStore";
 import { useWindowSize } from "usehooks-ts";
 import Footer from "../Footer";
+import { useFilterSetting } from "@/hooks/useFilterSetting";
+import { listPageInitialFilter } from "@/constants/categoriesAndFilters";
 
 interface SideBarListProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -17,11 +19,17 @@ export default function SideBarList({ onClick }: SideBarListProps) {
   const isTabletOrMobile = screenWidth < 1200;
 
   const toggleSideBar = useSideBarStore((state) => state.toggleSideBar);
+  const { getFilterAction } = useFilterSetting();
 
   const toggleSideBarInTabletOrMobile = () => {
     if (isTabletOrMobile) {
       toggleSideBar();
     }
+  };
+
+  const handleStudyListClick = () => {
+    toggleSideBarInTabletOrMobile();
+    getFilterAction("studyList", { category: "ALL", filters: listPageInitialFilter })();
   };
 
   return (
@@ -34,7 +42,7 @@ export default function SideBarList({ onClick }: SideBarListProps) {
           <Link to={HOME_PATH} onClick={toggleSideBarInTabletOrMobile}>
             <S.Category>홈</S.Category>
           </Link>
-          <Link to={STUDY_LIST_PATH} onClick={toggleSideBarInTabletOrMobile}>
+          <Link to={STUDY_LIST_PATH} onClick={handleStudyListClick}>
             <S.Category>스터디/프로젝트 찾기</S.Category>
           </Link>
           <Link to={SCOUT} onClick={toggleSideBarInTabletOrMobile}>

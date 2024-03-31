@@ -39,11 +39,11 @@ export default function Home() {
     <Container>
       <Banners />
       <Box>
-        {Object.entries(HOT_AND_NEW_LIST).map(([key, { title, path }]) => (
+        {Object.entries(HOT_AND_NEW_LIST).map(([key, { title, filter }]) => (
           <HotAndNewSection
             key={key}
             category={title}
-            path={path}
+            filter={filter}
             cardDataList={homeCardList[key as keyof HomeCardListType]}
           />
         ))}

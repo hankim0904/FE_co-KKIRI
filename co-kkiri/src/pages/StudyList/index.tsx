@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import * as S from "./styled";
 import FilterList from "@/components/commons/FilterList";
 import SearchInput from "@/components/commons/SearchInput";
@@ -6,8 +5,8 @@ import Filters from "@/components/domains/studyList/Filters";
 import Cards from "@/components/commons/Cards";
 import Pagination from "@/components/commons/Pagination";
 import CreatePost from "@/components/commons/FloatingButton/CreatePost";
-import { CategoryListFilter, categoryListFilter } from "@/constants/categories";
-import { CategoryList } from "@/types/categoryTypes";
+import { CategoryListFilter, categoryListFilter } from "@/constants/categoriesAndFilters";
+import { CategoryList } from "@/types/categoryAndFilterTypes";
 import { getFilterKey } from "@/utils/objectUtils";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getPostList } from "@/lib/api/post";
@@ -15,24 +14,11 @@ import useStudyListStore from "@/stores/studyListStore";
 import { useDebounceValue } from "usehooks-ts";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 
-export interface SelectedFilter {
-  stacks: string[];
-  position: string;
-  progressWay: string;
-  sortBy: string;
-}
-
 export default function StudyList() {
   const isSidebarOpenNarrow = useResponsiveSidebar();
-  const { currentCategory, setCurrentCategory } = useStudyListStore();
-  const [selectedFilter, setSelectedFilter] = useState<SelectedFilter>({
-    stacks: [],
-    position: "",
-    progressWay: "",
-    sortBy: "LATEST",
-  });
+  const { currentCategory, setCurrentCategory, selectedFilter, setSelectedFilter, currentPage, setCurrentPage } =
+    useStudyListStore();
   const [searchTitle, setSearchTitle] = useDebounceValue("", 500);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, error, isLoading } = useQuery({
     queryKey: [
@@ -64,13 +50,13 @@ export default function StudyList() {
 
   const list = data?.data || [];
 
-  const handleStacksChange = (stacks: string[]) => setSelectedFilter((prev) => ({ ...prev, stacks }));
+  const handleStacksChange = (stacks: string[]) => setSelectedFilter({ ...selectedFilter, stacks });
 
-  const handlePositionChange = (position: string) => setSelectedFilter((prev) => ({ ...prev, position }));
+  const handlePositionChange = (position: string) => setSelectedFilter({ ...selectedFilter, position });
 
-  const handleProgressWayChange = (progressWay: string) => setSelectedFilter((prev) => ({ ...prev, progressWay }));
+  const handleProgressWayChange = (progressWay: string) => setSelectedFilter({ ...selectedFilter, progressWay });
 
-  const handleSortByChange = (sortBy: string) => setSelectedFilter((prev) => ({ ...prev, sortBy }));
+  const handleSortByChange = (sortBy: string) => setSelectedFilter({ ...selectedFilter, sortBy });
 
   const handleTitleChange = (title: string) => setSearchTitle(title);
 
@@ -91,10 +77,6 @@ export default function StudyList() {
 
   const totalPage = data?.meta.pageCount || NaN;
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [currentCategory]);
-
   return (
     <S.Container>
       <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
@@ -108,7 +90,7 @@ export default function StudyList() {
           <SearchInput placeholder="제목을 검색해보세요!" handleValueChange={handleTitleChange} />
         </S.CategoryWrapper>
         <Filters
-          selectedFilter={selectedFilter.stacks}
+          selectedFilter={selectedFilter}
           handleStacksChange={handleStacksChange}
           handlePositionChange={handlePositionChange}
           handleProgressWayChange={handleProgressWayChange}

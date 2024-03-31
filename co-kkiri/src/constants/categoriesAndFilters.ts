@@ -1,4 +1,4 @@
-import { CategoryList, CategoryStudyStatus } from "@/types/categoryTypes";
+import { CategoryList, CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
 
 export type CategoryListFilter = "ALL" | CategoryList;
 
@@ -13,4 +13,11 @@ export const categoryStudyStatusFilter: { [key in CategoryStudyStatus]: string }
   RECRUITING: "모집중",
   ON_GOING: "진행중",
   COMPLETED: "완료",
+};
+
+export const listPageInitialFilter = {
+  stacks: [],
+  position: "",
+  progressWay: "",
+  sortBy: "LATEST",
 };

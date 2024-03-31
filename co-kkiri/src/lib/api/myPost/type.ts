@@ -1,4 +1,4 @@
-import { CategoryList } from "@/types/categoryTypes";
+import { CategoryList } from "@/types/categoryAndFilterTypes";
 import { PageMeta } from "../pageMetaType";
 
 type MyAppliedPost = {

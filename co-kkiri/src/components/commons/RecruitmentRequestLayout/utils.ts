@@ -1,5 +1,5 @@
 import { RecruitApiRequestDto } from "@/lib/api/post/type";
-import { CategoryList } from "@/types/categoryTypes";
+import { CategoryList } from "@/types/categoryAndFilterTypes";
 import { FieldErrors, FieldValues } from "react-hook-form";
 
 // handleSubmit 조건 처리

@@ -1,4 +1,4 @@
-import { CategoryList } from "./categoryTypes";
+import { CategoryList } from "./categoryAndFilterTypes";
 
 export interface RecruitmentRequest {
   type: CategoryList;

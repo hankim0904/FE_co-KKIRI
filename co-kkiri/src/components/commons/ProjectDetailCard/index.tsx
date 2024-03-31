@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ProjectDetailTable from "./ProjectDetailTable";
 import { ProjectDetailConfig, ProjectDetailContentType } from "./types";
 import ProjectDetailRow from "./ProjectDetailRow";
-import { CategoryList } from "@/types/categoryTypes";
+import { CategoryList } from "@/types/categoryAndFilterTypes";
 
 interface ProjectDetailCardProps extends ProjectDetailContentType {
   type?: "mystudy";

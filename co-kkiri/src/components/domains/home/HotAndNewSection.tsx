@@ -5,21 +5,24 @@ import More from "./More";
 import Cards from "./Cards";
 import { ListApiResponseDto } from "@/lib/api/post/type";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
+import { Filter, Title } from "@/constants/hotAndNewList";
+import { useFilterSetting } from "@/hooks/useFilterSetting";
 
 interface CardsProps {
-  category: string;
-  path: string;
+  category: Title;
+  filter: Filter;
   cardDataList: ListApiResponseDto["data"];
 }
 
-export default function HotAndNewSection({ category, path, cardDataList }: CardsProps) {
+export default function HotAndNewSection({ category, filter, cardDataList }: CardsProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
+  const { getFilterAction } = useFilterSetting();
 
   return (
     <Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
       <Wrapper>
         <h2>{category}</h2>
-        <More path={path} />
+        <More onClick={getFilterAction("studyList", filter)} />
       </Wrapper>
       <Cards cardDataList={cardDataList} />
     </Box>

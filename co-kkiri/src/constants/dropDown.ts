@@ -180,7 +180,7 @@ export const DROPDOWN_INFO = {
   },
 
   popover: [
-    { option: "나의 스터디", path: MY_STUDY },
+    { option: "나의 스터디", path: MY_STUDY, filter: { category: "APPLIED" } },
     { option: "마이페이지", path: MY_PAGE },
     { option: "로그아웃", path: "" },
   ],

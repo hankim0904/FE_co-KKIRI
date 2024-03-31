@@ -1,5 +1,5 @@
-import { CategoryListFilter } from "@/constants/categories";
-import { CategoryList } from "@/types/categoryTypes";
+import { CategoryListFilter } from "@/constants/categoriesAndFilters";
+import { CategoryList } from "@/types/categoryAndFilterTypes";
 import { PageMeta, PaginationOptions } from "../pageMetaType";
 
 /**스터디모집하기, 수정하기 (연락 링크 추가 예정)*/

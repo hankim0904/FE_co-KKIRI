@@ -6,8 +6,8 @@ import Cards from "@/components/commons/Cards";
 import ScrollToTop from "@/components/commons/FloatingButton/ScrollToTop";
 
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
-import { categoryStudyStatusFilter } from "@/constants/categories";
-import { CategoryStudyStatus } from "@/types/categoryTypes";
+import { categoryStudyStatusFilter } from "@/constants/categoriesAndFilters";
+import { CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
 import { getFilterKey } from "@/utils/objectUtils";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchList } from "@/utils/myStudyPageFetchList";

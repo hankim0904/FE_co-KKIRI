@@ -1,4 +1,4 @@
-import { CategoryList } from "@/types/categoryTypes";
+import { CategoryList } from "@/types/categoryAndFilterTypes";
 
 //홈 페이지 카드 리스트
 export type MainPostInfo = {

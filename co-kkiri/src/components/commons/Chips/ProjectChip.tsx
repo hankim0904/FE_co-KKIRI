@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import DefaultChip from "./DefaultChip";
 import { VariantStyle } from "@/types/styledUtilTypes";
-import { CategoryList } from "@/types/categoryTypes";
+import { CategoryList } from "@/types/categoryAndFilterTypes";
 
 interface ProjectChipProps {
   label: CategoryList;

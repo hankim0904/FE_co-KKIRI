@@ -1,4 +1,4 @@
-import { imageAddress, postAddress } from "../address";
+import { postAddress } from "../address";
 import { apiRequest } from "../axios";
 import {
   AppliedMemberListApiRequestDto,
@@ -71,6 +71,3 @@ export const studyStart = (postId: number) => apiRequest("patch", postAddress.st
 
 /** 스터디 완료하기(PROGRESS_END로 변경됨)*/
 export const studyEnd = (postId: number) => apiRequest("patch", postAddress.studyEnd(postId));
-
-/** 이미지 url 가져오기 */
-export const getImageUploadUrl = () => apiRequest("post", imageAddress);

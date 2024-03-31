@@ -30,9 +30,8 @@ export default function FileSelector({ name, type, isMultiple, onChange, icon, c
     }
   };
 
-
   return (
-    <Container className={className} onClick={onClickHandler}>
+    <Container className={className} onClick={onClickHandler} type="button">
       <FileInput
         name={name}
         type="file"

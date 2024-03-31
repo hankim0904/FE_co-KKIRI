@@ -13,15 +13,17 @@ interface FormElementProps<ValueType> {
   label: string;
   isEssential?: boolean;
   FormFieldComponent: React.ReactElement<FormFieldProps<ValueType>>;
+  className?: string;
 }
 
 export default function FormElement<ValueType>({
   label,
   isEssential,
   FormFieldComponent: InputComponent,
+  className,
 }: FormElementProps<ValueType>) {
   return (
-    <Container>
+    <Container className={className}>
       <Label label={label} isEssential={isEssential} />
       {InputComponent}
     </Container>

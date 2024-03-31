@@ -33,6 +33,8 @@ export function isValidHexColor(color: string): boolean {
  * console.log(isEmptyValue(null)); // true
  */
 export function isEmptyValue<T>(value: T): boolean {
+  if (value === undefined || value === null) return true;
+
   // 객체나 배열이 비어 있는지 확인
   if (typeof value === "object" && (value === null || Object.keys(value).length === 0)) {
     return true;

@@ -2,13 +2,15 @@ import DESIGN_TOKEN from "@/styles/tokens";
 import DefaultModalLayout from "../ModalLayout";
 import EditUserProfileModalLayout from "./EditUserProfileModalLayout";
 import styled from "styled-components";
+import { useUserInfoMutation } from "@/hooks/useMutation/useUserInfoMutation";
 
 interface EditUserProfileModalProps {
   onClose: () => void;
 }
 
 export default function EditUserProfileModal({ onClose }: EditUserProfileModalProps) {
-    
+  const userInfoMutation = useUserInfoMutation();
+
   return (
     <ModalLayout
       desktopWidth={708}
@@ -17,8 +19,9 @@ export default function EditUserProfileModal({ onClose }: EditUserProfileModalPr
         onClose();
       }}>
       <EditUserProfileModalLayout
-        onSubmit={() => {
-          /*//TODO: ReactQuery*/
+        onSubmit={(data) => {
+          userInfoMutation(data);
+          onClose();
         }}
       />
     </ModalLayout>

@@ -129,8 +129,3 @@ export type InviteMemberRequestDto = {
   memberId: number;
   message: string;
 };
-
-/**이미지 업로드하기 */
-export type ImageUploadApiResponseDto = {
-  uploadUrl: string;
-};

@@ -11,9 +11,15 @@ interface MultiselectDropdownProps {
   selectedOptions: string[];
   limit?: number;
   onSelectChange: (selectedOptions: string[]) => void;
+  isError?: boolean;
 }
 
-export default function MultiselectDropdown({ selectedOptions, limit, onSelectChange }: MultiselectDropdownProps) {
+export default function MultiselectDropdown({
+  selectedOptions,
+  limit,
+  onSelectChange,
+  isError,
+}: MultiselectDropdownProps) {
   const { isOpen, openToggle, ref } = useOpenToggle();
   const dropButtonRef = useRef<HTMLButtonElement>(null);
   const { height } = useResizeObserver({
@@ -40,6 +46,7 @@ export default function MultiselectDropdown({ selectedOptions, limit, onSelectCh
         $iconType="default"
         $isSelected={isOpen}
         dropButtonRef={dropButtonRef}
+        isError={isError}
       />
       {isOpen && (
         <SelectLayout

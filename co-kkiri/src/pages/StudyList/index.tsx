@@ -13,6 +13,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getPostList } from "@/lib/api/post";
 import useStudyListStore from "@/stores/studyListStore";
 import { useDebounceValue } from "usehooks-ts";
+import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 
 export interface SelectedFilter {
   stacks: string[];
@@ -22,6 +23,7 @@ export interface SelectedFilter {
 }
 
 export default function StudyList() {
+  const isSidebarOpenNarrow = useResponsiveSidebar();
   const { currentCategory, setCurrentCategory } = useStudyListStore();
   const [selectedFilter, setSelectedFilter] = useState<SelectedFilter>({
     stacks: [],
@@ -95,7 +97,7 @@ export default function StudyList() {
 
   return (
     <S.Container>
-      <S.Box>
+      <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
         <S.CategoryWrapper>
           <FilterList
             type="category"

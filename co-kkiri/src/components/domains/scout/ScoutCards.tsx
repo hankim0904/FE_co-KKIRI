@@ -11,9 +11,8 @@ interface ScoutCardsProps {
 
 export default function ScoutCards({ userProfiles }: ScoutCardsProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
-
   return (
-    <Container $isSidebarOpenNarrow={isSidebarOpenNarrow}>
+    <Container>
       {userProfiles.length === 0 ? (
         <NoResultText text="검색 결과가 없어요." padding={120} color="black" />
       ) : (
@@ -38,10 +37,10 @@ export default function ScoutCards({ userProfiles }: ScoutCardsProps) {
 
 const { mediaQueries } = DESIGN_TOKEN;
 
-const Container = styled.div<{ $isSidebarOpenNarrow: boolean }>`
+const Container = styled.div`
   margin-top: 4rem;
   margin-bottom: 5.5rem;
-  ${({ $isSidebarOpenNarrow }) => $isSidebarOpenNarrow && `width: 76.8rem;`}
+  width: 100%;
 
   ${mediaQueries.tablet} {
     margin-top: 3rem;

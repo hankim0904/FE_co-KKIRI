@@ -13,8 +13,6 @@ export const Container = styled.div`
   padding-top: 2.8rem;
   padding-bottom: 9rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
 
   ${mediaQueries.tablet} {
@@ -27,12 +25,11 @@ export const Container = styled.div`
   }
 `;
 
-export const Box = styled.div`
+export const Box = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 112rem;
+  justify-content: flex-end;
+  width: ${({ $isSidebarOpenNarrow }) => ($isSidebarOpenNarrow ? "91rem" : "112rem")};
 
   ${mediaQueries.tablet} {
     width: 70.8rem;
@@ -48,9 +45,8 @@ export const TitleWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2.8rem;
-  width: 100%;
 
-  ${mediaQueries.mobile} {
+  ${mediaQueries.tablet} {
     margin-bottom: 1.8rem;
   }
 
@@ -65,5 +61,5 @@ export const TitleWrapper = styled.div`
 
 export const Title = styled.div`
   ${font20Bold}
-  color:${color.black[1]}
+  color:${color.black[1]};
 `;

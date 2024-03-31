@@ -3,7 +3,7 @@ import FilterDropdown from "@/components/commons/DropDowns/FilterDropdown";
 import StacksPopover from "@/components/commons/StackPopover";
 import { SelectedFilter } from "@/pages/Scout";
 import { DROPDOWN_FILTER_INFO } from "@/constants/dropDown";
-import { Option } from "@/components/commons/Form/RHFDropdown";
+import { Option } from "@/components/commons/RecruitmentRequestLayout/PositionChips";
 
 interface ScoutFiltersProps {
   selectedFilter: SelectedFilter;

@@ -7,6 +7,7 @@ import Pagination from "@/components/commons/Pagination";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getSearchedMemberProfile } from "@/lib/api/member";
 import { useDebounceValue } from "usehooks-ts";
+import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 
 export interface SelectedFilter {
   position: string;
@@ -14,6 +15,7 @@ export interface SelectedFilter {
 }
 
 export default function Scout() {
+  const isSidebarOpenNarrow = useResponsiveSidebar();
   const [selectedFilter, setSelectedFilter] = useState<SelectedFilter>({
     position: "",
     stacks: [],
@@ -61,7 +63,7 @@ export default function Scout() {
 
   return (
     <S.Container>
-      <S.Box>
+      <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
         <S.TitleWrapper>
           <S.Title>스카우트</S.Title>
           <SearchInput placeholder="멤버를 찾아보세요!" handleValueChange={handleNicknameChange} />

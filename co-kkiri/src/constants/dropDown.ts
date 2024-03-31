@@ -184,4 +184,8 @@ export const DROPDOWN_INFO = {
     { option: "마이페이지", path: MY_PAGE },
     { option: "로그아웃", path: "" },
   ],
+  share: [
+    { type: "URL", option: "링크 공유하기" },
+    { type: "KAKAO", option: "카카오톡 공유하기" },
+  ],
 };

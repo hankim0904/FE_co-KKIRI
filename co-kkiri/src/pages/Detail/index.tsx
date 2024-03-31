@@ -37,12 +37,14 @@ export default function Detail() {
 
   const { postDetails, postApplyStatus } = detailData;
   const teamInviteId = postDetails.teamInviteId ?? NaN;
+  const postType = postDetails.type === "PROJECT" ? "프로젝트" : "스터디";
+  const kakaoShareInfo = { title: postDetails.postTitle, name: postDetails.userNickname, postType };
 
   return (
     <S.Container>
       <S.Box>
         <S.GoBackButton />
-        <S.ShareAndScrapButton isScraped={postDetails.isScraped} postId={postId} />
+        <S.ShareAndScrapButton isScraped={postDetails.isScraped} postId={postId} kakaoShareInfo={kakaoShareInfo} />
         <S.PostSection postDetails={postDetails} postApplyStatus={postApplyStatus} />
         <S.DetailCardSection cardRef={cardRef} postDetails={postDetails} />
         <S.CommentsSection postId={postId} />

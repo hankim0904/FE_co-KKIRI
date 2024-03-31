@@ -16,9 +16,10 @@ import { memberProfile } from "@/constants/initialDatas";
 
 interface UserProfileModalProps {
   userId: number;
+  onClose: () => void;
 }
 
-export default function UserProfileModal({ userId }: UserProfileModalProps) {
+export default function UserProfileModal({ userId, onClose }: UserProfileModalProps) {
   const queryClient = useQueryClient();
 
   const { data } = useQuery<MemberProfileApiResponseDto>({
@@ -33,7 +34,7 @@ export default function UserProfileModal({ userId }: UserProfileModalProps) {
 
   const { userId: myId } = useUserInfoStore();
   return (
-    <ModalLayout desktopWidth={430} tabletWidth={430} mobileWidth={320} onClose={() => {}}>
+    <ModalLayout desktopWidth={430} tabletWidth={430} mobileWidth={320} onClose={onClose}>
       <UserProfileCardLayout {...data} score={data.gauge} />
       <Divider />
       {/* <CollapseSection title="유저가 받은 태그" isCollapsed={isOpen} onClick={() => setIsOpen(!isOpen)}>

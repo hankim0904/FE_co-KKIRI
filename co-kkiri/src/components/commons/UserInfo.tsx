@@ -3,6 +3,7 @@ import DESIGN_TOKEN from "@/styles/tokens";
 import { useState } from "react";
 import { styled } from "styled-components";
 import UserProfileModal from "../modals/UserProfileModal";
+import useOpenToggle from "@/hooks/useOpenToggle";
 
 interface UserInfoProps {
   user: {
@@ -14,21 +15,25 @@ interface UserInfoProps {
 }
 
 export default function UserInfo({ user, nicknameBold }: UserInfoProps) {
-  const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState<boolean>(false);
+  // const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState<boolean>(false);
 
-  const handleUserProfileModalOpen = () => {
-    setIsUserProfileModalOpen(!isUserProfileModalOpen);
-  };
+  // const handleUserProfileModalOpen = () => {
+  //   setIsUserProfileModalOpen(!isUserProfileModalOpen);
+  // };
+
+  const { isOpen: isUserProfileModalOpen, openToggle } = useOpenToggle();
   return (
-    <UserInfoWrapper onClick={handleUserProfileModalOpen}>
-      {isUserProfileModalOpen && user.id && <UserProfileModal userId={user.id} />}
-      {user.profileImageUrl ? (
-        <ProfileImg src={user.profileImageUrl} alt="프로필 사진" />
-      ) : (
-        <img src={IMAGES.profileImg.src} alt={IMAGES.profileImg.alt} />
-      )}
-      <Nickname $bold={nicknameBold}>{user.nickname}</Nickname>
-    </UserInfoWrapper>
+    <>
+      {isUserProfileModalOpen && user.id && <UserProfileModal userId={user.id} onClose={openToggle} />}
+      <UserInfoWrapper onClick={openToggle}>
+        {user.profileImageUrl ? (
+          <ProfileImg src={user.profileImageUrl} alt="프로필 사진" />
+        ) : (
+          <img src={IMAGES.profileImg.src} alt={IMAGES.profileImg.alt} />
+        )}
+        <Nickname $bold={nicknameBold}>{user.nickname}</Nickname>
+      </UserInfoWrapper>
+    </>
   );
 }
 

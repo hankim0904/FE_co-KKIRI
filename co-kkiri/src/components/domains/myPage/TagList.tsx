@@ -2,12 +2,18 @@ import DESIGN_TOKEN from "@/styles/tokens";
 import SectionTitle from "../manage/SectionTitle";
 import styled from "styled-components";
 import NoResultText from "@/components/commons/NoResultText";
+import { recievedReviews } from "@/lib/mock/mypage/review";
+import EvaluationChip from "@/components/commons/Chips/EvaluationChip";
 
 export default function TagList() {
   return (
     <Container>
       <SectionTitle title="내가 받은 태그" lineLength="mypage" />
-      <NoResultText text="아직 받은 태그가 없어요." padding={60} color="gray" />
+      {/* // api 명세가 어떻게 나오는지 보고 해야할 것 같다 */}
+      {/* {recievedReviews.compliments.map((tags) => (
+        <EvaluationChip label={tags.informative} evaluationWay="compliments" />
+      ))} */}
+      <NoResultText text="Coming Soon..." padding={60} color="gray" />
     </Container>
   );
 }

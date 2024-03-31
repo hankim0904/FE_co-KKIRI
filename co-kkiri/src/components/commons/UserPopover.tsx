@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DROPDOWN_INFO } from "@/constants/dropDown";
 import DESIGN_TOKEN from "@/styles/tokens";
 import styled from "styled-components";
+import { useMutation } from "@tanstack/react-query";
+import { logout } from "@/lib/api/auth";
+import { useUserInfoStore } from "@/stores/userInfoStore";
 
 interface UserPopoverProps {
   isPopoverOpen: boolean;
@@ -10,20 +13,43 @@ interface UserPopoverProps {
 
 export default function UserPopover({ isPopoverOpen, handleSelectOption }: UserPopoverProps) {
   const { popover } = DROPDOWN_INFO;
+  const navigate = useNavigate();
+  const { resetUserInfo } = useUserInfoStore();
+
+  const logoutMutation = useMutation({
+    mutationFn: () => logout(),
+    onSuccess: () => {
+      navigate("/");
+      resetUserInfo();
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
 
   return (
     <Container $isPopoverOpen={isPopoverOpen}>
       <Box>
-        {popover.map((options) => (
-          <Link to={options.path} key={options.option}>
-            <Option
-              onClick={() => {
-                handleSelectOption(options.option);
-              }}>
+        {popover.map((options) =>
+          options.path ? (
+            <Link to={options.path} key={options.option}>
+              <Option
+                onClick={() => {
+                  handleSelectOption(options.option);
+                }}>
+                {options.option}
+              </Option>
+            </Link>
+          ) : (
+            <Option key={options.option} onClick={handleLogout}>
               {options.option}
             </Option>
-          </Link>
-        ))}
+          ),
+        )}
       </Box>
     </Container>
   );

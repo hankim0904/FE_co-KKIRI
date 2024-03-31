@@ -8,3 +8,5 @@ export const googleLogin = (code: string) => apiRequest("post", google.redirect(
 
 export const getUserInfoSummary = (): Promise<UserInfoSummaryResponseDto> =>
   apiRequest("get", memberAddress.userInfoSummary);
+
+export const logout = () => apiRequest("post", authAddress.logout);

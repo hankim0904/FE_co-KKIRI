@@ -3,10 +3,6 @@ import { UserInfoApiResponseDto, UserInfoEditApiRequestDto } from "@/lib/api/myP
 import { SetterFromState } from "@/types/objectUtilTypes";
 import { create } from "zustand";
 
-interface defaultUserInfo {
-  defaultUserInfo: UserInfoEditApiRequestDto;
-}
-
 interface UserInfoState {
   userId: number | null;
   userInfo: UserInfoEditApiRequestDto | null;
@@ -18,30 +14,26 @@ type UserInfoSetter = SetterFromState<UserInfoState>;
 
 type UserInfoActions = {
   fetchUserInfo: () => Promise<void>;
+  resetUserInfo: () => void;
 };
 
-type UserInfoStore = defaultUserInfo & UserInfoState & UserInfoSetter & UserInfoActions;
+type UserInfoStore = UserInfoState & UserInfoSetter & UserInfoActions;
 
-export const useUserInfoStore = create<UserInfoStore>((set) => ({
-  defaultUserInfo: {
-    nickname: "",
-    profileImageUrl: "",
-    position: "",
-    career: undefined,
-    introduce: "",
-    stack: [],
-    link: "",
-  },
+const initialState: UserInfoState = {
   userId: null,
-  profileImage: undefined,
   userInfo: null,
   isLoading: true,
   isVisible: false,
+};
+
+export const useUserInfoStore = create<UserInfoStore>((set) => ({
+  ...initialState,
 
   setUserId: (userId) => set({ userId }),
   setUserInfo: (userInfo) => set({ userInfo }),
   setIsLoading: (isLoading) => set({ isLoading }),
   setIsVisible: (isVisible) => set({ isVisible }),
+  resetUserInfo: () => set({ ...initialState }),
   fetchUserInfo: async () => {
     let userProfile: UserInfoApiResponseDto | null = null;
     try {

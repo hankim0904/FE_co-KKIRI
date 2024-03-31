@@ -9,6 +9,13 @@ export const authAddress = {
     //post
     redirect: (code: string) => `/auth/google/redirect?code=${code}`,
   },
+  github: {
+    //get
+    login: `${BASE_URL}/auth/github/login`,
+    //post
+    redirect: (code: string) => `/auth/github/redirect?code=${code}`,
+  },
+  logout: `/member/logout`,
 };
 
 export const postAddress = {

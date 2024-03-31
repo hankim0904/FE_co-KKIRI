@@ -36,15 +36,16 @@ export default function UserPopover({ isPopoverOpen, handleSelectOption }: UserP
   return (
     <Container $isPopoverOpen={isPopoverOpen}>
       <Box>
-        {popover.map((options) => (
-          <Link to={options.path} key={options.option}>
-            <Option
-              onClick={() => {
-                handleSelectOption(options.option);
-                if (options.filter) {
-                  getFilterAction("myStudy", options.filter as MyStudyCondition)();
-                }
-              }}>
+        {popover.map((options) =>
+          options.path ? (
+            <Link to={options.path} key={options.option}>
+              <Option
+                onClick={() => {
+                  handleSelectOption(options.option);
+                  if (options.filter) {
+                    getFilterAction("myStudy", options.filter as MyStudyCondition)();
+                  }
+                }}>
                 {options.option}
               </Option>
             </Link>

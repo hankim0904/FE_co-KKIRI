@@ -12,7 +12,7 @@ import ScoutModal from "./ScoutModal";
 
 interface UserProfileModalProps {
   userId: number;
-  onScoutClick: () => void;
+  // onScoutClick: () => void;
   onClose: () => void;
 }
 

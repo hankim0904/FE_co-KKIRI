@@ -1,6 +1,5 @@
 import { IMAGES } from "@/constants/images";
 import DESIGN_TOKEN from "@/styles/tokens";
-import { useState } from "react";
 import { styled } from "styled-components";
 import UserProfileModal from "../modals/UserProfileModal";
 import useOpenToggle from "@/hooks/useOpenToggle";
@@ -12,20 +11,22 @@ interface UserInfoProps {
     profileImageUrl?: string;
   };
   nicknameBold?: boolean;
+  type?: "review";
 }
 
-export default function UserInfo({ user, nicknameBold }: UserInfoProps) {
-  // const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState<boolean>(false);
-
-  // const handleUserProfileModalOpen = () => {
-  //   setIsUserProfileModalOpen(!isUserProfileModalOpen);
-  // };
-
+export default function UserInfo({ user, nicknameBold, type }: UserInfoProps) {
   const { isOpen: isUserProfileModalOpen, openToggle } = useOpenToggle();
+
+  const handleToggle = () => {
+    if (type !== "review") {
+      openToggle();
+    }
+  };
+
   return (
     <>
       {isUserProfileModalOpen && user.id && <UserProfileModal userId={user.id} onClose={openToggle} />}
-      <UserInfoWrapper onClick={openToggle}>
+      <UserInfoWrapper onClick={handleToggle}>
         {user.profileImageUrl ? (
           <ProfileImg src={user.profileImageUrl} alt="프로필 사진" />
         ) : (

@@ -21,7 +21,7 @@ export default function EvaluationPart({ evaluationCategory, selectedChips, onCh
         <SelectPositionChip
           key={key}
           label={value}
-          isSelected={selectedChips.includes(key)}
+          isSelected={selectedChips?.includes(key)}
           onClick={() => {
             onChipClick(key);
           }}

@@ -1,6 +1,6 @@
 export const EVALUATION_TYPE = {
-  improvements: "이런 점은 좋았어요👍",
-  compliments: "이런 점은 아쉬웠어요😭",
+  compliments: "이런 점은 좋았어요👍",
+  improvements: "이런 점은 아쉬웠어요😭",
 };
 
 export const EVALUATION_COMMENT = {

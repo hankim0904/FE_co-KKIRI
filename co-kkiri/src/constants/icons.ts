@@ -33,6 +33,10 @@ import infoToast from "@/assets/icons/toastIcons/info.svg";
 import errorToast from "@/assets/icons/toastIcons/error.svg";
 import warnToast from "@/assets/icons/toastIcons/warn.svg";
 import successToast from "@/assets/icons/toastIcons/success.svg";
+import number1 from "@/assets/icons/number_1.svg";
+import number2 from "@/assets/icons/number_2.svg";
+import checked from "@/assets/icons/checked.svg";
+import unchecked from "@/assets/icons/unchecked.svg";
 import { Images } from "@/types/imageTypes";
 
 export const ICONS: Images = {
@@ -172,5 +176,21 @@ export const ICONS: Images = {
   successToast: {
     src: successToast,
     alt: "성공 토스트",
+  },
+  number1: {
+    src: number1,
+    alt: "1",
+  },
+  number2: {
+    src: number2,
+    alt: "2",
+  },
+  checked: {
+    src: checked,
+    alt: "선택",
+  },
+  unchecked: {
+    src: unchecked,
+    alt: "선택하지 않음",
   },
 };

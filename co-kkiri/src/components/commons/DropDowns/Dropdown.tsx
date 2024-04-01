@@ -2,7 +2,6 @@ import useOpenToggle from "@/hooks/useOpenToggle";
 import SquareDropButton from "./commons/SquareDropButton";
 import DropMenu from "./commons/DropMenu";
 import styled from "styled-components";
-import DESIGN_TOKEN from "@/styles/tokens";
 import { Option } from "../RecruitmentRequestLayout/PositionChips";
 
 interface DropdownProps {

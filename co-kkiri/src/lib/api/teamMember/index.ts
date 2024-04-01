@@ -1,6 +1,6 @@
-import { teamMemberAddress } from "../address";
+import { teamMemberAddress, teamAddress } from "../address";
 import { apiRequest } from "../axios";
-import { TeamMemberApiRequestDto, TeamMemberApiResponseDto } from "./type";
+import { InviteInfoApiResponseDto, TeamMemberApiRequestDto, TeamMemberApiResponseDto } from "./type";
 
 /** 현재 팀원 목록 가져오기 */
 // data 추가해야 함
@@ -15,3 +15,7 @@ export const rejectMember = (teamMemberId: number) => apiRequest("patch", teamMe
 
 /** 현재 팀원 삭제하기 */
 export const deleteTeamMember = (teamMemberId: number) => apiRequest("delete", teamMemberAddress.out(teamMemberId));
+
+/** 초대 요청 정보 조회하기  */
+export const getInviteInfo = (teamMemberId: number): Promise<InviteInfoApiResponseDto> =>
+  apiRequest("get", teamAddress.inviteInfo(teamMemberId));

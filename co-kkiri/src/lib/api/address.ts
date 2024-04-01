@@ -92,6 +92,8 @@ export const teamAddress = {
   accept: "/team/accept",
   //patch
   reject: "/team/reject",
+  //get
+  inviteInfo: (teamInviteId: number) => `/team/${teamInviteId}`,
 };
 
 export const myPostAddress = {

@@ -15,3 +15,15 @@ export type TeamMemberApiResponseDto = {
 };
 
 export type TeamMemberApiRequestDto = PaginationOptions;
+
+// 초대받은
+export interface InviteInfo {
+  sendMemberId: number;
+  postTitle: string;
+  message: string;
+  postId: number;
+  sendMemberNickname: string;
+  teamMemberId: number;
+}
+
+export type InviteInfoApiResponseDto = InviteInfo;

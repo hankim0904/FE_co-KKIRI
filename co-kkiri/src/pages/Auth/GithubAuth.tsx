@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-export default function GoogleAuth() {
+export default function GithubAuth() {
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
 
   useEffect(() => {
-    const message = { type: "googleOAuthSuccess", code: code };
+    const message = { type: "githubOAuthSuccess", code: code };
     window.opener.postMessage(message, import.meta.env.VITE_APP_URL);
     window.close();
   });

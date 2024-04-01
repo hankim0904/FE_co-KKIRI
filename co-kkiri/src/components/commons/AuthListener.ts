@@ -1,26 +1,36 @@
-import { useEffect } from "react";
-import { googleLogin } from "@/lib/api/auth";
+import { useCallback, useEffect } from "react";
+import { githubLogin, googleLogin } from "@/lib/api/auth";
 import useAuthModalToggleStore from "@/stores/authModalToggle";
 import { useUserInfoStore } from "@/stores/userInfoStore";
-import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AuthListener = () => {
   const setIsAuthModalOpen = useAuthModalToggleStore((state) => state.setIsAuthModalOpen);
   const fetchUserInfo = useUserInfoStore((state) => state.fetchUserInfo);
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const getAccessToken = async (code: string) => {
-    const response = await googleLogin(code);
-    // console.log(response); 리스폰스 확인용
+  const getGoogleAccessToken = async (code: string) => {
+    await googleLogin(code);
   };
+
+  const getGithubAccessToken = async (code: string) => {
+    await githubLogin(code);
+  };
+
+  const updateUserInfo = useCallback(async () => {
+    await fetchUserInfo();
+    setIsAuthModalOpen(false);
+    queryClient.invalidateQueries();
+  }, [fetchUserInfo, queryClient, setIsAuthModalOpen]);
 
   useEffect(() => {
     const handleMessage = async (event: MessageEvent) => {
-      if (event.data && event.data.type === "OAuthSuccess") {
-        await getAccessToken(event.data.code);
-        await fetchUserInfo();
-        setIsAuthModalOpen(false);
-        navigate(0);
+      if (event.data && event.data.type === "googleOAuthSuccess") {
+        await getGoogleAccessToken(event.data.code);
+        await updateUserInfo();
+      } else if (event.data && event.data.type === "githubOAuthSuccess") {
+        await getGithubAccessToken(event.data.code);
+        await updateUserInfo();
       }
     };
 
@@ -29,7 +39,7 @@ const AuthListener = () => {
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [fetchUserInfo, setIsAuthModalOpen]);
+  }, [fetchUserInfo, setIsAuthModalOpen, updateUserInfo]);
 
   return null;
 };

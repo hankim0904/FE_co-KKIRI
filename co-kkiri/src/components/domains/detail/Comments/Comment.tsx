@@ -5,11 +5,16 @@ import CommentTextarea from "@/components/domains/detail/Comments/CommentTextare
 import { createTimePassedMessage } from "@/utils/formatDate";
 import { CommentInfo } from "@/lib/api/comment/type";
 import useCommentMutation from "@/hooks/useMutation/useCommentMutation";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
 
 interface CommentProps {
   commentInfo: CommentInfo;
   postId: number;
 }
+
+const { serverError, unauthorized } = TOAST;
+
 /**
  * 댓글 정보(작성자 정보, 작성날짜, 댓글 본문, 댓글 작성자 확인)객체를 받는 댓글창 컴포넌트
  */
@@ -27,6 +32,7 @@ export default function Comment({ commentInfo, postId }: CommentProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState<string>(commentContent);
   const { editMutation, deleteMutation } = useCommentMutation(postId);
+  const pushToast = useToast();
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -40,12 +46,13 @@ export default function Comment({ commentInfo, postId }: CommentProps) {
         onSuccess: () => {
           setIsEditing(false);
         },
+        onError: () => pushToast(serverError.message, serverError.type),
       },
     );
   };
 
   const handleDeleteComment = () => {
-    deleteMutation.mutate(commentId);
+    deleteMutation.mutate(commentId, { onError: () => pushToast(serverError.message, serverError.type) });
   };
 
   return (

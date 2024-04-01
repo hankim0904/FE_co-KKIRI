@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as S from "./styled";
 import useComponentHeight from "@/hooks/useComponentHeight";
 import ScrollToTop from "@/components/commons/FloatingButton/ScrollToTop";
@@ -6,11 +6,33 @@ import { useQuery } from "@tanstack/react-query";
 import { getPostDetail } from "@/lib/api/post";
 import { useParams } from "react-router-dom";
 import { PostDetailApiResponseDto } from "@/lib/api/post/type";
+import usePostMutation from "@/hooks/useMutation/usePostMutation";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
+
+const { serverError } = TOAST;
 
 export default function Detail() {
   const cardRef = useRef<HTMLDivElement>(null);
   const { id } = useParams();
   const postId = Number(id);
+  const [viewCountIncreased, setViewCountIncreased] = useState(false);
+  const { increaseViewCountMutation } = usePostMutation();
+  const pushToast = useToast();
+
+  useEffect(() => {
+    if (postId) {
+      increaseViewCountMutation.mutate(postId, {
+        onSuccess: () => {
+          setViewCountIncreased(true);
+        },
+        onError: () => {
+          pushToast(serverError.message, serverError.type);
+        },
+      });
+    }
+  }, []);
+
   const {
     data: detailData,
     isPending,
@@ -22,6 +44,7 @@ export default function Detail() {
     retry: 0,
     staleTime: 60 * 1000,
     gcTime: 0,
+    enabled: viewCountIncreased,
   });
 
   const cardHeight = useComponentHeight<PostDetailApiResponseDto | undefined>(detailData, cardRef, 407);

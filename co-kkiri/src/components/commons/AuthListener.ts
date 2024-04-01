@@ -2,10 +2,12 @@ import { useEffect } from "react";
 import { googleLogin } from "@/lib/api/auth";
 import useAuthModalToggleStore from "@/stores/authModalToggle";
 import { useUserInfoStore } from "@/stores/userInfoStore";
+import { useNavigate } from "react-router-dom";
 
 const AuthListener = () => {
   const setIsAuthModalOpen = useAuthModalToggleStore((state) => state.setIsAuthModalOpen);
   const fetchUserInfo = useUserInfoStore((state) => state.fetchUserInfo);
+  const navigate = useNavigate();
 
   const getAccessToken = async (code: string) => {
     const response = await googleLogin(code);
@@ -18,6 +20,7 @@ const AuthListener = () => {
         await getAccessToken(event.data.code);
         await fetchUserInfo();
         setIsAuthModalOpen(false);
+        navigate(0);
       }
     };
 

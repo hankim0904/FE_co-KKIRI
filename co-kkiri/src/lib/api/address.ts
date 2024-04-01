@@ -43,6 +43,8 @@ export const postAddress = {
   recruitStart: (postId: number) => `/post/${postId}/recruit-start`, // 백엔드 확인 요망
   //post
   invite: "/post/invite",
+  //post
+  viewCountIncrease: (postId: number) => `/post/${postId}/view-count/increase`,
 };
 
 export const teamMemberAddress = {

@@ -3,12 +3,10 @@ import { apiRequest } from "../axios";
 import {
   AppliedMemberListApiRequestDto,
   AppliedMemberListApiResponseDto,
-  InviteMemberRequestDto,
   ListApiRequestDto,
   ListApiResponseDto,
   PostDetailApiResponseDto,
   RecruitApiRequestDto,
-  ScoutListApiResponseDto,
   StudyManagementApiResponseDto,
 } from "./type";
 
@@ -23,6 +21,9 @@ export const getPostList = (qs: ListApiRequestDto): Promise<ListApiResponseDto> 
 /** 스터디 상세 보기*/
 export const getPostDetail = (postId: number): Promise<PostDetailApiResponseDto> =>
   apiRequest("get", postAddress.postId(postId));
+
+/** 스터디 상세 조회수 증가*/
+export const increaseViewCount = (postId: number) => apiRequest("post", postAddress.viewCountIncrease(postId));
 
 /** 스터디 글 작성하기 */
 export const createPost = (data: RecruitApiRequestDto): Promise<{ postId: number }> =>
@@ -51,17 +52,9 @@ export const getAppliedMemberList = (
   qs: AppliedMemberListApiRequestDto,
 ): Promise<AppliedMemberListApiResponseDto> => apiRequest("get", postAddress.apply(postId), null, qs);
 
-/** 스터디 초대를 위한 내가 만든 스터디 리스트 */
-export const getPostListForInvite = (): Promise<ScoutListApiResponseDto> => apiRequest("get", postAddress.scout);
-
-/** 스터디 초대하기 */
-export const inviteMember = (data: InviteMemberRequestDto) => apiRequest("post", postAddress.invite, data);
-
 /** 스터디 프로젝트 정보  */
 export const getStudyManagement = (postId: number): Promise<StudyManagementApiResponseDto> =>
   apiRequest("get", postAddress.management(postId));
-
-//아래 함수들은 api 문서 수정되면 한번에 반영해놓겠습니다.
 
 /** 스터디 모집 시작하기*/
 export const recruitStart = (postId: number) => apiRequest("patch", postAddress.recruitStart(postId));

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPost, modifyPost, deletePost, applyPost, cancelApplyPost } from "@/lib/api/post";
+import { createPost, modifyPost, deletePost, applyPost, cancelApplyPost, increaseViewCount } from "@/lib/api/post";
 import { RecruitApiRequestDto } from "@/lib/api/post/type";
 
 interface ModifyPostPayload {
@@ -46,5 +46,11 @@ export default function usePostMutation() {
     onError: (error) => console.error(error, error.message),
   });
 
-  return { uploadMutation, editMutation, deleteMutation, applyMutation, cancelMutation };
+  const increaseViewCountMutation = useMutation({
+    mutationFn: (postId: number) => increaseViewCount(postId),
+    onSuccess: (_, postId) => queryClient.invalidateQueries({ queryKey: ["postDetail", postId] }),
+    onError: (error) => console.error(error, error.message),
+  });
+
+  return { uploadMutation, editMutation, deleteMutation, applyMutation, cancelMutation, increaseViewCountMutation };
 }

@@ -8,6 +8,8 @@ import { statusButtonConfig, StatusButtonConfig } from "@/constants/statusButton
 import { ConfirmType } from "@/components/modals/ConfirmModal";
 import { PostApplyStatus } from "@/lib/api/post/type";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
 
 interface MappedButtonProps {
   postApplyStatus: PostApplyStatus;
@@ -16,10 +18,13 @@ interface MappedButtonProps {
   className?: string;
 }
 
+const { serverError, unauthorized, success } = TOAST;
+
 export default function StatusBasedButton({ postApplyStatus, postId, teamInviteId, className }: MappedButtonProps) {
   const { isOpen: isConfirmOpen, openToggle: confirmToggle } = useOpenToggle();
   const { isOpen: isInviteResponseOpen, openToggle: inviteResponseToggle } = useOpenToggle();
   const [confirmType, setConfirmType] = useState<ConfirmType>("apply");
+  const pushToast = useToast();
 
   const { applyMutation, cancelMutation } = usePostMutation();
 
@@ -27,7 +32,10 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
     switch (postApplyStatus) {
       case "APPLIED":
         cancelMutation.mutate(postId, {
-          onSuccess: () => {}, //토스트 추가
+          onSuccess: () => {
+            pushToast(success.message, success.type);
+          },
+          onError: () => pushToast(serverError.message, serverError.type),
           onSettled: () => {
             confirmToggle();
           },
@@ -35,11 +43,15 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
         break;
       case "NOT_APPLIED":
         applyMutation.mutate(postId, {
-          onSuccess: () => {}, //토스트 추가
+          onSuccess: () => {
+            pushToast(success.message, success.type);
+          },
           onError: (error) => {
             if (error.name === "Unauthorized") {
-              return; //토스트 추가
+              pushToast(unauthorized.message, unauthorized.type);
+              return;
             }
+            pushToast(serverError.message, serverError.type);
           },
           onSettled: () => {
             confirmToggle();

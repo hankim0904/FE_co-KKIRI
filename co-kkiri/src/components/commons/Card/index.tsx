@@ -3,7 +3,6 @@ import useMyStudyStore from "@/stores/myStudyStore";
 
 import * as S from "./Card.styled";
 
-import Header from "./Header";
 import Title from "./Title";
 import ProjectChip from "../Chips/ProjectChip";
 import CardCornerButton from "../CardCornerButton";
@@ -34,7 +33,7 @@ export default function Card({ page = "home", cardData }: CardProps) {
   const {
     postId,
     type,
-    status,
+    postStatus,
     isScraped,
     recruitEndAt,
     progressWay,
@@ -51,7 +50,7 @@ export default function Card({ page = "home", cardData }: CardProps) {
     commentCount,
   } = cardData;
   const isSidebarOpenNarrow = useResponsiveSidebar();
-  const cardCornerType = getCardCornerType(page, currentCategory, status);
+  const cardCornerType = getCardCornerType(page, currentCategory, postStatus);
 
   return (
     <Link to={`/list/${postId}`}>

@@ -20,7 +20,7 @@ export type RecruitApiRequestDto = {
 export type PostInfo = {
   postId: number;
   type: CategoryList;
-  status?: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
+  postStatus?: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
   recruitEndAt: string;
   isScraped: boolean;
   progressWay: string;

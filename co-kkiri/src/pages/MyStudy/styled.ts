@@ -25,6 +25,7 @@ export const Box = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   ${tablet} {
     padding-top: 3.6rem;
     padding-bottom: 7.6rem;
+    min-width: fit-content;
   }
 
   ${mobile} {

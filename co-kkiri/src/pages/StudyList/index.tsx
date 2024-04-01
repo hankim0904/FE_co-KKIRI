@@ -50,15 +50,30 @@ export default function StudyList() {
 
   const list = data?.data || [];
 
-  const handleStacksChange = (stacks: string[]) => setSelectedFilter({ ...selectedFilter, stacks });
+  const handleStacksChange = (stacks: string[]) => {
+    setSelectedFilter({ ...selectedFilter, stacks });
+    setCurrentPage(1);
+  };
 
-  const handlePositionChange = (position: string) => setSelectedFilter({ ...selectedFilter, position });
+  const handlePositionChange = (position: string) => {
+    setSelectedFilter({ ...selectedFilter, position });
+    setCurrentPage(1);
+  };
 
-  const handleProgressWayChange = (progressWay: string) => setSelectedFilter({ ...selectedFilter, progressWay });
+  const handleProgressWayChange = (progressWay: string) => {
+    setSelectedFilter({ ...selectedFilter, progressWay });
+    setCurrentPage(1);
+  };
 
-  const handleSortByChange = (sortBy: string) => setSelectedFilter({ ...selectedFilter, sortBy });
+  const handleSortByChange = (sortBy: string) => {
+    setSelectedFilter({ ...selectedFilter, sortBy });
+    setCurrentPage(1);
+  };
 
-  const handleTitleChange = (title: string) => setSearchTitle(title);
+  const handleTitleChange = (title: string) => {
+    setSearchTitle(title);
+    setCurrentPage(1);
+  };
 
   if (error) {
     console.error(error);
@@ -73,6 +88,7 @@ export default function StudyList() {
     const filterKey = getFilterKey<CategoryList>(categoryListFilter, category);
     const newCategory = filterKey as CategoryListFilter;
     setCurrentCategory(newCategory);
+    setCurrentPage(1);
   };
 
   const totalPage = data?.meta.pageCount || NaN;

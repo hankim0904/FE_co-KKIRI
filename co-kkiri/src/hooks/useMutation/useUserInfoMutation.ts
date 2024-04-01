@@ -6,21 +6,12 @@ import { useToast } from "../useToast";
 
 export const useUserInfoMutation = () => {
   const pushToast = useToast();
-  const { setUserInfo } = useUserInfoStore();
-  const queryClient = useQueryClient();
+  const { fetchUserInfo } = useUserInfoStore();
 
   const { mutate } = useMutation<void, Error,UserInfoEditApiRequestDto>({
     mutationFn: (data: UserInfoEditApiRequestDto) => editUserInfo(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["my-page", "info"] });
-      const newData = queryClient.getQueryData<UserInfoEditApiRequestDto>(["my-page", "info"]);
-
-      if (newData) {
-        setUserInfo({
-          ...newData,
-        });
-      }
-
+      fetchUserInfo();
       pushToast("성공적으로 수정되었습니다", "success");
     },
     onError: () => {

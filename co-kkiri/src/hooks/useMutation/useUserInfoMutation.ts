@@ -9,7 +9,7 @@ export const useUserInfoMutation = () => {
   const { setUserInfo } = useUserInfoStore();
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation<UserInfoEditApiRequestDto, Error, UserInfoApiResponseDto>({
+  const { mutate } = useMutation<void, Error,UserInfoEditApiRequestDto>({
     mutationFn: (data: UserInfoEditApiRequestDto) => editUserInfo(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-page", "info"] });

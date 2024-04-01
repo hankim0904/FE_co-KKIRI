@@ -8,4 +8,5 @@ export const memberProfile: MemberProfileApiResponseDto = {
   position: "",
   stacks: [],
   gauge: 0,
+  isVisibleProfile: false,
 };

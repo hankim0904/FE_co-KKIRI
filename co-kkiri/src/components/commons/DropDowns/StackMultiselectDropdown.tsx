@@ -46,7 +46,7 @@ export default function MultiselectDropdown({
         $iconType="default"
         $isSelected={isOpen}
         dropButtonRef={dropButtonRef}
-        isError={isError}
+        $isError={isError}
       />
       {isOpen && (
         <SelectLayout

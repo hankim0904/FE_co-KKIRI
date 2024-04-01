@@ -22,7 +22,7 @@ export default function ScoutCard(props: ScoutCardProps) {
           cardType="scout"
         />
       </Container>
-      {isUserProfileModalOpen && <UserProfileModal userId={props.memberId} onScoutClick={userProfileModalOpenToggle} onClose={userProfileModalOpenToggle}/>}
+      {isUserProfileModalOpen && <UserProfileModal userId={props.memberId} onClose={userProfileModalOpenToggle}/>}
     </>
   );
 }

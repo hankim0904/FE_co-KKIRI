@@ -14,7 +14,7 @@ export default function RHFEvaluationPart({ evaluationCategory, formFieldName, c
       control={control}
       name={formFieldName}
       render={({ field }) => (
-        <EvaluationPart evaluationCategory={evaluationCategory} selectedChips={field.value} onChange={field.onChange} />
+        <EvaluationPart evaluationCategory={evaluationCategory} selectedChips={field.value as string[]} onChange={field.onChange} />
       )}
     />
   );

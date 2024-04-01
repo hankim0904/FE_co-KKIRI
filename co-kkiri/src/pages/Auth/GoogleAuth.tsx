@@ -8,7 +8,7 @@ export default function GoogleAuth() {
   useEffect(() => {
     const message = { type: "OAuthSuccess", code: code };
     // localhost는 추후 변경해야함
-    window.opener.postMessage(message, "http://localhost");
+    window.opener.postMessage(message, import.meta.env.VITE_APP_URL);
     window.close();
   });
 

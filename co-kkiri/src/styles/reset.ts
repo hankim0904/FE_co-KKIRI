@@ -37,6 +37,7 @@ const resetStyle = css`
   svg {
     display: block;
     max-width: 100%;
+    pointer-events: none;
   }
 
   button {

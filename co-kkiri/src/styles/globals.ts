@@ -16,23 +16,22 @@ body {
   font-family: "Pretendard";
   font-weight: 400;
   overflow-y:scroll;
+  background-color: ${color.white};
 }
 
 body::-webkit-scrollbar {
-    width: 8px;  
+  width: 8px;  
 }
 
 body::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: ${color.primary[1]}; /* 스크롤바의 색상 */
-    
-    border-radius: 10px;
+  height: 30%;
+  background: ${color.primary[1]};
+  border-radius: 10px;
 }
 
 body::-webkit-scrollbar-track {
-    background: ${color.primary[3]};  /*스크롤바 뒷 배경 색상*/
+    background: ${color.primary[3]};
 }
-
 `;
 
 export default GlobalStyles;

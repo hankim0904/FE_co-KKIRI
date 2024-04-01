@@ -43,7 +43,6 @@ export default function Detail() {
     queryFn: () => getPostDetail(postId),
     retry: 0,
     staleTime: 60 * 1000,
-    gcTime: 0,
     enabled: viewCountIncreased,
   });
 

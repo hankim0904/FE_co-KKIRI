@@ -23,7 +23,6 @@ export default function MyStudy() {
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       lastPage.meta.hasNextPage ? lastPageParam + 1 : undefined,
-    gcTime: 0,
   });
 
   const handleCategoryChange = (category: string) => {

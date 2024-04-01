@@ -1,10 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { scrapAdd, scrapCancel } from "@/lib/api/scrap";
-import { useToggle } from "usehooks-ts";
 
 function useScrapMutations(postId: number, isScraped: boolean) {
   const queryClient = useQueryClient();
-  const [isScrapedValue, toggle] = useToggle(isScraped);
 
   const ScrapMutation = useMutation({
     mutationFn: () => scrapAdd(postId),
@@ -13,8 +11,6 @@ function useScrapMutations(postId: number, isScraped: boolean) {
       queryClient.invalidateQueries({ queryKey: ["/my-page/scrap/list"] });
       queryClient.invalidateQueries({ queryKey: ["postDetail", postId] });
       queryClient.invalidateQueries({ queryKey: ["/post/list"] });
-
-      toggle();
     },
   });
 
@@ -25,12 +21,10 @@ function useScrapMutations(postId: number, isScraped: boolean) {
       queryClient.invalidateQueries({ queryKey: ["/my-page/scrap/list"] });
       queryClient.invalidateQueries({ queryKey: ["postDetail", postId] });
       queryClient.invalidateQueries({ queryKey: ["/post/list"] });
-
-      toggle();
     },
   });
 
-  return { ScrapMutation, CancelScrapMutation, isScrapedValue };
+  return { ScrapMutation, CancelScrapMutation };
 }
 
 export default useScrapMutations;

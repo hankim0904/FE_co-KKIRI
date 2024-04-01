@@ -30,7 +30,7 @@ export default function CardCornerButton({
 }: CardCornerButtonProps) {
   const navigate = useNavigate();
   const { text, icon, width } = CARD_CORNER_BUTTON[cardCornerType as CardCornerButtonType];
-  const { ScrapMutation, CancelScrapMutation, isScrapedValue } = useScrapMutations(postId, isScraped);
+  const { ScrapMutation, CancelScrapMutation } = useScrapMutations(postId, isScraped);
   const isLoading = ScrapMutation.isPending || CancelScrapMutation.isPending;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -42,7 +42,7 @@ export default function CardCornerButton({
         if (isLoading) {
           return;
         }
-        isScrapedValue ? CancelScrapMutation.mutate() : ScrapMutation.mutate();
+        isScraped ? CancelScrapMutation.mutate() : ScrapMutation.mutate();
         break;
       case "manage":
         navigate(`/mystudy/${postId}`);
@@ -56,7 +56,7 @@ export default function CardCornerButton({
   return (
     <Wrapper onClick={handleClick} className={className} $cardCornerType={cardCornerType} $isLoading={isLoading}>
       {text && <Text $cardCornerType={cardCornerType}>{text}</Text>}
-      <Icon src={icon(isScrapedValue).src} alt={icon(isScrapedValue).alt} $width={width} />
+      <Icon src={icon(isScraped).src} alt={icon(isScraped).alt} $width={width} />
     </Wrapper>
   );
 }

@@ -45,7 +45,6 @@ export default function StudyList() {
         take: 12,
       }),
     placeholderData: keepPreviousData,
-    gcTime: 0,
   });
 
   const list = data?.data || [];

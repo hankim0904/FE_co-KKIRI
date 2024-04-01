@@ -16,7 +16,6 @@ export default function Home() {
   } = useQuery({
     queryKey: ["homeCardList"],
     queryFn: getHomeCardList,
-    gcTime: 0,
   });
 
   const homeCardList: HomeCardListType = homeCardListData ?? {

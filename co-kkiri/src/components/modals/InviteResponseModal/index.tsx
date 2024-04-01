@@ -3,10 +3,9 @@ import ModalLayout from "../ModalLayout";
 import UserInfo from "../../commons/UserInfo";
 import Button from "../../commons/Button";
 import { ICONS } from "@/constants/icons";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { acceptMember, getInviteInfo, rejectMember } from "@/lib/api/teamMember";
-import useOpenToggle from "@/hooks/useOpenToggle";
 
 interface InviteResponseModalProps {
   onClose: () => void;
@@ -16,7 +15,6 @@ interface InviteResponseModalProps {
 export default function InviteResponseModal({ onClose, teamInviteId }: InviteResponseModalProps) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { isOpen, openToggle, ref } = useOpenToggle();
 
   //팀 초대 조회
   const { data } = useQuery({
@@ -27,7 +25,6 @@ export default function InviteResponseModal({ onClose, teamInviteId }: InviteRes
   const handleAccept = useMutation({
     mutationFn: (teamMemberId: number) => acceptMember(teamMemberId),
     onSuccess: () => {
-      console.log("요청 성공");
       queryClient.invalidateQueries();
     },
     onError: (error) => {
@@ -41,9 +38,7 @@ export default function InviteResponseModal({ onClose, teamInviteId }: InviteRes
 
   const handleReject = useMutation({
     mutationFn: (teamMemberId: number) => rejectMember(teamMemberId),
-    onSuccess: () => {
-      console.log("요청 성공");
-    },
+    onSuccess: () => {},
     onError: (error) => {
       console.error(error);
     },
@@ -54,8 +49,7 @@ export default function InviteResponseModal({ onClose, teamInviteId }: InviteRes
   const handleRejectMember = (teamMemberId: number) => {
     handleReject.mutate(teamMemberId);
   };
-  console.log(data?.teamMemberId);
-  console.log(teamMemberId);
+
   return (
     <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose}>
       <S.Container>

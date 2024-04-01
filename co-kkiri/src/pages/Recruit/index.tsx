@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
 import { FieldValues } from "react-hook-form";
+import ReviewModal from "@/components/domains/review/ReviewModal";
 
 export default function Recruit() {
   const navigate = useNavigate();

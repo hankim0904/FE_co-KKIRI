@@ -38,6 +38,7 @@ export default function DeadlineDropdown({ placeholder, selectedOption, onChange
             selected={selectedOption ? new Date(selectedOption) : undefined}
             onSelect={handleSelectDate}
             initialFocus
+            className="scale-125"
           />
         </CalendarWrapper>
       )}
@@ -67,6 +68,11 @@ const Container = styled.div`
 
 const CalendarWrapper = styled.div`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 21rem;
+  height: 24.2rem;
   top: 5.4rem;
   left: 0;
   background-color: white;

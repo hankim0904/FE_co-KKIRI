@@ -5,6 +5,7 @@ import {
   InvitedTeamListApiResponseDto,
   MyScrapApiRequestDto,
   MyScrapApiResponseDto,
+  MyPageReviewApiResponseDto,
   UserInfoApiResponseDto,
   UserInfoEditApiRequestDto,
   VisibleProfileStatusApiRequestDto,
@@ -14,7 +15,11 @@ import {
 export const getUserInfo = (): Promise<UserInfoApiResponseDto> => apiRequest("get", myPageAddress.userInfo);
 
 /** 마이페이지 유저 정보 수정하기 */
-export const editUserInfo = (data: UserInfoEditApiRequestDto):Promise<void> => apiRequest("patch", myPageAddress.userInfo, data);
+export const editUserInfo = (data: UserInfoEditApiRequestDto): Promise<void> =>
+  apiRequest("patch", myPageAddress.userInfo, data);
+
+/** 내가 받은 태그 가져오기 */
+export const getReviewTagList = (): Promise<MyPageReviewApiResponseDto> => apiRequest("get", myPageAddress.tagList);
 
 /** 초대된 팀 목록 가져오기 */
 export const getInvitedTeamList = (qs: InvitedTeamListApiRequestDto): Promise<InvitedTeamListApiResponseDto> =>

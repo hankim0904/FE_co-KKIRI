@@ -12,6 +12,7 @@ interface DefaultChipProps {
   label?: string;
   imgUrl?: string;
   icon?: Icon;
+  count?: number;
 
   isSelected?: boolean;
   onClick?: (e: MouseEvent<HTMLDivElement>) => void;
@@ -24,6 +25,7 @@ export default function DefaultChip({
   label,
   imgUrl,
   icon,
+  count,
   isSelected,
   onClick,
   onIconClick,
@@ -40,6 +42,7 @@ export default function DefaultChip({
       onClick={!icon ? onClick : undefined}>
       {imgUrl && <Image stack={{ name: label || "", img: imgUrl }} />}
       {label && <span className="label">{label}</span>}
+      {count && <span className="label">{count}</span>}
       {icon && <img className="icon" src={icon.src} alt={icon.alt} onClick={onIconClick} />}
     </Container>
   );

@@ -3,10 +3,11 @@ import DefaultChip from "./DefaultChip";
 import { VariantStyle } from "@/types/styledUtilTypes";
 import DESIGN_TOKEN from "@/styles/tokens";
 
-type EvaluationWayType = "compliments" | "improvements";
+type EvaluationWayType = "COMPLIMENT" | "IMPROVMENT";
 interface EvaluationChipProps {
   label: string;
   evaluationWay: EvaluationWayType;
+  count?: number;
 }
 
 /**
@@ -14,8 +15,8 @@ interface EvaluationChipProps {
  * @param evaluationWay: 바탕, 글씨 색상 지정
  * @property {"compliments" | "improvements"} evaluationWay
  */
-export default function EvaluationChip({ label, evaluationWay }: EvaluationChipProps) {
-  return <Container evaluationWay={evaluationWay} label={label} />;
+export default function EvaluationChip({ label, evaluationWay, count }: EvaluationChipProps) {
+  return <Container evaluationWay={evaluationWay} label={label} count={count} />;
 }
 
 const { color, typography } = DESIGN_TOKEN;
@@ -27,19 +28,19 @@ const EvaluationChipStyle = css`
 `;
 
 const VARIANT_STYLE: VariantStyle<EvaluationWayType> = {
-  compliments: css`
+  COMPLIMENT: css`
     background-color: ${color.primary[3]};
     color: ${color.primary[1]};
     ${typography.font12Semibold}
     ${EvaluationChipStyle}
   `,
-  improvements: css`
+  IMPROVMENT: css`
     background-color: #ffdbe4;
     color: ${color.red};
     ${EvaluationChipStyle}
   `,
 };
 
-const Container = styled(DefaultChip)<EvaluationChipProps>`
+const Container = styled(DefaultChip)<{ evaluationWay: EvaluationWayType }>`
   ${({ evaluationWay }) => VARIANT_STYLE[evaluationWay]}
 `;

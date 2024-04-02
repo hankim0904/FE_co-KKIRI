@@ -1,4 +1,7 @@
 import { css } from "styled-components";
+import DESIGN_TOKEN from "./tokens";
+
+const { color } = DESIGN_TOKEN;
 
 const resetStyle = css`
   * {
@@ -31,6 +34,20 @@ const resetStyle = css`
   html,
   body {
     height: 100%;
+  }
+
+  div::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  div::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: ${color.primary[1]};
+    border-radius: 10px;
+  }
+
+  div::-webkit-scrollbar-track {
+    background: ${color.primary[3]};
   }
 
   img,

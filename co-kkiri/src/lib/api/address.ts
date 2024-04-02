@@ -80,6 +80,8 @@ export const myPageAddress = {
   //get, patch
   userInfo: "/my-page/info",
   //get
+  tagList: "/my-page/review/list",
+  //get
   inviteList: "/my-page/invite/list",
   //get
   scrapList: "/my-page/scrap/list",

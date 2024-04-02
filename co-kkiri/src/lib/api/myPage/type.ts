@@ -13,6 +13,17 @@ export type UserInfoApiResponseDto = {
   link?: string;
 };
 
+// 내가 받은 태그 정보
+type MyPageReview = {
+  type: "COMPLIMENT" | "IMPROVMENT";
+  content?: string;
+  count: number;
+};
+
+export type MyPageReviewApiResponseDto = {
+  reviewList: MyPageReview[];
+};
+
 //마이 페이지 초대된 팀 목록
 type InvitedTeam = {
   postId: number;

@@ -5,11 +5,13 @@ import Button from "@/components/commons/Button";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { getScrapList } from "@/lib/api/myPage";
 import NoResultText from "@/components/commons/NoResultText";
+import { useToast } from "@/hooks/useToast";
 
 export default function ScrapList() {
+  const pushToast = useToast();
   const PAGE_LIMIT = 6;
 
-  const { data, error, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ["/my-page/scrap/list"],
     queryFn: ({ pageParam = 1 }) => getScrapList({ page: pageParam, take: PAGE_LIMIT }),
     initialPageParam: 1,
@@ -27,7 +29,7 @@ export default function ScrapList() {
   const allCards = data?.pages.flatMap((page) => page.data) ?? [];
 
   if (error) {
-    console.error(error);
+    pushToast(`${error.message}`, "error");
   }
 
   return (

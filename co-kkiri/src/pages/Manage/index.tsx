@@ -6,13 +6,19 @@ import { getTeamMember } from "@/lib/api/teamMember";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
+import DetailCardSkeleton from "@/components/commons/Skeleton/DetailCardSkeleton";
+import styled from "styled-components";
 
 export default function Manage() {
   const pushToast = useToast();
   const { id } = useParams();
   const postId = Number(id);
 
-  const { data: detailInfo, error: detailInfoError } = useQuery({
+  const {
+    data: detailInfo,
+    error: detailInfoError,
+    isLoading: detailInfoIsLoading,
+  } = useQuery({
     queryKey: ["management", postId],
     queryFn: () => getStudyManagement(postId),
   });
@@ -54,6 +60,12 @@ export default function Manage() {
   return (
     <S.Container>
       <S.Box>
+        {detailInfoIsLoading && (
+          <DetailCardSkeletonWarper>
+            <DetailCardSkeleton page="mystudy" />
+          </DetailCardSkeletonWarper>
+        )}
+
         {detailInfo && <S.DetailSection detailInfo={detailInfo} />}
         <S.ListSection>
           <AppliedList detailInfo={appliedMemberListData} isLeader={detailInfo?.isLeader} type={detailInfo?.status} />
@@ -71,3 +83,7 @@ export default function Manage() {
     </S.Container>
   );
 }
+
+const DetailCardSkeletonWarper = styled.div`
+  margin-top: 9rem;
+`;

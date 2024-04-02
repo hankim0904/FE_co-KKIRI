@@ -5,6 +5,7 @@ import DESIGN_TOKEN from "@/styles/tokens";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { Pages } from "@/types/pagesTypes";
 import NoResultText from "./NoResultText";
+import CardSkeleton from "./Skeleton/elements/CardSkeleton";
 
 interface CardsProps {
   data: ListApiResponseDto["data"];

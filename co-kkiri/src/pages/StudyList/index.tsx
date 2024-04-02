@@ -14,6 +14,7 @@ import useStudyListStore from "@/stores/studyListStore";
 import { useDebounceValue } from "usehooks-ts";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { useToast } from "@/hooks/useToast";
+import CardsSkeleton from "@/components/commons/Skeleton/CardsSkeleton";
 
 export default function StudyList() {
   const pushToast = useToast();
@@ -80,11 +81,6 @@ export default function StudyList() {
     pushToast(`${error.message}`, "error");
   }
 
-  // 임시
-  if (isLoading) {
-    <div>Loading...</div>;
-  }
-
   const handleCategoryChange = (category: string) => {
     const filterKey = getFilterKey<CategoryList>(categoryListFilter, category);
     const newCategory = filterKey as CategoryListFilter;
@@ -113,7 +109,7 @@ export default function StudyList() {
           handleProgressWayChange={handleProgressWayChange}
           handleSortByChange={handleSortByChange}
         />
-        <Cards data={list} page="studyList" />
+        {isLoading ? <CardsSkeleton /> : <Cards data={list} page="studyList" />}
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPage} />
       </S.Box>
       <CreatePost />

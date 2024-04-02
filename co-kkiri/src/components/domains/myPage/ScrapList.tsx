@@ -6,12 +6,13 @@ import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { getScrapList } from "@/lib/api/myPage";
 import NoResultText from "@/components/commons/NoResultText";
 import { useToast } from "@/hooks/useToast";
+import ScrapListSkeleton from "@/components/commons/Skeleton/ScrapListSkeleton";
 
 export default function ScrapList() {
   const pushToast = useToast();
   const PAGE_LIMIT = 6;
 
-  const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
+  const { data, error, hasNextPage, fetchNextPage, isLoading } = useInfiniteQuery({
     queryKey: ["/my-page/scrap/list"],
     queryFn: ({ pageParam = 1 }) => getScrapList({ page: pageParam, take: PAGE_LIMIT }),
     initialPageParam: 1,
@@ -25,7 +26,7 @@ export default function ScrapList() {
     placeholderData: keepPreviousData,
   });
 
-  const count = data?.pages[0].meta.totalCount;
+  const count = data?.pages[0].meta.totalCount ?? NaN;
   const allCards = data?.pages.flatMap((page) => page.data) ?? [];
 
   if (error) {
@@ -35,24 +36,28 @@ export default function ScrapList() {
   return (
     <S.Container>
       <SectionTitle title="스터디/프로젝트 스크랩 목록" count={count} type="cardList" />
-      {count ? (
-        <S.Box>
-          <S.Wrapper>
-            {allCards.map(
-              (scrap) =>
-                scrap.isScraped && (
-                  <div key={scrap.postId}>
-                    <Card page="studyList" cardData={scrap} />
-                  </div>
-                ),
+      {isLoading ? (
+        <ScrapListSkeleton />
+      ) : count > 0 ? (
+        <>
+          <S.Box>
+            <S.Wrapper>
+              {allCards.map(
+                (scrap) =>
+                  scrap.isScraped && (
+                    <div key={scrap.postId}>
+                      <Card page="studyList" cardData={scrap} />
+                    </div>
+                  ),
+              )}
+            </S.Wrapper>
+            {hasNextPage && (
+              <Button variant="ghost" width={158} onClick={() => fetchNextPage()}>
+                더보기
+              </Button>
             )}
-          </S.Wrapper>
-          {hasNextPage && (
-            <Button variant="ghost" width={158} onClick={() => fetchNextPage()}>
-              더보기
-            </Button>
-          )}
-        </S.Box>
+          </S.Box>
+        </>
       ) : (
         <NoResultText text="스크랩 목록이 없어요." padding={60} color="gray" />
       )}

@@ -38,16 +38,13 @@ export default function Home() {
     }
   }, [error, pushToast]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Container>
       <Banners />
       <Box>
         {Object.entries(HOT_AND_NEW_LIST).map(([key, { title, filter }]) => (
           <HotAndNewSection
+            isLoading={isLoading}
             key={key}
             category={title}
             filter={filter}

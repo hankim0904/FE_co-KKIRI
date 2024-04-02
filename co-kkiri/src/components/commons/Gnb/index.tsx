@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as S from "./Gnb.styled";
 import { ROUTER_PATH } from "@/lib/path";
@@ -10,6 +10,7 @@ import useOpenToggle from "@/hooks/useOpenToggle";
 import useAuthModalToggleStore from "@/stores/authModalToggle";
 import GnbUserInfo from "./GnbUserInfo";
 import { useUserInfoStore } from "@/stores/userInfoStore";
+import UserProfileSkeleton from "../Skeleton/UserProfileSkeleton";
 
 interface GnbProps {
   onSideBarClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -18,6 +19,7 @@ interface GnbProps {
 export default function Gnb({ onSideBarClick }: GnbProps) {
   const { HOME_PATH, RECRUIT_PATH } = ROUTER_PATH;
   const { ref, isOpen: isPopoverOpen, openToggle: togglePopover } = useOpenToggle();
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
   const isAuthModalOpen = useAuthModalToggleStore((state) => state.isAuthModalOpen);
   const toggleAuthModal = useAuthModalToggleStore((state) => state.toggleAuthModal);
@@ -29,7 +31,7 @@ export default function Gnb({ onSideBarClick }: GnbProps) {
   };
 
   useEffect(() => {
-    fetchUserInfo();
+    fetchUserInfo().then(() => setIsLoadingUser(false));
   }, [fetchUserInfo]);
 
   return (
@@ -47,7 +49,9 @@ export default function Gnb({ onSideBarClick }: GnbProps) {
           <Link to={RECRUIT_PATH}>
             <S.PostButton>스터디 모집하기</S.PostButton>
           </Link>
-          {user ? (
+          {isLoadingUser ? (
+            <UserProfileSkeleton />
+          ) : user ? (
             <GnbUserInfo user={user} onClick={handlePopoverOpen} />
           ) : (
             <S.SignButton onClick={toggleAuthModal}>로그인/회원가입</S.SignButton>

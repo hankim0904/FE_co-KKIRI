@@ -6,22 +6,36 @@ import ScrapList from "@/components/domains/myPage/ScrapList";
 import { useQuery } from "@tanstack/react-query";
 import { getInvitedTeamList, getReviewTagList, getVisibleProfileStatus } from "@/lib/api/myPage";
 import { useToast } from "@/hooks/useToast";
+import UserProfileSkeleton from "@/components/commons/Skeleton/UserProfileSkeleton";
+import UserInfoCardSkeleton from "@/components/commons/Skeleton/UserInfoCardSkeleton";
 
 export default function MyPage() {
   const pushToast = useToast();
-  const { data: tagList, error: tagListError } = useQuery({
+  const {
+    data: tagList,
+    error: tagListError,
+    isLoading: tagListIsLoading,
+  } = useQuery({
     queryKey: ["my-page/review/list"],
     queryFn: () => getReviewTagList(),
     retry: false,
   });
 
-  const { data: invitedTeamList, error: invitedTeamListError } = useQuery({
+  const {
+    data: invitedTeamList,
+    error: invitedTeamListError,
+    isLoading: invitedTeamListLoading,
+  } = useQuery({
     queryKey: ["invite/list"],
     queryFn: () => getInvitedTeamList({ page: 1, take: 100 }),
     retry: false,
   });
 
-  const { data: visibleProfile, error: visibleProfileError } = useQuery({
+  const {
+    data: visibleProfile,
+    error: visibleProfileError,
+    isLoading: visibleProfileLoading,
+  } = useQuery({
     queryKey: ["my-page/visigle-profile"],
     queryFn: () => getVisibleProfileStatus(),
     retry: false,
@@ -47,7 +61,11 @@ export default function MyPage() {
     <S.Container>
       <S.Box>
         <S.Wrapper>
-          <MyPageUserInfo visibleProfile={visibleProfileData} />
+          {tagListIsLoading && invitedTeamListLoading && visibleProfileLoading ? (
+            <UserInfoCardSkeleton page={"mypage"} />
+          ) : (
+            <MyPageUserInfo visibleProfile={visibleProfileData} />
+          )}
           <S.Lists>
             <TagList reviewList={tagListData} />
             <InvitedTeamList count={invitedTeamListData.length} teamList={invitedTeamListData} />

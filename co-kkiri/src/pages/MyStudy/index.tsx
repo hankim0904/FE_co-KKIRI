@@ -12,6 +12,7 @@ import { fetchList } from "@/utils/myStudyPageFetchList";
 import { categoryStudyStatusFilter } from "@/constants/categoriesAndFilters";
 import TOAST from "@/constants/toast";
 import { CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
+import CardsSkeleton from "@/components/commons/Skeleton/CardsSkeleton";
 
 const { serverError, unauthorized } = TOAST;
 
@@ -21,7 +22,7 @@ export default function MyStudy() {
   const fetchListWithCategory = ({ pageParam = 1 }) => fetchList(currentCategory, { pageParam });
   const pushToast = useToast();
 
-  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey: ["myStudyList", currentCategory],
     queryFn: fetchListWithCategory,
     initialPageParam: 1,
@@ -57,11 +58,17 @@ export default function MyStudy() {
           filters={Object.values(categoryStudyStatusFilter)}
           onFilterClick={handleCategoryChange}
         />
-        <S.CardsSection data={allCards} page="myStudy" />
-        {hasNextPage && (
-          <S.ButtonSection variant="ghost" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
-            더보기
-          </S.ButtonSection>
+        {isLoading ? (
+          <CardsSkeleton />
+        ) : (
+          <>
+            <S.CardsSection data={allCards} page="myStudy" />
+            {hasNextPage && (
+              <S.ButtonSection variant="ghost" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+                더보기
+              </S.ButtonSection>
+            )}
+          </>
         )}
         <ScrollToTop />
       </S.Box>

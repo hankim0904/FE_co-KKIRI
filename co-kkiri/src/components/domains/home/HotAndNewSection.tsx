@@ -7,14 +7,16 @@ import { ListApiResponseDto } from "@/lib/api/post/type";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { Filter, Title } from "@/constants/hotAndNewList";
 import { useFilterSetting } from "@/hooks/useFilterSetting";
+import HomeCardsSkeleton from "@/components/commons/Skeleton/HomeCardsSkeleton";
 
 interface CardsProps {
   category: Title;
   filter: Filter;
   cardDataList: ListApiResponseDto["data"];
+  isLoading: boolean;
 }
 
-export default function HotAndNewSection({ category, filter, cardDataList }: CardsProps) {
+export default function HotAndNewSection({ category, filter, cardDataList, isLoading }: CardsProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
   const { getFilterAction } = useFilterSetting();
 
@@ -24,7 +26,7 @@ export default function HotAndNewSection({ category, filter, cardDataList }: Car
         <h2>{category}</h2>
         <More onClick={getFilterAction("studyList", filter)} />
       </Wrapper>
-      <Cards cardDataList={cardDataList} />
+      {isLoading ? <HomeCardsSkeleton /> : <Cards cardDataList={cardDataList} />}
     </Box>
   );
 }

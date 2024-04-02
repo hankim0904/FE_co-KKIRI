@@ -1,30 +1,48 @@
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import useSideBarStore from "@/stores/sideBarStore";
+
+import { useWindowSize } from "usehooks-ts";
 import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
+
 import Gnb from "@/components/commons/Gnb";
 import SideBar from "@/components/commons/SideBar";
-import { useWindowSize } from "usehooks-ts";
+import useSideBarStore from "@/stores/sideBarStore";
 import { slideIn, slideOut } from "@/utils/animation";
 
 export default function Navigation() {
   const isSideBarOpen = useSideBarStore((state) => state.isSideBarOpen);
   const toggleSideBar = useSideBarStore((state) => state.toggleSideBar);
+  const [isSideBarVisible, setIsSideBarVisible] = useState(false);
 
   const { width: screenWidth } = useWindowSize();
   const isTabletOrMobile = screenWidth < 1200;
 
   const handleSideBar = () => {
+    if (!isSideBarOpen) setIsSideBarVisible(true);
     toggleSideBar();
   };
+
+  useEffect(() => {
+    if (!isSideBarOpen && !isTabletOrMobile) {
+      const timer = setTimeout(() => {
+        setIsSideBarVisible(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    } else if (!isSideBarOpen && isTabletOrMobile) {
+      setIsSideBarVisible(false);
+    }
+  }, [isSideBarOpen, isTabletOrMobile]);
 
   return (
     <>
       <Gnb onSideBarClick={handleSideBar} />
-      <SideBarWrapper $isOpen={isSideBarOpen}>
-        {isSideBarOpen && isTabletOrMobile && <SideBar onClick={handleSideBar} onClose={handleSideBar} />}
-        {!isTabletOrMobile && <SideBar onClose={() => {}} />}
-      </SideBarWrapper>
+      {isSideBarVisible && (
+        <SideBarWrapper $isOpen={isSideBarOpen}>
+          {isTabletOrMobile && <SideBar onClick={handleSideBar} onClose={handleSideBar} />}
+          {!isTabletOrMobile && <SideBar onClose={() => {}} />}
+        </SideBarWrapper>
+      )}
       <OutletWrapper $isOpen={isSideBarOpen}>
         <Outlet />
       </OutletWrapper>
@@ -41,11 +59,10 @@ interface SideBarWrapperProps {
 const SideBarWrapper = styled.div<SideBarWrapperProps>`
   ${zIndex.modal}
   position: fixed;
-  ${({ $isOpen }) => ($isOpen ? "" : "display:none;")}
-  animation: ${(props) => (props.$isOpen ? slideIn : slideOut)} 0.2s forwards;
+  animation: ${(props) => (props.$isOpen ? slideIn : slideOut)} 0.5s forwards;
 `;
 
-const OutletWrapper = styled.div<SideBarWrapperProps>`
+const OutletWrapper = styled.div<{ $isOpen: boolean }>`
   padding-left: ${(props) => (props.$isOpen ? "21rem" : 0)};
 
   ${mediaQueries.tablet} {

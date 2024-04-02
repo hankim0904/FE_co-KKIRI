@@ -59,6 +59,7 @@ export default function Detail() {
           postApplyStatus={postApplyStatus}
           postId={postId}
           teamInviteId={teamInviteId}
+          isLoading={isLoading}
         />
         <ScrollToTop />
       </S.Box>

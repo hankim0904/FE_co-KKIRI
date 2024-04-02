@@ -12,17 +12,25 @@ import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
 import { useNavigate } from "react-router-dom";
 import { useHandleError } from "@/hooks/useHandleError";
+import ButtonSkeleton from "@/components/commons/Skeleton/ButtonSkeleton";
 
 interface MappedButtonProps {
   postApplyStatus: PostApplyStatus;
   postId: number;
   teamInviteId: number;
+  isLoading: boolean;
   className?: string;
 }
 
 const { success } = TOAST;
 
-export default function StatusBasedButton({ postApplyStatus, postId, teamInviteId, className }: MappedButtonProps) {
+export default function StatusBasedButton({
+  postApplyStatus,
+  postId,
+  teamInviteId,
+  isLoading,
+  className,
+}: MappedButtonProps) {
   const { isOpen: isConfirmOpen, openToggle: confirmToggle } = useOpenToggle();
   const { isOpen: isInviteResponseOpen, openToggle: inviteResponseToggle } = useOpenToggle();
   const [confirmType, setConfirmType] = useState<ConfirmType>("apply");
@@ -85,12 +93,16 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
 
   return (
     <div className={className}>
-      <StyledButton
-        onClick={handleClick}
-        variant={statusButtonConfig[postApplyStatus].variant}
-        disabled={statusButtonConfig[postApplyStatus].disabled || applyMutation.isPending}>
-        {statusButtonConfig[postApplyStatus].text}
-      </StyledButton>
+      {isLoading || !postApplyStatus ? (
+        <ButtonSkeleton />
+      ) : (
+        <StyledButton
+          onClick={handleClick}
+          variant={statusButtonConfig[postApplyStatus].variant}
+          disabled={statusButtonConfig[postApplyStatus].disabled || applyMutation.isPending}>
+          {statusButtonConfig[postApplyStatus].text}
+        </StyledButton>
+      )}
       {isConfirmOpen && <ConfirmModal type={confirmType} onClose={confirmToggle} onClick={handleConfirmAgreeClick} />}
       {isInviteResponseOpen && <InviteResponseModal onClose={inviteResponseToggle} teamInviteId={teamInviteId} />}
     </div>

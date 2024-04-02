@@ -13,6 +13,7 @@ import TOAST from "@/constants/toast";
 import { useNavigate } from "react-router-dom";
 import { useHandleError } from "@/hooks/useHandleError";
 import ButtonSkeleton from "@/components/commons/Skeleton/ButtonSkeleton";
+import useSkeleton from "@/hooks/useSkeleton";
 
 interface MappedButtonProps {
   postApplyStatus: PostApplyStatus;
@@ -37,6 +38,7 @@ export default function StatusBasedButton({
   const pushToast = useToast();
   const navigate = useNavigate();
   const handleError = useHandleError();
+  const isVisibleSkeleton = useSkeleton(isLoading);
 
   const { applyMutation, cancelMutation } = usePostMutation();
 
@@ -93,7 +95,7 @@ export default function StatusBasedButton({
 
   return (
     <div className={className}>
-      {isLoading || !postApplyStatus ? (
+      {isVisibleSkeleton || !postApplyStatus ? (
         <ButtonSkeleton />
       ) : (
         <StyledButton

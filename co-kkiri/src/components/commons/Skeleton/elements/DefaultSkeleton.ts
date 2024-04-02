@@ -14,7 +14,7 @@ const DefaultSkeleton = styled.div`
   background-color: #dbdbdb;
   position: relative;
   overflow: hidden;
-  animation: ${loading} 1.7s ease-in-out infinite;
+  animation: ${loading} 1.5s ease-in-out infinite;
 
   &:before {
     content: "";

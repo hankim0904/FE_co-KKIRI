@@ -4,6 +4,7 @@ import DetailCardSkeleton from "@/components/commons/Skeleton/DetailCardSkeleton
 import { PostDetails } from "@/lib/api/post/type";
 import { formatDate } from "@/utils/formatDate";
 import { postDetailInitialData } from "@/lib/initialData/detail";
+import useSkeleton from "@/hooks/useSkeleton";
 
 interface DetailCardProps {
   postDetails: PostDetails;
@@ -15,10 +16,11 @@ interface DetailCardProps {
 export default function DetailCard({ postDetails, className, cardRef, isLoading }: DetailCardProps) {
   const { type, recruitEndAt, progressPeriod, positions, progressWay, contactWay, capacity, stacks, link } =
     postDetails;
+  const isVisibleSkeleton = useSkeleton(isLoading);
 
   return (
     <div className={className} ref={cardRef}>
-      {isLoading || postDetails === postDetailInitialData ? (
+      {isVisibleSkeleton || postDetails === postDetailInitialData ? (
         <DetailCardSkeleton page="detail" />
       ) : (
         <ProjectDetailCard

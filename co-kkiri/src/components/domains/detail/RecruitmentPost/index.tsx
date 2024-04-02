@@ -9,6 +9,7 @@ import { PostDetails, PostApplyStatus } from "@/lib/api/post/type";
 import { ContentSkeleton, TitleSkeleton } from "@/components/commons/Skeleton/TextSkeleton";
 import UserProfileSkeleton from "@/components/commons/Skeleton/UserProfileSkeleton";
 import { postDetailInitialData } from "@/lib/initialData/detail";
+import useSkeleton from "@/hooks/useSkeleton";
 
 interface RecruitmentPostProps {
   postDetails: PostDetails;
@@ -28,6 +29,7 @@ export default function RecruitmentPost({ isLoading, postDetails, postApplyStatu
     viewCount,
     scrapCount,
   } = postDetails;
+  const isVisibleSkeleton = useSkeleton(isLoading);
 
   const userInfo = { nickname, profileImageUrl, id };
   const isMine = postApplyStatus === "OWNER";
@@ -36,14 +38,14 @@ export default function RecruitmentPost({ isLoading, postDetails, postApplyStatu
 
   return (
     <S.Container className={className}>
-      {isLoading || postDetails === postDetailInitialData ? (
+      {isVisibleSkeleton || postDetails === postDetailInitialData ? (
         <TitleSkeleton page="detail" />
       ) : (
         <S.Title>{postTitle}</S.Title>
       )}
       <S.Box>
         <S.PostInfoWrapper>
-          {isLoading || postDetails === postDetailInitialData ? (
+          {isVisibleSkeleton || postDetails === postDetailInitialData ? (
             <UserProfileSkeleton />
           ) : (
             <>
@@ -56,7 +58,7 @@ export default function RecruitmentPost({ isLoading, postDetails, postApplyStatu
         {isMine && <PostManagementButtons />}
       </S.Box>
       <S.HorizontalDivider />
-      {isLoading || postDetails === postDetailInitialData ? (
+      {isVisibleSkeleton || postDetails === postDetailInitialData ? (
         <ContentSkeleton />
       ) : (
         <S.Content dangerouslySetInnerHTML={sanitizedContent} />

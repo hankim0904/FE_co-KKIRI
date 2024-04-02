@@ -5,6 +5,7 @@ import ModalPortal from "./ModalPortal";
 import { useEffect, useRef } from "react";
 import { slideIn } from "@/utils/animation";
 import { useOnClickOutside } from "usehooks-ts";
+import { allowScroll, preventScroll } from "@/utils/handleScrollForModal";
 
 interface ModalLayoutProps {
   children: React.ReactNode;
@@ -31,11 +32,9 @@ export default function ModalLayout({
   useOnClickOutside(modalRef, onClose);
 
   useEffect(() => {
-    document.body.style.cssText = `
-      position: fixed; 
-      width: 100%;`;
+    const prevScrollY = preventScroll();
     return () => {
-      document.body.style.cssText = "";
+      allowScroll(prevScrollY);
     };
   }, []);
 
@@ -71,9 +70,8 @@ interface ModalBoxProps {
 }
 
 const Container = styled.div<{ $isSidebar?: boolean }>`
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 0;
   display: flex;
   justify-content: ${(props) => (props.$isSidebar ? "flex-start" : "center")};
   align-items: center;

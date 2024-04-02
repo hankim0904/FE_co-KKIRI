@@ -39,6 +39,8 @@ export const postAddress = {
   studyStart: (postId: number) => `/post/${postId}/start`,
   //patch
   studyEnd: (postId: number) => `/post/${postId}/end`,
+  //patch
+  reviewEnd: (postId: number) => `/post/${postId}/review-end`,
   //patch ???
   recruitStart: (postId: number) => `/post/${postId}/recruit-start`, // 백엔드 확인 요망
   //post

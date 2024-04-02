@@ -6,5 +6,5 @@ interface PositionChipProps {
 }
 
 export default function PositionChip({ label, className }: PositionChipProps) {
-  return <DefaultChip label={label} className={className} />;
+  return label && <DefaultChip label={label} className={className} />;
 }

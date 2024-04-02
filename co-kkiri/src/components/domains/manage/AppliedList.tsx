@@ -7,22 +7,28 @@ import { ICONS } from "@/constants/icons";
 import { AppliedMemberListApiResponseDto } from "@/lib/api/post/type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { acceptMember, rejectMember } from "@/lib/api/teamMember";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
 
 interface AppliedListProps {
   detailInfo: AppliedMemberListApiResponseDto["data"];
+  isLeader?: boolean;
+  type?: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
 }
 
-export default function AppliedList({ detailInfo }: AppliedListProps) {
+export default function AppliedList({ detailInfo, isLeader, type }: AppliedListProps) {
+  const pushToast = useToast();
   const queryClient = useQueryClient();
+  const detailInfoData = detailInfo || [];
 
   const handleAccept = useMutation({
     mutationFn: (teamMemberId: number) => acceptMember(teamMemberId),
     onSuccess: () => {
-      console.log("요청 성공");
+      pushToast(TOAST.success.message, TOAST.success.type);
       queryClient.invalidateQueries();
     },
     onError: (error) => {
-      console.error(error);
+      pushToast(`${error.message}`, "error");
     },
   });
 
@@ -33,10 +39,11 @@ export default function AppliedList({ detailInfo }: AppliedListProps) {
   const handleReject = useMutation({
     mutationFn: (teamMemberId: number) => rejectMember(teamMemberId),
     onSuccess: () => {
-      console.log("요청 성공");
+      pushToast(TOAST.success.message, TOAST.success.type);
+      queryClient.invalidateQueries();
     },
     onError: (error) => {
-      console.error(error);
+      pushToast(`${error.message}`, "error");
     },
   });
 
@@ -46,22 +53,24 @@ export default function AppliedList({ detailInfo }: AppliedListProps) {
 
   return (
     <Container>
-      <SectionTitle title="신청 목록" count={detailInfo.length} />
+      <SectionTitle title="신청 목록" count={detailInfoData.length} />
       <Members>
-        {detailInfo.map((info) => (
+        {detailInfoData.map((info) => (
           <Box key={info.memberId}>
             <MemberWrapper>
               <UserInfo user={{ id: info.memberId, nickname: info.nickname, profileImageUrl: info.profileImageUrl }} />
               <PositionChip label={info.position} />
             </MemberWrapper>
-            <AcceptWrapper>
-              <button onClick={() => handleAcceptMember(info.teamMemberId)}>
-                <img src={ICONS.accept.src} alt={ICONS.accept.alt} />
-              </button>
-              <button onClick={() => handleRejectMember(info.teamMemberId)}>
-                <img src={ICONS.reject.src} alt={ICONS.reject.alt} />
-              </button>
-            </AcceptWrapper>
+            {type === "READY" && isLeader && (
+              <AcceptWrapper>
+                <button onClick={() => handleAcceptMember(info.teamMemberId)}>
+                  <img src={ICONS.accept.src} alt={ICONS.accept.alt} />
+                </button>
+                <button onClick={() => handleRejectMember(info.teamMemberId)}>
+                  <img src={ICONS.reject.src} alt={ICONS.reject.alt} />
+                </button>
+              </AcceptWrapper>
+            )}
           </Box>
         ))}
       </Members>
@@ -76,10 +85,6 @@ const Container = styled.div`
   flex-direction: column;
   gap: 2rem;
   width: 35rem;
-
-  ${mediaQueries.tablet} {
-    width: 28.8rem;
-  }
 
   ${mediaQueries.mobile} {
     width: 28.8rem;

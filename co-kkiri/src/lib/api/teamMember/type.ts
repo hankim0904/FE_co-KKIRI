@@ -8,6 +8,7 @@ type PostTeamMember = {
   profileImageUrl: string;
   position: string;
   isLeader: boolean;
+  isReviewed: boolean;
 };
 
 export type TeamMemberApiResponseDto = {

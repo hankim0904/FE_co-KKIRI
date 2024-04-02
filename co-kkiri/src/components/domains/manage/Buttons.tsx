@@ -1,95 +1,75 @@
-import Button from "@/components/commons/Button";
-import { BUTTON_TYPE } from "@/constants/manageButtons";
 import useManageButtons from "@/hooks/useManageButtons";
-import DESIGN_TOKEN from "@/styles/tokens";
-import { Dispatch, SetStateAction, useState } from "react";
+import useOpenToggle from "@/hooks/useOpenToggle";
 import styled from "styled-components";
+import ReviewModal from "../review/ReviewModal";
+import { useQuery } from "@tanstack/react-query";
+import { getTeamMember } from "@/lib/api/teamMember";
+import { useUserInfoStore } from "@/stores/userInfoStore";
+import ManageButton from "./ManageButton";
 
 interface ButtonsProps {
   buttonType: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
   isLeader: boolean;
-  isReviewModalOpen: boolean;
-  setIsReviewModalOpen: Dispatch<SetStateAction<boolean>>;
   postId: number;
+  isReviewed?: boolean;
 }
 
-export default function Buttons({
-  buttonType,
-  isLeader,
-  postId,
-  isReviewModalOpen,
-  setIsReviewModalOpen,
-}: ButtonsProps) {
-  const numOfButtons = BUTTON_TYPE.filter(
-    (buttonInfo) => buttonInfo.type === buttonType && buttonInfo.isLeader === isLeader,
-  ).length;
-  const { goToScoutPage, goToPostReviewPage, studyStartMutation, studyEndMutation } = useManageButtons();
+export default function Buttons({ buttonType, isLeader, postId, isReviewed }: ButtonsProps) {
+  const { isOpen: isReviewModalOpen, openToggle: handleReviewModalOpen } = useOpenToggle();
+  const { goToScoutPage, goToPostReviewPage, studyStartMutation, studyEndMutation, studyReviewEndMutation } =
+    useManageButtons();
 
-  const handleStudyStart = (postId: number) => {
-    studyStartMutation.mutate(postId);
-  };
+  const handleStudyStart = () => studyStartMutation.mutate(postId);
+  const handleStudyEnd = () => studyEndMutation.mutate(postId);
+  const handleReviewEnd = () => studyReviewEndMutation.mutate(postId);
 
-  const handleStudyEnd = (postId: number) => {
-    studyEndMutation.mutate(postId);
-  };
-
-  const handleReviewModalOpen = () => {
-    setIsReviewModalOpen(!isReviewModalOpen);
-  };
-
-  const getOnClickHandler = (label: string) => {
-    switch (label) {
-      case "초대하기":
-        return goToScoutPage();
-      case "스터디 시작":
-        return handleStudyStart(postId);
-      case "스터디 완료":
-        return handleStudyEnd(postId);
-      case "리뷰 작성":
-        return goToPostReviewPage(postId);
-      case "리뷰 보기":
-        return handleReviewModalOpen();
-      default:
-        return () => {};
-    }
-  };
+  // 리뷰 여부 확인
+  const { data: memberList } = useQuery({
+    queryKey: ["memberList", postId],
+    queryFn: () => getTeamMember(postId, { page: 1, take: 100 }),
+  });
+  const user = useUserInfoStore((state) => state.userInfo);
+  const memberListData = memberList?.data || [];
+  const userProfileImageUrl = user?.profileImageUrl || "";
+  const memberProfileImageUrl = memberListData.filter((member) => member.profileImageUrl === userProfileImageUrl)[0];
+  const memberReviewed = memberProfileImageUrl?.isReviewed;
 
   return (
     <Box>
-      {BUTTON_TYPE.map(
-        (buttonInfo) =>
-          buttonInfo.type === buttonType &&
-          buttonInfo.isLeader === isLeader && (
-            <ButtonWrapper key={buttonInfo.label} $numOfButtons={numOfButtons}>
-              <Button
-                variant={buttonInfo.variant}
-                disabled={buttonInfo.disabled}
-                onClick={() => getOnClickHandler(buttonInfo.label)}>
-                {buttonInfo.label}
-              </Button>
-            </ButtonWrapper>
-          ),
+      {isLeader && buttonType === "READY" && (
+        <>
+          <ManageButton text="초대하기" buttonCount={2} variant="ghost" onClick={goToScoutPage} />
+          <ManageButton text="스터디 시작" buttonCount={2} variant="primary" onClick={handleStudyStart} />
+        </>
       )}
+      {!isLeader && buttonType === "READY" && (
+        <ManageButton text="스터디 대기 중" buttonCount={1} variant="primary" disabled />
+      )}
+      {isLeader && buttonType === "PROGRESS" && (
+        <ManageButton text="스터디 완료" buttonCount={1} variant="primary" onClick={handleStudyEnd} />
+      )}
+      {!isLeader && buttonType === "PROGRESS" && (
+        <ManageButton text="스터디 완료" buttonCount={1} variant="primary" disabled />
+      )}
+      {memberReviewed === false && buttonType === "PROGRESS_END" && (
+        <ManageButton text="리뷰 작성" buttonCount={1} variant="primary" onClick={() => goToPostReviewPage(postId)} />
+      )}
+      {!isLeader && memberReviewed === true && buttonType === "PROGRESS_END" && (
+        <ManageButton text="리뷰 작성 완료" buttonCount={1} variant="primary" disabled />
+      )}
+      {isLeader && memberReviewed === true && buttonType === "PROGRESS_END" && (
+        <ManageButton text="리뷰 마감" buttonCount={1} variant="primary" onClick={handleReviewEnd} />
+      )}
+      {buttonType === "DONE" && (
+        <ManageButton text="내가 받은 리뷰 보기" buttonCount={1} variant="ghost" onClick={handleReviewModalOpen} />
+      )}
+      {isReviewModalOpen && <ReviewModal onClose={handleReviewModalOpen} />}
     </Box>
   );
 }
-
-const { mediaQueries } = DESIGN_TOKEN;
 
 const Box = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 1.2rem;
-`;
-
-const ButtonWrapper = styled.div<{ $numOfButtons: number }>`
-  width: ${({ $numOfButtons }) => ($numOfButtons === 1 ? "50rem" : "24.4rem")};
-
-  ${mediaQueries.tablet} {
-    width: ${({ $numOfButtons }) => ($numOfButtons === 1 ? "32rem" : "15.6rem")};
-  }
-
-  ${mediaQueries.mobile} {
-    width: ${({ $numOfButtons }) => ($numOfButtons === 1 ? "32rem" : "15.6rem")};
-  }
 `;

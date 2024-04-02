@@ -59,8 +59,11 @@ export const getStudyManagement = (postId: number): Promise<StudyManagementApiRe
 /** 스터디 모집 시작하기*/
 export const recruitStart = (postId: number) => apiRequest("patch", postAddress.recruitStart(postId));
 
-/** 스터디 시작하기(=모집마감, PROGRESS로 변경됨) */
+/** 스터디 시작하기(모집마감, PROGRESS로 변경됨) */
 export const studyStart = (postId: number) => apiRequest("patch", postAddress.studyStart(postId));
 
 /** 스터디 완료하기(PROGRESS_END로 변경됨)*/
 export const studyEnd = (postId: number) => apiRequest("patch", postAddress.studyEnd(postId));
+
+/** 스터디 리뷰 마감(DONE으로 변경됨) */
+export const reviewEnd = (postId: number) => apiRequest("patch", postAddress.reviewEnd(postId));

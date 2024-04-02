@@ -3,26 +3,30 @@ import UserInfo from "@/components/commons/UserInfo";
 import styled from "styled-components";
 import PositionChip from "@/components/commons/Chips/PositionChip";
 import DESIGN_TOKEN from "@/styles/tokens";
-import LeaderIcon from "./LeaderIcon";
 import { TeamMemberApiResponseDto } from "@/lib/api/teamMember/type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTeamMember } from "@/lib/api/teamMember";
 import { ICONS } from "@/constants/icons";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
 
 interface MemberListProps {
-  detailInfo: TeamMemberApiResponseDto["data"] | null | undefined;
+  detailInfo: TeamMemberApiResponseDto["data"];
+  isLeader?: boolean;
+  type?: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
 }
 
-export default function MemberList({ detailInfo }: MemberListProps) {
+export default function MemberList({ detailInfo, isLeader, type }: MemberListProps) {
+  const pushToast = useToast();
   const queryClient = useQueryClient();
   const handleOut = useMutation({
     mutationFn: (teamMemberId: number) => deleteTeamMember(teamMemberId),
     onSuccess: () => {
-      console.log("요청 성공");
+      pushToast(TOAST.success.message, TOAST.success.type);
       queryClient.invalidateQueries();
     },
     onError: (error) => {
-      console.error(error);
+      pushToast(`${error.message}`, "error");
     },
   });
 
@@ -45,9 +49,13 @@ export default function MemberList({ detailInfo }: MemberListProps) {
               )}
               <PositionChip label={info.position} />
             </MemberWrapper>
-            <DeleteWrapper onClick={() => handleOutMember(info.teamMemberId)}>
-              {!info.isLeader && <button>삭제</button>}
-            </DeleteWrapper>
+            {type === "READY"
+              ? isLeader && (
+                  <DeleteWrapper onClick={() => handleOutMember(info.teamMemberId)}>
+                    {!info.isLeader && <button>삭제</button>}
+                  </DeleteWrapper>
+                )
+              : info.isReviewed && <ReviewText>리뷰 완료</ReviewText>}
           </Box>
         ))}
       </Members>
@@ -63,9 +71,6 @@ const Container = styled.div`
   gap: 2rem;
   width: 35rem;
 
-  ${mediaQueries.tablet} {
-    width: 28.8rem;
-  }
   ${mediaQueries.mobile} {
     width: 28.8rem;
   }
@@ -98,4 +103,8 @@ const Leader = styled.div`
   position: absolute;
   top: 2.2rem;
   left: 2.2rem;
+`;
+
+const ReviewText = styled.div`
+  color: ${color.primary[1]};
 `;

@@ -4,39 +4,40 @@ import AppliedList from "@/components/domains/manage/AppliedList";
 import { getAppliedMemberList, getStudyManagement } from "@/lib/api/post";
 import { getTeamMember } from "@/lib/api/teamMember";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useToast } from "@/hooks/useToast";
 
 export default function Manage() {
+  const pushToast = useToast();
   const { id } = useParams();
   const postId = Number(id);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
-  const { data: detailInfo, error } = useQuery({
+
+  const { data: detailInfo, error: detailInfoError } = useQuery({
     queryKey: ["management", postId],
     queryFn: () => getStudyManagement(postId),
   });
   const { data: appliedMemberList, error: appliedMemberListError } = useQuery({
     queryKey: ["appliedMemberList", postId],
-    queryFn: () => getAppliedMemberList(postId, { order: "DESC", page: 1, take: 100 }),
+    queryFn: () => getAppliedMemberList(postId, { page: 1, take: 100 }),
   });
   const { data: memberList, error: memberListError } = useQuery({
     queryKey: ["memberList", postId],
-    queryFn: () => getTeamMember(postId, { order: "DESC", page: 1, take: 5 }),
+    queryFn: () => getTeamMember(postId, { page: 1, take: 100 }),
   });
 
   const appliedMemberListData = appliedMemberList?.data || [];
   const memberListData = memberList?.data || [];
 
-  if (error) {
-    console.error(error);
+  if (detailInfoError) {
+    pushToast(`${detailInfoError.message}`, "error");
   }
 
   if (appliedMemberListError) {
-    console.error(appliedMemberListError);
+    pushToast(`${appliedMemberListError.message}`, "error");
   }
 
   if (memberListError) {
-    console.error(memberListError);
+    pushToast(`${memberListError.message}`, "error");
   }
 
   return (
@@ -44,20 +45,13 @@ export default function Manage() {
       <S.Box>
         {detailInfo && <S.DetailSection detailInfo={detailInfo} />}
         <S.ListSection>
-          <AppliedList detailInfo={appliedMemberListData} />
-          <MemberList detailInfo={memberListData} />
+          <AppliedList detailInfo={appliedMemberListData} isLeader={detailInfo?.isLeader} type={detailInfo?.status} />
+          <MemberList detailInfo={memberListData} isLeader={detailInfo?.isLeader} type={detailInfo?.status} />
         </S.ListSection>
         {detailInfo && (
-          <S.ButtonSection
-            buttonType={detailInfo.status}
-            isLeader={detailInfo.isLeader}
-            postId={postId}
-            isReviewModalOpen={isReviewModalOpen}
-            setIsReviewModalOpen={setIsReviewModalOpen}
-          />
+          <S.ButtonSection buttonType={detailInfo.status} isLeader={detailInfo.isLeader} postId={postId} />
         )}
       </S.Box>
-      {/* {isReviewModalOpen && 받은 리뷰 모달 컴포넌트} */}
     </S.Container>
   );
 }

@@ -6,14 +6,18 @@ import { ICONS } from "@/constants/icons";
 import DOMPurify from "dompurify";
 import { createTimePassedMessage } from "@/utils/formatDate";
 import { PostDetails, PostApplyStatus } from "@/lib/api/post/type";
+import { ContentSkeleton, TitleSkeleton } from "@/components/commons/Skeleton/TextSkeleton";
+import UserProfileSkeleton from "@/components/commons/Skeleton/UserProfileSkeleton";
+import { postDetailInitialData } from "@/lib/initialData/detail";
 
 interface RecruitmentPostProps {
   postDetails: PostDetails;
   postApplyStatus: PostApplyStatus;
+  isLoading: boolean;
   className?: string;
 }
 
-export default function RecruitmentPost({ postDetails, postApplyStatus, className }: RecruitmentPostProps) {
+export default function RecruitmentPost({ isLoading, postDetails, postApplyStatus, className }: RecruitmentPostProps) {
   const {
     postMemberId: id,
     postTitle,
@@ -32,17 +36,31 @@ export default function RecruitmentPost({ postDetails, postApplyStatus, classNam
 
   return (
     <S.Container className={className}>
-      <S.Title>{postTitle}</S.Title>
+      {isLoading || postDetails === postDetailInitialData ? (
+        <TitleSkeleton page="detail" />
+      ) : (
+        <S.Title>{postTitle}</S.Title>
+      )}
       <S.Box>
         <S.PostInfoWrapper>
-          <UserInfo user={userInfo} nicknameBold />
-          <S.InfoDivider />
-          <S.CreatedDate>{createTimePassedMessage(createdAt)}</S.CreatedDate>
+          {isLoading || postDetails === postDetailInitialData ? (
+            <UserProfileSkeleton />
+          ) : (
+            <>
+              <UserInfo user={userInfo} nicknameBold />
+              <S.InfoDivider />
+              <S.CreatedDate>{createTimePassedMessage(createdAt)}</S.CreatedDate>
+            </>
+          )}
         </S.PostInfoWrapper>
         {isMine && <PostManagementButtons />}
       </S.Box>
       <S.HorizontalDivider />
-      <S.Content dangerouslySetInnerHTML={sanitizedContent} />
+      {isLoading || postDetails === postDetailInitialData ? (
+        <ContentSkeleton />
+      ) : (
+        <S.Content dangerouslySetInnerHTML={sanitizedContent} />
+      )}
       <S.CountWrapper>
         <Count icon={ICONS.eye} count={viewCount} />
         <Count icon={ICONS.scrapEmpty} count={scrapCount} />

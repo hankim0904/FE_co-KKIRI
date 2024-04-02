@@ -4,17 +4,14 @@ import { useParams } from "react-router-dom";
 import CommentTextarea from "./CommentTextarea";
 import Button from "@/components/commons/Button";
 import useCommentMutation from "@/hooks/useMutation/useCommentMutation";
-import { useToast } from "@/hooks/useToast";
-import TOAST from "@/constants/toast";
-
-const { serverError, unauthorized } = TOAST;
+import { useHandleError } from "@/hooks/useHandleError";
 
 export default function CommentForm() {
   const [content, setContent] = useState("");
   const { id } = useParams();
   const postId = Number(id);
   const { uploadMutation } = useCommentMutation(postId);
-  const pushToast = useToast();
+  const handleError = useHandleError();
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -26,13 +23,7 @@ export default function CommentForm() {
       onSuccess: () => {
         setContent("");
       },
-      onError: (error) => {
-        if (error.name === "Unauthorized") {
-          pushToast(unauthorized.message, unauthorized.type);
-          return;
-        }
-        pushToast(serverError.message, serverError.type);
-      },
+      onError: (error) => handleError(error),
     });
   };
 

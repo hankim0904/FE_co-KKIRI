@@ -13,7 +13,7 @@ interface CommentProps {
   postId: number;
 }
 
-const { serverError, unauthorized } = TOAST;
+const { serverError, unauthorizedComment } = TOAST;
 
 /**
  * 댓글 정보(작성자 정보, 작성날짜, 댓글 본문, 댓글 작성자 확인)객체를 받는 댓글창 컴포넌트
@@ -38,6 +38,14 @@ export default function Comment({ commentInfo, postId }: CommentProps) {
     setContent(e.target.value);
   };
 
+  const handleCommentError = (error: Error) => {
+    if (error.name === "Unauthorized") {
+      pushToast(unauthorizedComment.message, unauthorizedComment.type);
+      return;
+    }
+    pushToast(serverError.message, serverError.type);
+  };
+
   const handleEditComment = () => {
     const editedComment = { content };
     editMutation.mutate(
@@ -46,13 +54,15 @@ export default function Comment({ commentInfo, postId }: CommentProps) {
         onSuccess: () => {
           setIsEditing(false);
         },
-        onError: () => pushToast(serverError.message, serverError.type),
+        onError: (error) => handleCommentError(error),
       },
     );
   };
 
   const handleDeleteComment = () => {
-    deleteMutation.mutate(commentId, { onError: () => pushToast(serverError.message, serverError.type) });
+    deleteMutation.mutate(commentId, {
+      onError: (error) => handleCommentError(error),
+    });
   };
 
   return (

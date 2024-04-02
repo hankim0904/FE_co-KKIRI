@@ -5,6 +5,7 @@ import Comment from "./Comment";
 import Button from "@/components/commons/Button";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCommentList } from "@/lib/api/comment";
+import NoResultText from "@/components/commons/NoResultText";
 
 interface CommentsProps {
   postId: number;
@@ -16,27 +17,20 @@ export default function Comments({ postId, className }: CommentsProps) {
     data: commentsData,
     isSuccess,
     isError,
-    isPending,
-    error,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ["comments", postId],
-    queryFn: ({ pageParam }) => getCommentList(postId, { order: "DESC", page: pageParam, take: 10 }),
+    queryFn: ({ pageParam }) => getCommentList(postId, { order: "DESC", page: pageParam, take: 5 }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       lastPage.meta.hasNextPage ? lastPageParam + 1 : undefined,
     retry: 0,
   });
 
-  if (isPending) {
-    return <div>Loading...</div>;
-  }
-
   if (isError) {
-    return <div>{error.message}</div>;
-    // 에러 및 로딩 처리 통일
+    <NoResultText text="서버 에러가 발생했습니다. 잠시후 다시 시도해주세요." padding={60} color="gray" />;
   }
 
   const commentsPages = commentsData?.pages ?? [];

@@ -50,6 +50,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
+  height: 31.3rem;
+  padding-top: 1rem;
 `;
 
 const Wrapper = styled.div`
@@ -72,5 +74,14 @@ const SentenceShort = styled(DefaultSkeleton)`
 
   ${mediaQueries.mobile} {
     width: 12rem;
+  }
+`;
+
+export const CommentSkeleton = styled(DefaultSkeleton)`
+  width: 4rem;
+  height: 2.4rem;
+
+  ${mediaQueries.mobile} {
+    width: 2rem;
   }
 `;

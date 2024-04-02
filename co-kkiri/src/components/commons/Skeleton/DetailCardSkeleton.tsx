@@ -19,10 +19,10 @@ export default function DetailCardSkeleton({ page }: DetailCardSkeletonProps) {
           <Content />
         </Wrapper>
       ))}
-      <Wrapper>
+      <StacksWrapper>
         <Title />
         <StacksSkeleton />
-      </Wrapper>
+      </StacksWrapper>
     </Container>
   );
 }
@@ -56,7 +56,7 @@ const TypeSection = styled(DefaultSkeleton)`
   height: 2.6rem;
   border-radius: 0.2rem 6.1rem 6.1rem 0.2rem;
   position: absolute;
-  top: 1.5rem;
+  top: 3rem;
   left: -0.2rem;
 `;
 
@@ -65,12 +65,17 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 4rem;
 `;
+const StacksWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+`;
 
 const Title = styled(DefaultSkeleton)`
   width: 6rem;
-  height: 2rem;
+  height: 1.9rem;
 `;
 const Content = styled(DefaultSkeleton)`
   width: 14rem;
-  height: 2rem;
+  height: 1.9rem;
 `;

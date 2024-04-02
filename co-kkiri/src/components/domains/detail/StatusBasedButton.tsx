@@ -11,6 +11,7 @@ import usePostMutation from "@/hooks/useMutation/usePostMutation";
 import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
 import { useNavigate } from "react-router-dom";
+import { useHandleError } from "@/hooks/useHandleError";
 
 interface MappedButtonProps {
   postApplyStatus: PostApplyStatus;
@@ -19,7 +20,7 @@ interface MappedButtonProps {
   className?: string;
 }
 
-const { serverError, unauthorized, success } = TOAST;
+const { success } = TOAST;
 
 export default function StatusBasedButton({ postApplyStatus, postId, teamInviteId, className }: MappedButtonProps) {
   const { isOpen: isConfirmOpen, openToggle: confirmToggle } = useOpenToggle();
@@ -27,6 +28,7 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
   const [confirmType, setConfirmType] = useState<ConfirmType>("apply");
   const pushToast = useToast();
   const navigate = useNavigate();
+  const handleError = useHandleError();
 
   const { applyMutation, cancelMutation } = usePostMutation();
 
@@ -37,7 +39,7 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
           onSuccess: () => {
             pushToast(success.message, success.type);
           },
-          onError: () => pushToast(serverError.message, serverError.type),
+          onError: (error) => handleError(error),
           onSettled: () => {
             confirmToggle();
           },
@@ -49,11 +51,7 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
             pushToast(success.message, success.type);
           },
           onError: (error) => {
-            if (error.name === "Unauthorized") {
-              pushToast(unauthorized.message, unauthorized.type);
-              return;
-            }
-            pushToast(serverError.message, serverError.type);
+            handleError(error);
           },
           onSettled: () => {
             confirmToggle();

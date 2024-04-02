@@ -1,9 +1,10 @@
-import { ChangeEvent, useMemo } from "react";
+import { useMemo, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolbar from "./CustomToolbar";
 import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
+import { useImageMutation } from "@/hooks/useMutation/useImageMutation";
 
 const formats = [
   "header",
@@ -20,12 +21,42 @@ const formats = [
 ];
 
 export default function QuillEditor({ onChange, value }: { onChange: (value: string) => void; value: string }) {
+  const quillRef = useRef<ReactQuill | null>(null);
+  const uploadImage = useImageMutation();
+
+  const imageHandler = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.addEventListener("change", async () => {
+      if (input.files) {
+        const file = input.files[0];
+
+        const editor = quillRef.current?.getEditor();
+        if (editor) {
+          const range = editor.getSelection();
+          if (range) {
+            const result = await uploadImage(file);
+            const IMG_URL = result;
+            editor.insertEmbed(range.index, "image", IMG_URL);
+          }
+        }
+      }
+    });
+  };
+
   const modules = useMemo(() => {
     return {
       toolbar: {
         container: "#toolbar",
+        handlers: {
+          image: imageHandler,
+        },
       },
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -33,6 +64,7 @@ export default function QuillEditor({ onChange, value }: { onChange: (value: str
       <CustomToolbar />
       <ReactQuillWrapper>
         <ReactQuill
+          ref={quillRef}
           value={value}
           theme="snow"
           modules={modules}

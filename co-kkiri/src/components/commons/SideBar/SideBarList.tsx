@@ -7,14 +7,15 @@ import { useWindowSize } from "usehooks-ts";
 import Footer from "../Footer";
 import { useFilterSetting } from "@/hooks/useFilterSetting";
 import { listPageInitialFilter } from "@/constants/categoriesAndFilters";
+import { useUserInfoStore } from "@/stores/userInfoStore";
 
 interface SideBarListProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function SideBarList({ onClick }: SideBarListProps) {
-  const { HOME_PATH, STUDY_LIST_PATH, SCOUT } = ROUTER_PATH;
-
+  const { HOME_PATH, STUDY_LIST_PATH, SCOUT, MY_STUDY, MY_PAGE } = ROUTER_PATH;
+  const { userInfo } = useUserInfoStore();
   const { width: screenWidth } = useWindowSize();
   const isTabletOrMobile = screenWidth < 1200;
 
@@ -30,6 +31,11 @@ export default function SideBarList({ onClick }: SideBarListProps) {
   const handleStudyListClick = () => {
     toggleSideBarInTabletOrMobile();
     getFilterAction("studyList", { category: "ALL", filters: listPageInitialFilter })();
+  };
+
+  const handleMyStudyClick = () => {
+    toggleSideBarInTabletOrMobile();
+    getFilterAction("myStudy", { category: "APPLIED" })();
   };
 
   return (
@@ -48,6 +54,16 @@ export default function SideBarList({ onClick }: SideBarListProps) {
           <Link to={SCOUT} onClick={toggleSideBarInTabletOrMobile}>
             <S.Category>스카우트</S.Category>
           </Link>
+          {userInfo && (
+            <Link to={MY_STUDY} onClick={handleMyStudyClick}>
+              <S.Category>나의 스터디</S.Category>
+            </Link>
+          )}
+          {userInfo && (
+            <Link to={MY_PAGE} onClick={toggleSideBarInTabletOrMobile}>
+              <S.Category>마이페이지</S.Category>
+            </Link>
+          )}
         </S.CategoryBox>
       </S.Box>
       <Footer />

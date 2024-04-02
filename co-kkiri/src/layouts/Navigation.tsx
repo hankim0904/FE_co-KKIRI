@@ -41,6 +41,7 @@ interface SideBarWrapperProps {
 const SideBarWrapper = styled.div<SideBarWrapperProps>`
   ${zIndex.modal}
   position: fixed;
+  ${({ $isOpen }) => ($isOpen ? "" : "display:none;")}
   animation: ${(props) => (props.$isOpen ? slideIn : slideOut)} 0.2s forwards;
 `;
 

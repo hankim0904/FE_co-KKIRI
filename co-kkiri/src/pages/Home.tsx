@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
@@ -7,8 +8,14 @@ import Banners from "@/components/domains/home/Banners";
 import HotAndNewSection from "@/components/domains/home/HotAndNewSection";
 import { HOT_AND_NEW_LIST } from "@/constants/hotAndNewList";
 import { HomeCardListType } from "@/types/homeCardListTypes";
+import TOAST from "@/constants/toast";
+import { useToast } from "@/hooks/useToast";
+
+const { serverError } = TOAST;
 
 export default function Home() {
+  const pushToast = useToast();
+
   const {
     data: homeCardListData,
     isLoading,
@@ -25,13 +32,14 @@ export default function Home() {
     hotProjectLists: [],
   };
 
+  useEffect(() => {
+    if (error) {
+      pushToast(serverError.message, serverError.type);
+    }
+  }, [error, pushToast]);
+
   if (isLoading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error.message}</div>;
-    // 에러 및 로딩 처리 통일
   }
 
   return (

@@ -17,7 +17,7 @@ export const RULES: Record<ModalTextFieldInputConfig, ValidationRule> = {
   career: {},
   link: {
     pattern: {
-      value: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,})\/?([\w/#.-]*)*(\?[\w=&.-]*)?(#[\w-]*)?$/, // 해당 정규식은 임시입니다.
+      value: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,})\/?([\w@/#.-]*)(\?[\w=&.-]*)?(#[\w-]*)?$/,
       message: "올바른 url 형식이 아닙니다.",
     },
   },

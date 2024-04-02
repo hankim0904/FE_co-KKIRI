@@ -40,7 +40,7 @@ export default function UserProfileCardLayout({
         <S.PositionChip label={isEmptyValue(position) ? emptyMessages.position : position!} />
         <S.Nickname>{nickname}</S.Nickname>
         <S.Career>{isEmptyValue(position) ? emptyMessages.career : `경력 ${career}년차`}</S.Career>
-        <Stacks stacks={stack || stacks || []} />
+        <Stacks stacks={stack || stacks || []} variant="profile"/>
       </S.InfoBox>
       {!(cardType === "scout") && (
         <S.IntroduceBox>

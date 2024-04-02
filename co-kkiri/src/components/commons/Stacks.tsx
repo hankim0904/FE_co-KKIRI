@@ -13,9 +13,10 @@ import { STACK_CHIP_LIMIT } from "@/constants/cardChipLimits";
 interface StacksProps {
   stacks: string[];
   variant?: "card" | "profile";
+  className?: string;
 }
 
-export default function Stacks({ stacks, variant = "profile" }: StacksProps) {
+export default function Stacks({ stacks, variant, className }: StacksProps) {
   const [displayPositions, setDisplayPositions] = useState<string[]>(stacks);
   const { width: windowWidth } = useWindowSize();
   const isSidebarOpenNarrow = useResponsiveSidebar();
@@ -32,11 +33,13 @@ export default function Stacks({ stacks, variant = "profile" }: StacksProps) {
       setDisplayPositions(stacks.slice(0, limit));
     } else if (variant === "profile") {
       setDisplayPositions(stacks.slice(0, 3));
+    } else {
+      setDisplayPositions(stacks);
     }
   }, [variant, stacks, windowWidth, isSidebarOpenNarrow]);
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {displayPositions.length === 0 ? (
         <StackComponent />
       ) : (

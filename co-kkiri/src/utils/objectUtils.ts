@@ -1,3 +1,5 @@
+import { Option } from "@/types/PositionTypes";
+
 /**
  * 주어진 값에 해당하는 키를 매핑된 필터 객체에서 찾습니다.
  *
@@ -22,4 +24,8 @@ export function getFilterKey<Filter extends string>(mappedFilter: { [x in Filter
   if (!result) throw Error(`value:${value}를 가진 key가 ${JSON.stringify(mappedFilter)}내에 없습니다`);
 
   return result;
+}
+
+export function getLabelFromValue(options: Option[], label: any) {
+  return options.find((option) => option.value === label)?.label || "";
 }

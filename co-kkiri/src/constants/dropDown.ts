@@ -32,6 +32,7 @@ export const DROPDOWN_FORM_INFO: DropdownInfo = {
   },
   recruitment: {
     progressPeriod: [
+      { label: "협의 후 결정", value: null },
       { label: "협의 후 결정", value: "협의 후 결정" },
       { label: "1주", value: "1주" },
       { label: "2주", value: "2주" },
@@ -45,11 +46,13 @@ export const DROPDOWN_FORM_INFO: DropdownInfo = {
       { label: "6개월 이상", value: "6개월 이상" },
     ],
     progressWay: [
+      { label: "협의 후 결정", value: null },
       { label: "온라인", value: "온라인" },
       { label: "오프라인", value: "오프라인" },
       { label: "온/오프라인", value: "온/오프라인" },
     ],
     capacity: [
+      { label: "인원 미정", value: 999 },
       { label: "인원 미정", value: 0 },
       { label: "1명", value: 1 },
       { label: "2명", value: 2 },
@@ -63,12 +66,15 @@ export const DROPDOWN_FORM_INFO: DropdownInfo = {
       { label: "10명 이상", value: 10 },
     ],
     contactWay: [
+      { label: "협의 후 결정", value: null },
+      { label: "기타", value: null },
       { label: "기타", value: "기타" },
       { label: "카카오 오픈톡", value: "카카오 오픈톡" },
       { label: "이메일", value: "이메일" },
       { label: "구글폼", value: "구글폼" },
     ],
     position: [
+      { label: "협의 후 결정", value: null },
       { label: "전체", value: "전체" },
       { label: "프론트엔드", value: "프론트엔드" },
       { label: "백엔드", value: "백엔드" },

@@ -17,12 +17,14 @@ export const useHandleError = () => {
       switch (error.message) {
         case "해당 포스트는 삭제되었습니다.":
           pushToast(deletePost.message, deletePost.type);
+          navigate("/list");
           break;
-        case "해당 글 작성자가 존재하지 않습니다.":
+        case "해당 포스트의 작성자가 존재하지 않습니다.":
           pushToast(notFoundUser.message, notFoundUser.type);
+          navigate("/list");
           break;
       }
-      navigate("/list");
+
       return;
     }
     if (error.name === "Not Found") {

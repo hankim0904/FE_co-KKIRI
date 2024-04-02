@@ -37,14 +37,12 @@ export default function Recruit() {
           pushToast("포스트가 성공적으로 업로드되었습니다.", "success");
           navigate(`/list/${data.postId}`);
         },
-        onError: (error) => {
+        onError: () => {
           pushToast(serverError.message, serverError.type);
-          console.error(error);
         },
       });
     } else {
       pushToast(unauthorized.message, unauthorized.type);
-      navigate("/");
     }
   };
 

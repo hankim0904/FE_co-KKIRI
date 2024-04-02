@@ -10,6 +10,7 @@ import { PostApplyStatus } from "@/lib/api/post/type";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
 import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
+import { useNavigate } from "react-router-dom";
 
 interface MappedButtonProps {
   postApplyStatus: PostApplyStatus;
@@ -25,6 +26,7 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
   const { isOpen: isInviteResponseOpen, openToggle: inviteResponseToggle } = useOpenToggle();
   const [confirmType, setConfirmType] = useState<ConfirmType>("apply");
   const pushToast = useToast();
+  const navigate = useNavigate();
 
   const { applyMutation, cancelMutation } = usePostMutation();
 
@@ -61,8 +63,11 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
     }
   };
 
-  const handleModal = () => {
+  const handleClick = () => {
     switch (postApplyStatus) {
+      case "OWNER":
+        navigate(`/mystudy/${postId}`);
+        break;
       case "APPLIED":
       case "NOT_APPLIED":
         confirmToggle();
@@ -80,12 +85,10 @@ export default function StatusBasedButton({ postApplyStatus, postId, teamInviteI
     }
   }, [postApplyStatus]);
 
-  if (postApplyStatus === "OWNER") return null;
-
   return (
     <div className={className}>
       <StyledButton
-        onClick={handleModal}
+        onClick={handleClick}
         variant={statusButtonConfig[postApplyStatus].variant}
         disabled={statusButtonConfig[postApplyStatus].disabled || applyMutation.isPending}>
         {statusButtonConfig[postApplyStatus].text}

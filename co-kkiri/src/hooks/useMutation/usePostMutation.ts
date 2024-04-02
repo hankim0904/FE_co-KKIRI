@@ -48,7 +48,10 @@ export default function usePostMutation() {
 
   const increaseViewCountMutation = useMutation({
     mutationFn: (postId: number) => increaseViewCount(postId),
-    onSuccess: (_, postId) => queryClient.invalidateQueries({ queryKey: ["postDetail", postId] }),
+    onSuccess: (_, postId) => {
+      queryClient.invalidateQueries({ queryKey: ["postDetail", postId] });
+      queryClient.invalidateQueries({ queryKey: ["/post/list"] });
+    },
     onError: (error) => console.error(error, error.message),
   });
 

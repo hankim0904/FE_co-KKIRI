@@ -92,4 +92,5 @@ const Box = styled.div`
 
 const Option = styled.div`
   ${typography.font14Medium}
+  cursor: pointer;
 `;

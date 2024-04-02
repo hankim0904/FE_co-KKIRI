@@ -4,17 +4,18 @@ import useComponentHeight from "@/hooks/useComponentHeight";
 import ScrollToTop from "@/components/commons/FloatingButton/ScrollToTop";
 import { useQuery } from "@tanstack/react-query";
 import { getPostDetail } from "@/lib/api/post";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PostDetailApiResponseDto } from "@/lib/api/post/type";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
 import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
 
-const { serverError } = TOAST;
+const { serverError, deletePost, notFoundPost } = TOAST;
 
 export default function Detail() {
   const cardRef = useRef<HTMLDivElement>(null);
   const { id } = useParams();
+  const navigate = useNavigate();
   const postId = Number(id);
   const [viewCountIncreased, setViewCountIncreased] = useState(false);
   const { increaseViewCountMutation } = usePostMutation();
@@ -26,7 +27,17 @@ export default function Detail() {
         onSuccess: () => {
           setViewCountIncreased(true);
         },
-        onError: () => {
+        onError: (error) => {
+          if (error.name === "Gone") {
+            pushToast(deletePost.message, deletePost.type);
+            navigate("/list");
+            return;
+          }
+          if (error.name === "Not Found") {
+            pushToast(notFoundPost.message, notFoundPost.type);
+            navigate("/list");
+            return;
+          }
           pushToast(serverError.message, serverError.type);
         },
       });

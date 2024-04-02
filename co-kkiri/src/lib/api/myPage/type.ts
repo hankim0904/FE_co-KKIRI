@@ -9,6 +9,7 @@ export type UserInfoApiResponseDto = {
   career?: number;
   introduce?: string;
   stack?: string[];
+  stacks?: string[];
   link?: string;
 };
 

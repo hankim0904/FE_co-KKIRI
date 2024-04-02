@@ -2,13 +2,14 @@ import DefaultModalLayout from "./ModalLayout";
 import UserProfileCardLayout from "../commons/UserProfileCard/UserProfileCardLayout";
 import styled from "styled-components";
 import Button from "../commons/Button";
-import DESIGN_TOKEN from "@/styles/tokens";
 import useOpenToggle from "@/hooks/useOpenToggle";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMemberProfile } from "@/lib/api/member";
 import { MemberProfileApiResponseDto } from "@/lib/api/member/type";
 import { memberProfile } from "@/constants/initialDatas";
 import ScoutModal from "./ScoutModal";
+import { useToast } from "@/hooks/useToast";
+import { useEffect } from "react";
 
 interface UserProfileModalProps {
   userId: number;
@@ -16,22 +17,34 @@ interface UserProfileModalProps {
 }
 
 export default function UserProfileModal({ userId, onClose }: UserProfileModalProps) {
-  const queryClient = useQueryClient();
+  const pushToast = useToast();
   const { isOpen: isInvitedModalOpen, setIsOpen: setIsInvitedModalOpen } = useOpenToggle();
+  const queryClient = useQueryClient();
 
-  const { data } = useQuery<MemberProfileApiResponseDto>({
+  const { data, isError } = useQuery<MemberProfileApiResponseDto>({
     queryKey: ["memberProfile", userId],
     queryFn: ({ queryKey }) => getMemberProfile(queryKey[1] as number),
-    initialData: () => {
+    placeholderData: () => {
       const data = queryClient.getQueryData<MemberProfileApiResponseDto>(["memberProfile", userId]);
       return data || memberProfile;
     },
-    initialDataUpdatedAt: () => queryClient.getQueryState(["memberProfile", userId])?.dataUpdatedAt,
+    staleTime: 1000 * 60,
   });
 
   const onScoutClickHandler = () => {
     setIsInvitedModalOpen(true);
   };
+
+  useEffect(() => {
+    if (isError) {
+      pushToast("유저 정보를 불러오는 중 오류가 발생했습니다", "error");
+    }
+  }, [isError, pushToast]);
+
+  if(!data) {
+    // 스켈레톤 UI 추가
+    return null;
+  }
 
   return (
     <>

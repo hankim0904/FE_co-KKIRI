@@ -19,6 +19,7 @@ export default function UserProfileCardLayout({
   position,
   career,
   stack,
+  stacks,
   score,
   introduce,
   link,
@@ -38,8 +39,8 @@ export default function UserProfileCardLayout({
         </S.ProgressWrapper>
         <S.PositionChip label={isEmptyValue(position) ? emptyMessages.position : position!} />
         <S.Nickname>{nickname}</S.Nickname>
-        <S.Career>{isEmptyValue(career) ? emptyMessages.career : `경력 ${career}년차`}</S.Career>
-        <Stacks stacks={stack || []} />
+        <S.Career>{isEmptyValue(position) ? emptyMessages.career : `경력 ${career}년차`}</S.Career>
+        <Stacks stacks={stack || stacks || []} />
       </S.InfoBox>
       {!(cardType === "scout") && (
         <S.IntroduceBox>

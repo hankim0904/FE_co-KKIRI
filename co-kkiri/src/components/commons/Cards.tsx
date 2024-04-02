@@ -43,7 +43,7 @@ const Container = styled.div`
   }
 `;
 
-const CardList = styled.div<{ $isSidebarOpenNarrow: boolean }>`
+export const CardList = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   display: grid;
   flex-wrap: wrap;
   gap: 2rem;

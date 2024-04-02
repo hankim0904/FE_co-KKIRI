@@ -48,11 +48,11 @@ const Container = styled.div`
 
   ${mediaQueries.mobile} {
     margin-top: 5.2rem;
-    width: 36rem;
+    width: 32rem;
   }
 `;
 
-const Wrapper = styled.div<{ $isSidebarOpenNarrow: boolean }>`
+export const Wrapper = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   display: grid;
   flex-wrap: wrap;
   gap: 2rem;

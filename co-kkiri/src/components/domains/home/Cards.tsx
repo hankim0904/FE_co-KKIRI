@@ -26,7 +26,7 @@ const {
   mediaQueries: { tablet, mobile },
 } = DESIGN_TOKEN;
 
-const Wrapper = styled.div<{ $isSidebarOpenNarrow: boolean }>`
+export const Wrapper = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   display: flex;
   gap: 2rem;
   ${({ $isSidebarOpenNarrow }) =>

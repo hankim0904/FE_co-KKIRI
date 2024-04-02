@@ -36,7 +36,7 @@ export const Box = styled.div<{ $isSidebarOpenNarrow: boolean }>`
   }
 
   ${mediaQueries.mobile} {
-    width: 36rem;
+    width: 32rem;
   }
 `;
 

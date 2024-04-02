@@ -7,7 +7,7 @@ interface PageProp {
   $page: Pages;
 }
 
-interface ContainerProps extends PageProp {
+export interface ContainerProps extends PageProp {
   $isSidebarOpenNarrow: boolean;
 }
 

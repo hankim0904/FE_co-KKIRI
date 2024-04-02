@@ -8,6 +8,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getSearchedMemberProfile } from "@/lib/api/member";
 import { useDebounceValue } from "usehooks-ts";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
+import { useToast } from "@/hooks/useToast";
 
 export interface SelectedFilter {
   position: string;
@@ -15,6 +16,7 @@ export interface SelectedFilter {
 }
 
 export default function Scout() {
+  const pushToast = useToast();
   const isSidebarOpenNarrow = useResponsiveSidebar();
   const [selectedFilter, setSelectedFilter] = useState<SelectedFilter>({
     position: "",
@@ -23,7 +25,7 @@ export default function Scout() {
   const [searchNickname, setSearchNickname] = useDebounceValue("", 500);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isError, isLoading } = useQuery({
     queryKey: [
       "/member/search",
       {
@@ -47,8 +49,8 @@ export default function Scout() {
   const totalPages = data?.meta.pageCount || 0;
   const scoutCardData = data?.data || [];
 
-  if (error) {
-    console.error(error.message);
+  if (isError) {
+    pushToast(`${error.message}`, "error");
   }
 
   const handlePositionChange = (position: string) => setSelectedFilter((prev) => ({ ...prev, position }));

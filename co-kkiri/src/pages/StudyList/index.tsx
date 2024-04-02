@@ -13,14 +13,16 @@ import { getPostList } from "@/lib/api/post";
 import useStudyListStore from "@/stores/studyListStore";
 import { useDebounceValue } from "usehooks-ts";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
+import { useToast } from "@/hooks/useToast";
 
 export default function StudyList() {
+  const pushToast = useToast();
   const isSidebarOpenNarrow = useResponsiveSidebar();
   const { currentCategory, setCurrentCategory, selectedFilter, setSelectedFilter, currentPage, setCurrentPage } =
     useStudyListStore();
   const [searchTitle, setSearchTitle] = useDebounceValue("", 500);
 
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isError, isLoading } = useQuery({
     queryKey: [
       "/post/list",
       {
@@ -74,8 +76,8 @@ export default function StudyList() {
     setCurrentPage(1);
   };
 
-  if (error) {
-    console.error(error);
+  if (isError) {
+    pushToast(`${error.message}`, "error");
   }
 
   // 임시

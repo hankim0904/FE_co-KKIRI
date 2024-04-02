@@ -1,6 +1,6 @@
 export type CategoryList = "STUDY" | "PROJECT";
 
-export type CategoryStudyStatus = "APPLIED" | "RECRUITING" | "ON_GOING" | "COMPLETED";
+export type CategoryStudyStatus = "APPLIED" | "RECRUITING" | "WAITING" | "ON_GOING" | "COMPLETED";
 
 export interface listPageSelectedFilter {
   stacks: string[];

@@ -43,6 +43,27 @@ export type RecruitedListApiResponseDto = {
   meta: PageMeta;
 };
 
+type WaitingPost = {
+  postId: number;
+  type: CategoryList;
+  recruitEndAt: string;
+  isScraped: boolean;
+  progressWay: string;
+  title: string;
+  positions: string[];
+  stacks: string[];
+  memberNickname: string;
+  memberProfileImg: string;
+  viewCount: number;
+  commentCount: number;
+};
+
+// 나의 스터디 내가 대기중인 스터디 목록
+export type WaitingListApiResponseDto = {
+  data: WaitingPost[];
+  meta: PageMeta;
+};
+
 type OnGoingPost = {
   postId: number;
   type: CategoryList;
@@ -67,6 +88,7 @@ export type OnGoingListApiResponseDto = {
 type CompletedPost = {
   postId: number;
   type: CategoryList;
+  postStatus: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
   recruitEndAt: string;
   isScraped: boolean;
   progressWay: string;

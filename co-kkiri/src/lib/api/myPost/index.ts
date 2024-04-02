@@ -6,6 +6,7 @@ import {
   MyAppliedListApiResponseDto,
   OnGoingListApiResponseDto,
   RecruitedListApiResponseDto,
+  WaitingListApiResponseDto,
 } from "./type";
 
 /** 내가 신청한 스터디 목록 가져오기 */
@@ -15,6 +16,10 @@ export const getApplyList = (qs: PaginationOptions): Promise<MyAppliedListApiRes
 /** 내가 모집한 스터디 목록 가져오기 */
 export const getRecruitList = (qs: PaginationOptions): Promise<RecruitedListApiResponseDto> =>
   apiRequest("get", myPostAddress.recruitList, null, qs);
+
+/** 내가 대기중인 스터디 목록 가져오기 */
+export const getWaitingList = (qs: PaginationOptions): Promise<WaitingListApiResponseDto> =>
+  apiRequest("get", myPostAddress.waitingList, null, qs);
 
 /** 내가 진행중인 스터디 목록 가져오기 */
 export const getOnGoingList = (qs: PaginationOptions): Promise<OnGoingListApiResponseDto> =>

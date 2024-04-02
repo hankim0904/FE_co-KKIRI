@@ -1,4 +1,4 @@
-import { getApplyList, getCompletedList, getOnGoingList, getRecruitList } from "@/lib/api/myPost";
+import { getApplyList, getCompletedList, getOnGoingList, getRecruitList, getWaitingList } from "@/lib/api/myPost";
 
 const PAGE_LIMIT = 12;
 
@@ -9,6 +9,8 @@ export const fetchList = (currentCategory: string, { pageParam }: { pageParam: n
       return getApplyList(fetchParams);
     case "RECRUITING":
       return getRecruitList(fetchParams);
+    case "WAITING":
+      return getWaitingList(fetchParams);
     case "ON_GOING":
       return getOnGoingList(fetchParams);
     case "COMPLETED":

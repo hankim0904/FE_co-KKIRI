@@ -3,6 +3,7 @@ import DESIGN_TOKEN from "@/styles/tokens";
 
 import FilterList from "@/components/commons/FilterList";
 import Button from "@/components/commons/Button";
+import Cards from "@/components/commons/Cards";
 
 const {
   color,
@@ -61,9 +62,12 @@ export const FilterListSection = styled(FilterList)`
   }
 `;
 
+export const CardsSection = styled(Cards)`
+  margin-bottom: 6rem;
+`;
+
 export const ButtonSection = styled(Button)`
   width: 15.8rem;
-  margin-top: 6rem;
   justify-self: center;
 
   ${mobile} {

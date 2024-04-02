@@ -106,6 +106,8 @@ export const myPostAddress = {
   //get
   recruitList: "/my-post/recruit/list",
   //get
+  waitingList: "/my-post/waiting/list",
+  //get
   onGoingList: "/my-post/on-going/list",
   //get
   completedList: "/my-post/complete/list",

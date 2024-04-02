@@ -1,19 +1,17 @@
+import { useEffect } from "react";
 import useMyStudyStore from "@/stores/myStudyStore";
 
+import { useInfiniteQuery } from "@tanstack/react-query";
 import * as S from "./styled";
 
-import Cards from "@/components/commons/Cards";
 import ScrollToTop from "@/components/commons/FloatingButton/ScrollToTop";
-
-import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
-import { categoryStudyStatusFilter } from "@/constants/categoriesAndFilters";
-import { CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
-import { getFilterKey } from "@/utils/objectUtils";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchList } from "@/utils/myStudyPageFetchList";
 import { useToast } from "@/hooks/useToast";
+import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
+import { getFilterKey } from "@/utils/objectUtils";
+import { fetchList } from "@/utils/myStudyPageFetchList";
+import { categoryStudyStatusFilter } from "@/constants/categoriesAndFilters";
 import TOAST from "@/constants/toast";
-import { useEffect } from "react";
+import { CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
 
 const { serverError, unauthorized } = TOAST;
 
@@ -59,7 +57,7 @@ export default function MyStudy() {
           filters={Object.values(categoryStudyStatusFilter)}
           onFilterClick={handleCategoryChange}
         />
-        <Cards data={allCards} page="myStudy" />
+        <S.CardsSection data={allCards} page="myStudy" />
         {hasNextPage && (
           <S.ButtonSection variant="ghost" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
             더보기

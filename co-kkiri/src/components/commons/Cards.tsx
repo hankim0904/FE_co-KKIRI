@@ -9,12 +9,13 @@ import NoResultText from "./NoResultText";
 interface CardsProps {
   data: ListApiResponseDto["data"];
   page?: Pages;
+  className?: string;
 }
 
-export default function Cards({ data, page }: CardsProps) {
+export default function Cards({ data, page, className }: CardsProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
   return (
-    <Container>
+    <Container className={className}>
       {data.length !== 0 ? (
         <CardList $isSidebarOpenNarrow={isSidebarOpenNarrow}>
           {data.map((data) => (

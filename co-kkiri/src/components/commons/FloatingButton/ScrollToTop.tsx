@@ -19,7 +19,7 @@ export default function ScrollToTop() {
 
       if (!scrollY) return;
 
-      if (scrollY > 200) {
+      if (scrollY > 400) {
         setIsVisible(true);
       } else {
         setIsVisible(false);

@@ -15,6 +15,7 @@ import Navigation from "./layouts/Navigation";
 import GoogleAuth from "./pages/Auth/GoogleAuth";
 import AuthListener from "./components/commons/AuthListener";
 import GithubAuth from "./pages/Auth/GithubAuth";
+import PageScrollTop from "./components/commons/PageScrollTop";
 
 const {
   HOME_PATH,
@@ -35,6 +36,7 @@ const PageRouter = () => {
   return (
     <Router>
       <AuthListener />
+      <PageScrollTop />
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route path={HOME_PATH} element={<Home />} />

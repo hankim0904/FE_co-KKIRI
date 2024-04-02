@@ -18,12 +18,14 @@ interface RecruitmentRequestLayoutProps {
   onSubmitClick: (data: FieldValues) => void;
   buttonText: string;
   selectedOptions: RecruitApiRequestDto;
+  isLoading: boolean;
 }
 
 export default function RecruitmentRequestLayout({
   selectedOptions,
   buttonText,
   onSubmitClick,
+  isLoading,
 }: RecruitmentRequestLayoutProps) {
   const {
     recruitment: { capacity, progressPeriod, progressWay, contactWay, position },
@@ -53,7 +55,6 @@ export default function RecruitmentRequestLayout({
     if (!validateFormData(errors)) {
       onSubmitClick(data);
     }
-    console.log(data);
   };
 
   const contactWayValue = watch("contactWay");
@@ -154,7 +155,7 @@ export default function RecruitmentRequestLayout({
           onClick={() => {
             handleRecruitFail(errors);
           }}
-          disabled={isButtonDisabled(titleValue, contentValue)}>
+          disabled={isButtonDisabled(titleValue, contentValue, isLoading)}>
           {buttonText}
         </Button>
       </S.SubmitButtonBox>

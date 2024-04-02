@@ -7,6 +7,10 @@ import { getPostDetail } from "@/lib/api/post";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
 import { FieldValues } from "react-hook-form";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
+
+const { serverError, unauthorized } = TOAST;
 
 export default function Edit() {
   const [selectedOptions, setSelectedOptions] = useState<RecruitApiRequestDto>({
@@ -27,6 +31,7 @@ export default function Edit() {
   const { id } = useParams();
   const postId = Number(id);
   const { editMutation } = usePostMutation();
+  const pushToast = useToast();
 
   // useQuery를 통해 데이터 가져오기
   const { data } = useQuery({
@@ -40,7 +45,12 @@ export default function Edit() {
       { postId, data: data as RecruitApiRequestDto },
       {
         onSuccess: () => {
+          pushToast("포스트가 성공적으로 업로드되었습니다.", "success");
           navigate(`/list/${postId}`);
+        },
+        onError: (error) => {
+          pushToast(serverError.message, serverError.type);
+          console.error(error);
         },
       },
     );
@@ -48,25 +58,35 @@ export default function Edit() {
 
   useEffect(() => {
     if (data) {
-      setSelectedOptions({
-        title: data.postDetails.postTitle,
-        content: data.postDetails.postContent,
-        type: data.postDetails.type,
-        recruitEndAt: data.postDetails.recruitEndAt,
-        progressPeriod: data.postDetails.progressPeriod,
-        progressWay: data.postDetails.progressWay,
-        contactWay: data.postDetails.contactWay,
-        capacity: data.postDetails.capacity,
-        positions: data.postDetails.positions,
-        stacks: data.postDetails.stacks,
-        link: data.postDetails.link,
-      });
+      if (data.postApplyStatus !== "OWNER") {
+        pushToast("잘못된 접근입니다.", "error");
+        navigate("/");
+      } else {
+        setSelectedOptions({
+          title: data.postDetails.postTitle,
+          content: data.postDetails.postContent,
+          type: data.postDetails.type,
+          recruitEndAt: data.postDetails.recruitEndAt,
+          progressPeriod: data.postDetails.progressPeriod,
+          progressWay: data.postDetails.progressWay,
+          contactWay: data.postDetails.contactWay,
+          capacity: data.postDetails.capacity,
+          positions: data.postDetails.positions,
+          stacks: data.postDetails.stacks,
+          link: data.postDetails.link,
+        });
+      }
     }
   }, [data]);
 
   return (
     <S.Container>
-      <RecruitmentRequestLayout selectedOptions={selectedOptions} onSubmitClick={handleSubmit} buttonText="수정하기" />
+      <RecruitmentRequestLayout
+        isLoading={editMutation.isPending}
+        selectedOptions={selectedOptions}
+        onSubmitClick={handleSubmit}
+        buttonText="수정하기"
+      />
     </S.Container>
   );
 }

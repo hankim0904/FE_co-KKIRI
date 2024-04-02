@@ -2,19 +2,21 @@ import RecruitmentRequestLayout from "@/components/commons/RecruitmentRequestLay
 import * as S from "./styled";
 import { RecruitApiRequestDto } from "@/lib/api/post/type";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
 import { FieldValues } from "react-hook-form";
-import ReviewModal from "@/components/domains/review/ReviewModal";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
+import { useUserInfoStore } from "@/stores/userInfoStore";
+
+const { serverError, unauthorized } = TOAST;
 
 export default function Recruit() {
-  const navigate = useNavigate();
-  const { uploadMutation } = usePostMutation();
   const [selectedOptions, setSelectedOptions] = useState<RecruitApiRequestDto>({
     type: "STUDY",
     recruitEndAt: "",
     progressPeriod: "",
-    capacity: 11,
+    capacity: 999,
     contactWay: "",
     progressWay: "",
     stacks: [],
@@ -23,19 +25,33 @@ export default function Recruit() {
     content: "",
     link: "",
   });
+  const navigate = useNavigate();
+  const { uploadMutation } = usePostMutation();
+  const pushToast = useToast();
+  const { userInfo } = useUserInfoStore();
 
   const handleSubmit = (data: FieldValues) => {
-    uploadMutation.mutate(data as RecruitApiRequestDto, {
-      onSuccess: (data) => {
-        navigate(`/list/${data.postId}`);
-      },
-    });
-    console.log(data);
+    if (userInfo) {
+      uploadMutation.mutate(data as RecruitApiRequestDto, {
+        onSuccess: (data) => {
+          pushToast("포스트가 성공적으로 업로드되었습니다.", "success");
+          navigate(`/list/${data.postId}`);
+        },
+        onError: (error) => {
+          pushToast(serverError.message, serverError.type);
+          console.error(error);
+        },
+      });
+    } else {
+      pushToast(unauthorized.message, unauthorized.type);
+      navigate("/");
+    }
   };
 
   return (
     <S.Container>
       <RecruitmentRequestLayout
+        isLoading={uploadMutation.isPending}
         selectedOptions={selectedOptions}
         onSubmitClick={handleSubmit}
         buttonText="글 등록하기"

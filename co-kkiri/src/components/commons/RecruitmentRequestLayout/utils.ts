@@ -61,14 +61,15 @@ export const handleSelectType = (
 };
 
 // 비활성화 검사
-export const isButtonDisabled = (title: string, content: string): boolean => {
+export const isButtonDisabled = (title: string, content: string, isLoading: boolean): boolean => {
   if (
     title === "" ||
     content === "" ||
     content === "<p><br></p>" ||
     content === "<h1><br></h1>" ||
     content === "<h2><br></h2>" ||
-    content === "<h3><br></h3>"
+    content === "<h3><br></h3>" ||
+    isLoading === true
   ) {
     return true;
   } else {

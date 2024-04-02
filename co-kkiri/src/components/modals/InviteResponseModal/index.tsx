@@ -3,17 +3,23 @@ import ModalLayout from "../ModalLayout";
 import UserInfo from "../../commons/UserInfo";
 import Button from "../../commons/Button";
 import { ICONS } from "@/constants/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { acceptMember, getInviteInfo, rejectMember } from "@/lib/api/teamMember";
+import TOAST from "@/constants/toast";
+import { useToast } from "@/hooks/useToast";
+import useOpenToggle from "@/hooks/useOpenToggle";
 
 interface InviteResponseModalProps {
   onClose: () => void;
   teamInviteId: number;
 }
 
+const { serverError, success } = TOAST;
+
 export default function InviteResponseModal({ onClose, teamInviteId }: InviteResponseModalProps) {
   const queryClient = useQueryClient();
+  const pushToast = useToast();
   const navigate = useNavigate();
 
   //팀 초대 조회
@@ -22,31 +28,49 @@ export default function InviteResponseModal({ onClose, teamInviteId }: InviteRes
     queryFn: () => getInviteInfo(teamInviteId),
   });
 
+  const teamMemberId = data?.teamMemberId ? data.teamMemberId : NaN;
+
   const handleAccept = useMutation({
     mutationFn: (teamMemberId: number) => acceptMember(teamMemberId),
     onSuccess: () => {
       queryClient.invalidateQueries();
+      pushToast(success.message, success.type);
+
+      return;
     },
     onError: (error) => {
+      pushToast(serverError.message, serverError.type);
       console.error(error);
+      return;
+    },
+    onSettled: () => {
+      navigate("/mypage");
     },
   });
 
-  const handleAcceptMember = (teamMemberId: number) => {
+  const handleAcceptMember = (teamMemberId: number, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     handleAccept.mutate(teamMemberId);
   };
 
   const handleReject = useMutation({
     mutationFn: (teamMemberId: number) => rejectMember(teamMemberId),
-    onSuccess: () => {},
+    onSuccess: () => {
+      pushToast(success.message, success.type);
+      return;
+    },
     onError: (error) => {
+      pushToast(serverError.message, serverError.type);
       console.error(error);
+      return;
+    },
+    onSettled: () => {
+      navigate("/mypage");
     },
   });
 
-  const teamMemberId = data?.teamMemberId ? data.teamMemberId : NaN;
-
-  const handleRejectMember = (teamMemberId: number) => {
+  const handleRejectMember = (teamMemberId: number, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     handleReject.mutate(teamMemberId);
   };
 
@@ -60,12 +84,10 @@ export default function InviteResponseModal({ onClose, teamInviteId }: InviteRes
             <UserInfo user={{ id: data?.sendMemberId, nickname: data?.sendMemberNickname }} />
           </S.SenderInfoBox>
           <S.ContentBox>
-            <Link to="">
-              <h6>
-                스터디/프로젝트
-                <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
-              </h6>
-            </Link>
+            <h6>
+              스터디/프로젝트
+              <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
+            </h6>
             <p>{data?.postTitle}</p>
           </S.ContentBox>
           <S.MessageBox>
@@ -73,10 +95,10 @@ export default function InviteResponseModal({ onClose, teamInviteId }: InviteRes
             <p>{data?.message}</p>
           </S.MessageBox>
           <S.SubmitButtonBox>
-            <Button onClick={() => handleRejectMember(teamMemberId)} type="submit" variant="red">
+            <Button onClick={(e) => handleRejectMember(teamMemberId, e)} variant="red">
               거절하기
             </Button>
-            <Button onClick={() => handleAcceptMember(teamMemberId)} type="submit" variant="primary">
+            <Button onClick={(e) => handleAcceptMember(teamMemberId, e)} variant="primary">
               수락하기
             </Button>
           </S.SubmitButtonBox>

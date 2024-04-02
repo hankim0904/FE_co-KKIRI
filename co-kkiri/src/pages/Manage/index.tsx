@@ -40,6 +40,17 @@ export default function Manage() {
     pushToast(`${memberListError.message}`, "error");
   }
 
+  const changeName = (type: string) => {
+    switch (type) {
+      case "STUDY":
+        return "스터디";
+      case "PROJECT":
+        return "프로젝트";
+      default:
+        return "스터디";
+    }
+  };
+
   return (
     <S.Container>
       <S.Box>
@@ -49,7 +60,12 @@ export default function Manage() {
           <MemberList detailInfo={memberListData} isLeader={detailInfo?.isLeader} type={detailInfo?.status} />
         </S.ListSection>
         {detailInfo && (
-          <S.ButtonSection buttonType={detailInfo.status} isLeader={detailInfo.isLeader} postId={postId} />
+          <S.ButtonSection
+            buttonType={detailInfo.status}
+            isLeader={detailInfo.isLeader}
+            postId={postId}
+            studyType={changeName(detailInfo.type)}
+          />
         )}
       </S.Box>
     </S.Container>

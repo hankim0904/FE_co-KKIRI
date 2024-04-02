@@ -12,9 +12,10 @@ interface ButtonsProps {
   isLeader: boolean;
   postId: number;
   isReviewed?: boolean;
+  studyType: string;
 }
 
-export default function Buttons({ buttonType, isLeader, postId, isReviewed }: ButtonsProps) {
+export default function Buttons({ buttonType, isLeader, postId, studyType, isReviewed }: ButtonsProps) {
   const { isOpen: isReviewModalOpen, openToggle: handleReviewModalOpen } = useOpenToggle();
   const { goToScoutPage, goToPostReviewPage, studyStartMutation, studyEndMutation, studyReviewEndMutation } =
     useManageButtons();
@@ -39,17 +40,17 @@ export default function Buttons({ buttonType, isLeader, postId, isReviewed }: Bu
       {isLeader && buttonType === "READY" && (
         <>
           <ManageButton text="초대하기" buttonCount={2} variant="ghost" onClick={goToScoutPage} />
-          <ManageButton text="스터디 시작" buttonCount={2} variant="primary" onClick={handleStudyStart} />
+          <ManageButton text={`${studyType} 시작`} buttonCount={2} variant="primary" onClick={handleStudyStart} />
         </>
       )}
       {!isLeader && buttonType === "READY" && (
-        <ManageButton text="스터디 대기 중" buttonCount={1} variant="primary" disabled />
+        <ManageButton text={`${studyType} 대기 중`} buttonCount={1} variant="primary" disabled />
       )}
       {isLeader && buttonType === "PROGRESS" && (
-        <ManageButton text="스터디 완료" buttonCount={1} variant="primary" onClick={handleStudyEnd} />
+        <ManageButton text={`${studyType} 완료`} buttonCount={1} variant="primary" onClick={handleStudyEnd} />
       )}
       {!isLeader && buttonType === "PROGRESS" && (
-        <ManageButton text="스터디 완료" buttonCount={1} variant="primary" disabled />
+        <ManageButton text={`${studyType} 완료`} buttonCount={1} variant="primary" disabled />
       )}
       {memberReviewed === false && buttonType === "PROGRESS_END" && (
         <ManageButton text="리뷰 작성" buttonCount={1} variant="primary" onClick={() => goToPostReviewPage(postId)} />

@@ -11,11 +11,17 @@ import { CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
 import { getFilterKey } from "@/utils/objectUtils";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchList } from "@/utils/myStudyPageFetchList";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
+import { useEffect } from "react";
+
+const { serverError, unauthorized } = TOAST;
 
 export default function MyStudy() {
   const { currentCategory, setCurrentCategory } = useMyStudyStore();
   const isSidebarOpenNarrow = useResponsiveSidebar();
   const fetchListWithCategory = ({ pageParam = 1 }) => fetchList(currentCategory, { pageParam });
+  const pushToast = useToast();
 
   const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ["myStudyList", currentCategory],
@@ -23,6 +29,7 @@ export default function MyStudy() {
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) =>
       lastPage.meta.hasNextPage ? lastPageParam + 1 : undefined,
+    retry: 0,
   });
 
   const handleCategoryChange = (category: string) => {
@@ -32,9 +39,15 @@ export default function MyStudy() {
 
   const allCards = data?.pages.flatMap((page) => page.data) ?? [];
 
-  if (error) {
-    console.error(error);
-  }
+  useEffect(() => {
+    if (error) {
+      if (error.name === "Unauthorized") {
+        pushToast(unauthorized.message, unauthorized.type);
+        return;
+      }
+      pushToast(serverError.message, serverError.type);
+    }
+  }, [error, pushToast]);
 
   return (
     <S.Container>

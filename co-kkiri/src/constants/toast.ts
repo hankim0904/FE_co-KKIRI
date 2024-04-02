@@ -13,6 +13,8 @@ const TOAST: Toast = {
   cancelApplicantSuccess: { message: "지원이 취소되었습니다.", type: "success" },
   notFoundPost: { message: "해당 게시글을 찾을 수 없습니다.", type: "error" },
   copyLink: { message: "링크가 복사되었습니다", type: "success" },
+  scrapContent: { message: "스크랩이 완료되었습니다", type: "success" },
+  notScrapContent: { message: "스크랩이 취소되었습니다", type: "success" },
 };
 
 export default TOAST;

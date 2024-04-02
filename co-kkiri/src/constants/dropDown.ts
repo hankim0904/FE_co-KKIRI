@@ -16,7 +16,7 @@ export const DROPDOWN_FORM_INFO: DropdownInfo = {
       { label: "프론트엔드", value: "프론트엔드" },
       { label: "백엔드", value: "백엔드" },
       { label: "디자이너", value: "디자이너" },
-      { label: "IOS", value: "IOS" },
+      { label: "iOS", value: "iOS" },
       { label: "안드로이드", value: "안드로이드" },
       { label: "데브옵스", value: "데브옵스" },
     ],
@@ -86,7 +86,7 @@ export const DROPDOWN_FILTER_INFO: DropdownInfo = {
       { label: "프론트엔드", value: "프론트엔드" },
       { label: "백엔드", value: "백엔드" },
       { label: "디자이너", value: "디자이너" },
-      { label: "IOS", value: "IOS" },
+      { label: "iOS", value: "iOS" },
       { label: "안드로이드", value: "안드로이드" },
       { label: "데브옵스", value: "데브옵스" },
     ],
@@ -116,8 +116,8 @@ export const DROPDOWN_INFO = {
   user: {
     position: {
       defaultValue: "포지션",
-      options: ["풀스택", "프론트엔드", "백엔드", "디자이너", "IOS", "안드로이드", "데브옵스"],
-      values: ["풀스택", "프론트엔드", "백엔드", "디자이너", "IOS", "안드로이드", "데브옵스"],
+      options: ["풀스택", "프론트엔드", "백엔드", "디자이너", "iOS", "안드로이드", "데브옵스"],
+      values: ["풀스택", "프론트엔드", "백엔드", "디자이너", "iOS", "안드로이드", "데브옵스"],
     },
     career: {
       defaultValue: "경력",
@@ -169,8 +169,8 @@ export const DROPDOWN_INFO = {
   filter: {
     position: {
       defaultValue: "포지션",
-      options: ["전체", "프론트엔드", "백엔드", "디자이너", "IOS", "안드로이드", "데브옵스"],
-      values: ["전체", "프론트엔드", "백엔드", "디자이너", "IOS", "안드로이드", "데브옵스"],
+      options: ["전체", "프론트엔드", "백엔드", "디자이너", "iOS", "안드로이드", "데브옵스"],
+      values: ["전체", "프론트엔드", "백엔드", "디자이너", "iOS", "안드로이드", "데브옵스"],
     },
     progressWay: {
       defaultValue: "진행 방식",

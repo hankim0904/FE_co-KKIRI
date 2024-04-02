@@ -87,7 +87,7 @@ export const manageData: ManageData = {
       status: "READY",
       contactWay: "오픈톡",
       capacity: 6,
-      positions: ["안드로이드", "IOS", "백엔드"],
+      positions: ["안드로이드", "iOS", "백엔드"],
       stack: ["Java", "Kotlin", "Swift"],
       isLeader: false,
     },

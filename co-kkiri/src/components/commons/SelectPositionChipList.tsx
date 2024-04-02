@@ -8,7 +8,7 @@ interface SelectPositionChipListProps {
 }
 
 export default function SelectPositionChipList({ selectedPositions, onChipClick }: SelectPositionChipListProps) {
-  const positions = ["전체", "프론트엔드", "백엔드", "디자이너", "IOS", "안드로이드", "데브옵스"];
+  const positions = ["전체", "프론트엔드", "백엔드", "디자이너", "iOS", "안드로이드", "데브옵스"];
 
   return (
     <div>

@@ -6,6 +6,7 @@ import Button from "../Button";
 import { useState } from "react";
 import EditUserProfileModal from "@/components/modals/EditUserProfileModal";
 import { UserInfoApiResponseDto } from "@/lib/api/myPage/type";
+import { emptyMessages } from "./constants";
 
 interface UserProfileCardProps extends UserInfoApiResponseDto {
   score: number;
@@ -37,7 +38,7 @@ export default function UserProfileCardLayout({
         </S.ProgressWrapper>
         <S.PositionChip label={isEmptyValue(position) ? emptyMessages.position : position!} />
         <S.Nickname>{nickname}</S.Nickname>
-        <S.Career>{isEmptyValue(position) ? emptyMessages.career : `경력 ${career}년차`}</S.Career>
+        <S.Career>{isEmptyValue(career) ? emptyMessages.career : `경력 ${career}년차`}</S.Career>
         <Stacks stacks={stack || []} />
       </S.InfoBox>
       {!(cardType === "scout") && (
@@ -59,11 +60,3 @@ export default function UserProfileCardLayout({
     </S.Container>
   );
 }
-
-const emptyMessages = {
-  career: "경력을 아직 작성하지 않았어요!",
-  position: "포지션",
-  link: "링크 없음",
-  introduce: "한줄소개를 아직 작성하지 않았어요!",
-  tags: "아직 받은 태그가 없어요.",
-};

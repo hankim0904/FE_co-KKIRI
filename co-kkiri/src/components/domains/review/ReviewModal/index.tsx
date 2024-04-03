@@ -32,7 +32,7 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
   };
 
   return (
-    <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose}>
+    <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose} isCloseClickOutside>
       <S.Container>
         <h3>스터디 리뷰</h3>
         <S.Box>

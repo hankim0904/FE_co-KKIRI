@@ -1,6 +1,6 @@
 import { SearchedMemberProfile } from "@/lib/api/member/type";
 import DESIGN_TOKEN from "@/styles/tokens";
-import { InfiniteData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import RHFDropdown from "../../commons/Form/RHFDropdown";
@@ -11,7 +11,7 @@ import FormElement from "@/components/commons/Form/FormElement";
 import RHFTextArea from "@/components/commons/Form/RHFTextArea";
 import ScoutUserProfile from "./ScoutUserProfile";
 import { getPostsForScout } from "@/lib/api/scout";
-import { InviteMemberRequestDto, ScoutListApiResponseDto } from "@/lib/api/scout/type";
+import { InviteMemberRequestDto } from "@/lib/api/scout/type";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/useToast";
 import useScoutMutations from "@/hooks/useMutation/useScoutMutation";

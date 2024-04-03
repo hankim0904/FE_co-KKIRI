@@ -75,7 +75,7 @@ export default function InviteResponseModal({ onClose, teamInviteId }: InviteRes
   };
 
   return (
-    <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose}>
+    <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose} isCloseClickOutside>
       <S.Container>
         <S.ContentContainer>
           <h1>초대 메세지</h1>

@@ -49,7 +49,7 @@ export default function UserProfileModal({ userId, onClose }: UserProfileModalPr
   return (
     <>
       {!isInvitedModalOpen && (
-        <ModalLayout desktopWidth={430} tabletWidth={430} mobileWidth={320} onClose={onClose}>
+        <ModalLayout desktopWidth={430} tabletWidth={430} mobileWidth={320} onClose={onClose} isCloseClickOutside>
           <UserProfileCardLayout {...data} score={data.gauge} />
           {/* <Divider /> */}
           {/* <CollapseSection title="유저가 받은 태그" isCollapsed={isOpen} onClick={() => setIsOpen(!isOpen)}>

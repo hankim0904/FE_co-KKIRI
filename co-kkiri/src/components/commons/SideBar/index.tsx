@@ -15,7 +15,13 @@ export default function SideBar({ onClick, onClose }: SideBarProps) {
   return (
     <>
       {isTabletOrMobile ? (
-        <ModalLayout desktopWidth={0} tabletWidth={210} mobileWidth={210} modalType="sidebar" onClose={onClose}>
+        <ModalLayout
+          desktopWidth={0}
+          tabletWidth={210}
+          mobileWidth={210}
+          modalType="sidebar"
+          onClose={onClose}
+          isCloseClickOutside>
           <SideBarList onClick={onClick} />
         </ModalLayout>
       ) : (

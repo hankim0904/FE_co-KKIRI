@@ -14,7 +14,7 @@ interface ConfirmModalProps {
 
 export default function ConfirmModal({ type, onClose, onClick }: ConfirmModalProps) {
   return (
-    <ModalLayout desktopWidth={430} mobileWidth={320} modalType="confirm" onClose={onClose}>
+    <ModalLayout desktopWidth={430} mobileWidth={320} modalType="confirm" onClose={onClose} isCloseClickOutside>
       <Container>
         <Message>{CONFIRM_TYPE[type].message}</Message>
         <Wrapper>

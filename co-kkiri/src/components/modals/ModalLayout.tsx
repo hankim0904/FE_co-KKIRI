@@ -15,6 +15,7 @@ interface ModalLayoutProps {
   tabletWidth?: number;
   desktopWidth: number;
   onClose: () => void;
+  isCloseClickOutside?: boolean;
   className?: string;
 }
 
@@ -25,11 +26,14 @@ export default function ModalLayout({
   children,
   modalType,
   onClose,
+  isCloseClickOutside,
   className,
 }: ModalLayoutProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  useOnClickOutside(modalRef, onClose);
+  useOnClickOutside(modalRef, () => {
+    isCloseClickOutside ? onClose() : null;
+  });
 
   useEffect(() => {
     const prevScrollY = preventScroll();

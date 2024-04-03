@@ -9,7 +9,11 @@
  * @returns {string} 포맷팅된 날짜 문자열입니다.
  */
 export const formatDate = (createdAt: string, withTime: boolean = false): string => {
-  const date = new Date(createdAt);
+  const originDate = new Date(createdAt);
+  const GMTNow = originDate.getTime() + originDate.getTimezoneOffset() * 60 * 1000; 
+
+  const KoreaTimeDiff = 9 * 60 * 60 * 1000;
+  const date = new Date(GMTNow + KoreaTimeDiff);
   const year = date.getUTCFullYear();
   const month = date.getUTCMonth() + 1;
   const day = date.getUTCDate();

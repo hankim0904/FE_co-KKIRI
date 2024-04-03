@@ -33,7 +33,6 @@ export default function Detail() {
     queryKey: ["postDetail", postId],
     queryFn: () => getPostDetail(postId),
     retry: 0,
-    staleTime: 60 * 1000,
     enabled: viewCountIncreased,
   });
 
@@ -41,7 +40,7 @@ export default function Detail() {
     handleError(error);
   }
 
-  const cardHeight = useComponentHeight<PostDetailApiResponseDto | undefined>(data, cardRef, 407);
+  const cardHeight = useComponentHeight<PostDetailApiResponseDto | undefined>(data, cardRef, isLoading, 407);
 
   const postDetails = data?.postDetails || postDetailInitialData;
   const postApplyStatus = data?.postApplyStatus || "NOT_APPLIED";

@@ -8,6 +8,7 @@ import { FieldValues } from "react-hook-form";
 import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
 import { useUserInfoStore } from "@/stores/userInfoStore";
+import useOpenToggle from "@/hooks/useOpenToggle";
 
 const { serverError, unauthorized } = TOAST;
 
@@ -25,6 +26,7 @@ export default function Recruit() {
     content: "",
     link: "",
   });
+
   const navigate = useNavigate();
   const { uploadMutation } = usePostMutation();
   const pushToast = useToast();

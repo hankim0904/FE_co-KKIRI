@@ -5,8 +5,7 @@ const { color, mediaQueries, typography } = DESIGN_TOKEN;
 
 export const Container = styled.div`
   width: 43rem;
-  height: 72rem;
-
+  max-height: 72rem;
   padding: 4rem 3rem;
 
   & h3 {
@@ -39,7 +38,7 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  height: 55.4rem;
+  max-height: 55.4rem;
   margin-top: 6rem;
   overflow-y: auto;
   overflow-x: hidden;

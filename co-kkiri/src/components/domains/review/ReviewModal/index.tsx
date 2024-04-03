@@ -1,11 +1,12 @@
 import EvaluationChip from "@/components/commons/Chips/EvaluationChip.tsx";
 import ModalLayout from "@/components/modals/ModalLayout";
 import * as S from "./ReviewModal.styled.ts";
-import { REVIEW_INFO } from "@/lib/mock/reviewComment.ts";
-import { EVALUATION_COMMENT } from "@/constants/evaluationChip";
 import { ICONS } from "@/constants/icons";
 import { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getReview } from "@/lib/api/review/index.ts";
+import { TEAM_REVIEW_INFO, emojis } from "@/lib/mock/review/teamReview.ts";
 
 interface ReviewModalProps {
   onClose: () => void;
@@ -13,13 +14,9 @@ interface ReviewModalProps {
 
 export default function ReviewModal({ onClose }: ReviewModalProps) {
   const { id } = useParams();
-  const { compliments, improvements } = EVALUATION_COMMENT;
-  const teamComplimentsTag = [compliments.team.communication_com, compliments.team.develop_com, compliments.team.deadline_com];
-  const teamImprovementsTag = [improvements.team.communication, improvements.team.deadline];
-  const complimentsTag = [compliments.member.teaching, compliments.member.leadership, compliments.member.moodMaker];
-  const improvementsTag = [improvements.member.dogmatic, improvements.member.harsh];
-  const { comments, emojis } = REVIEW_INFO;
+  const postId = Number(id);
   const selectedEmojisRef = useRef<string[]>([]);
+  const { postTitle, postReviews, memberReviews, memberReviewComments } = TEAM_REVIEW_INFO;
 
   const randomPicker = () => {
     const availableEmojis = emojis.filter((emoji) => !selectedEmojisRef.current.includes(emoji));
@@ -30,6 +27,12 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
 
     return selectedEmoji;
   };
+
+  //팀 리뷰 조회요청
+  // const { data } = useQuery({
+  //   queryKey: ["teamReview", postId],
+  //   queryFn: () => getReview(postId),
+  // });
 
   return (
     <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose} isCloseClickOutside>
@@ -43,39 +46,33 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
                 <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
               </h6>
             </Link>
-            <p>실제 사용할 쇼핑몰 웹프로젝트 만들어나가실 분 구합니다. 쇼핑몰 사장</p>
+            <p>{postTitle}</p>
           </S.ContentBox>
           <S.ContentBox>
             <h6>스터디 태그 모음</h6>
             <S.TagBox>
-              {teamComplimentsTag.map((tag) => (
-                <EvaluationChip key={tag} label={tag} evaluationWay="COMPLIMENT" />
-              ))}
-              {teamImprovementsTag.map((tag) => (
-                <EvaluationChip key={tag} label={tag} evaluationWay="IMPROVMENT" />
+              {postReviews.map((tag) => (
+                <EvaluationChip key={tag.content} label={tag.content} evaluationWay={tag.type} />
               ))}
             </S.TagBox>
           </S.ContentBox>
           <S.ContentBox>
             <h6>내가 받은 태그</h6>
             <S.TagBox>
-              {complimentsTag.map((tag) => (
-                <EvaluationChip key={tag} label={tag} evaluationWay="COMPLIMENT" />
-              ))}
-              {improvementsTag.map((tag) => (
-                <EvaluationChip key={tag} label={tag} evaluationWay="IMPROVMENT" />
+              {memberReviews.map((tag) => (
+                <EvaluationChip key={tag.content} label={tag.content} evaluationWay={tag.type} />
               ))}
             </S.TagBox>
           </S.ContentBox>
           <S.ContentBox>
             <h6>팀원들의 한마디</h6>
             <S.CommentBox>
-              {comments.map((comment) => (
-                <S.EmojiBox key={comment}>
+              {memberReviewComments.map((memberComment) => (
+                <S.EmojiBox key={memberComment.comment}>
                   <S.Emoji>
                     <div>{randomPicker()}</div>
                   </S.Emoji>
-                  <p>: {comment}</p>
+                  <p>: {memberComment.comment}</p>
                 </S.EmojiBox>
               ))}
             </S.CommentBox>

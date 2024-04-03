@@ -2,11 +2,11 @@ import styled, { css } from "styled-components";
 import DefaultChip from "./DefaultChip";
 import { VariantStyle } from "@/types/styledUtilTypes";
 import DESIGN_TOKEN from "@/styles/tokens";
+import { ReviewType } from "@/lib/api/review/type";
 
-type EvaluationWayType = "COMPLIMENT" | "IMPROVMENT";
 interface EvaluationChipProps {
   label: string;
-  evaluationWay: EvaluationWayType;
+  evaluationWay: ReviewType;
   count?: number;
 }
 
@@ -27,20 +27,20 @@ const EvaluationChipStyle = css`
   border-radius: 9.9rem;
 `;
 
-const VARIANT_STYLE: VariantStyle<EvaluationWayType> = {
+const VARIANT_STYLE: VariantStyle<ReviewType> = {
   COMPLIMENT: css`
     background-color: ${color.primary[3]};
     color: ${color.primary[1]};
     ${typography.font12Semibold}
     ${EvaluationChipStyle}
   `,
-  IMPROVMENT: css`
+  IMPROVEMENT: css`
     background-color: #ffdbe4;
     color: ${color.red};
     ${EvaluationChipStyle}
   `,
 };
 
-const Container = styled(DefaultChip)<{ evaluationWay: EvaluationWayType }>`
+const Container = styled(DefaultChip)<{ evaluationWay: ReviewType }>`
   ${({ evaluationWay }) => VARIANT_STYLE[evaluationWay]}
 `;

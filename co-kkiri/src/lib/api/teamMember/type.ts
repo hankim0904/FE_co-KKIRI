@@ -25,6 +25,7 @@ export interface InviteInfo {
   postId: number;
   sendMemberNickname: string;
   teamMemberId: number;
+  sendMemberProfileImageUrl?: string;
 }
 
 export type InviteInfoApiResponseDto = InviteInfo;

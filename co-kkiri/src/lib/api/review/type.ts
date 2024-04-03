@@ -33,3 +33,22 @@ export type ReviewFormValues = {
   memberReview: MemberReviewType[];
   memberReviewComment: MemberReviewCommentType[];
 };
+
+//  팀 리뷰 조회 관련 타입
+export type MemberReviewComment = {
+  comment: string;
+};
+
+export type TeamerReviewType = {
+  type: ReviewType;
+  content: string;
+};
+
+export type TeamReviewInfo = {
+  postTitle: string;
+  postReviews: PostReviewType[];
+  memberReviews: TeamerReviewType[];
+  memberReviewComments: MemberReviewComment[];
+};
+
+export type TeamReviewApiResponseDto = TeamReviewInfo;

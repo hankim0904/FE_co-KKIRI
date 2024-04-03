@@ -138,6 +138,8 @@ export const reviewAddress = {
   review: "/review/create",
   //get
   reviewInfo: "/my-post/complete/review/info",
+  //get
+  teamReview: (postId: number) => `/review/${postId}`,
 };
 
 //post

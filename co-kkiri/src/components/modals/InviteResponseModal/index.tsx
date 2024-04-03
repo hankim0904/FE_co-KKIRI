@@ -81,7 +81,13 @@ export default function InviteResponseModal({ onClose, teamInviteId }: InviteRes
           <h1>초대 메세지</h1>
           <S.SenderInfoBox>
             <h6>초대자</h6>
-            <UserInfo user={{ id: data?.sendMemberId, nickname: data?.sendMemberNickname }} />
+            <UserInfo
+              user={{
+                id: data?.sendMemberId,
+                nickname: data?.sendMemberNickname,
+                profileImageUrl: data?.sendMemberProfileImageUrl,
+              }}
+            />
           </S.SenderInfoBox>
           <S.ContentBox>
             <h6>

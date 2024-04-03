@@ -33,13 +33,11 @@ export default function Edit() {
   const { editMutation } = usePostMutation();
   const pushToast = useToast();
 
-  // useQuery를 통해 데이터 가져오기
   const { data } = useQuery({
     queryKey: ["postEdit", postId],
     queryFn: () => getPostDetail(postId),
   });
 
-  // 수정 요청 처리
   const handleSubmit = (data: FieldValues) => {
     editMutation.mutate(
       { postId, data: data as RecruitApiRequestDto },

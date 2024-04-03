@@ -18,18 +18,18 @@ body {
   overflow-y:scroll;
   background-color: ${color.white};
 }
-
-body::-webkit-scrollbar {
-  width: 8px;  
+*::-webkit-scrollbar {
+    width: 8px;  
 }
 
-body::-webkit-scrollbar-thumb {
-  height: 30%;
-  background: ${color.primary[1]};
-  border-radius: 10px;
+*::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: ${color.primary[1]};
+    
+    border-radius: 10px;
 }
 
-body::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
     background: ${color.primary[3]};
 }
 `;

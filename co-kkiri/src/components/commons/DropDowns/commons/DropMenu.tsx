@@ -41,6 +41,9 @@ export default function DropMenu({ options, isOpen, handleSelectOption, $borderT
 const { typography, color, zIndex } = DESIGN_TOKEN;
 
 const Container = styled.div<ContainerProps>`
+  max-height: 25.4rem;
+  overflow-y: auto;
+
   display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
   ${({ $borderType }) => ($borderType === "round" ? VARIANT_STYLE.round : VARIANT_STYLE.square)}
 `;

@@ -14,7 +14,7 @@ interface ReviewModalProps {
 export default function ReviewModal({ onClose }: ReviewModalProps) {
   const { id } = useParams();
   const { compliments, improvements } = EVALUATION_COMMENT;
-  const teamComplimentsTag = [compliments.team.communication, compliments.team.develop, compliments.team.deadline];
+  const teamComplimentsTag = [compliments.team.communication_com, compliments.team.develop_com, compliments.team.deadline_com];
   const teamImprovementsTag = [improvements.team.communication, improvements.team.deadline];
   const complimentsTag = [compliments.member.teaching, compliments.member.leadership, compliments.member.moodMaker];
   const improvementsTag = [improvements.member.dogmatic, improvements.member.harsh];
@@ -49,10 +49,10 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
             <h6>스터디 태그 모음</h6>
             <S.TagBox>
               {teamComplimentsTag.map((tag) => (
-                <EvaluationChip key={tag} label={tag} evaluationWay="compliments" />
+                <EvaluationChip key={tag} label={tag} evaluationWay="COMPLIMENT" />
               ))}
               {teamImprovementsTag.map((tag) => (
-                <EvaluationChip key={tag} label={tag} evaluationWay="improvements" />
+                <EvaluationChip key={tag} label={tag} evaluationWay="IMPROVMENT" />
               ))}
             </S.TagBox>
           </S.ContentBox>
@@ -60,10 +60,10 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
             <h6>내가 받은 태그</h6>
             <S.TagBox>
               {complimentsTag.map((tag) => (
-                <EvaluationChip key={tag} label={tag} evaluationWay="compliments" />
+                <EvaluationChip key={tag} label={tag} evaluationWay="COMPLIMENT" />
               ))}
               {improvementsTag.map((tag) => (
-                <EvaluationChip key={tag} label={tag} evaluationWay="improvements" />
+                <EvaluationChip key={tag} label={tag} evaluationWay="IMPROVMENT" />
               ))}
             </S.TagBox>
           </S.ContentBox>

@@ -3,7 +3,7 @@ import DESIGN_TOKEN from "@/styles/tokens";
 import Detail from "@/components/domains/manage/Detail";
 import Buttons from "@/components/domains/manage/Buttons";
 
-const { mediaQueries } = DESIGN_TOKEN;
+const { mediaQueries, typography, color } = DESIGN_TOKEN;
 
 export const Container = styled.div`
   display: flex;
@@ -28,11 +28,40 @@ export const Box = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 8.1rem;
   }
 `;
 
-export const DetailSection = styled(Detail)`
+export const TitleSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+`;
+
+export const LinkTitleWrapper = styled.div`
+  ${typography.font16Bold}
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: ${color.gray[1]};
+`;
+
+export const Title = styled.div`
+  ${typography.font24Bold}
+  color: ${color.black[2]};
+  width: 50rem;
+
+  ${mediaQueries.tablet} {
+    width: 32rem;
+  }
+
+  ${mediaQueries.mobile} {
+    width: 32rem;
+  }
+`;
+
+export const DetailCard = styled(Detail)`
   grid-area: detail;
 `;
 
@@ -41,6 +70,10 @@ export const ListSection = styled.div`
   flex-direction: column;
   gap: 8rem;
   grid-area: list;
+
+  ${mediaQueries.mobile} {
+    margin-top: 5rem;
+  }
 `;
 
 export const ButtonSection = styled(Buttons)`

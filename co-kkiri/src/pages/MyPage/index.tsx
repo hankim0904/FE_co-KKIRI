@@ -6,8 +6,8 @@ import ScrapList from "@/components/domains/myPage/ScrapList";
 import { useQuery } from "@tanstack/react-query";
 import { getInvitedTeamList, getReviewTagList, getVisibleProfileStatus } from "@/lib/api/myPage";
 import { useToast } from "@/hooks/useToast";
-import UserProfileSkeleton from "@/components/commons/Skeleton/UserProfileSkeleton";
 import UserInfoCardSkeleton from "@/components/commons/Skeleton/UserInfoCardSkeleton";
+import useSkeleton from "@/hooks/useSkeleton";
 
 export default function MyPage() {
   const pushToast = useToast();
@@ -45,6 +45,10 @@ export default function MyPage() {
   const invitedTeamListData = invitedTeamList?.data || [];
   const visibleProfileData = visibleProfile || { isVisibleProfile: false };
 
+  const isVisibleTagListSkeleton = useSkeleton(tagListIsLoading);
+  const isVisibleInvitedTeamListSkeleton = useSkeleton(invitedTeamListLoading);
+  const isVisibleVisibleProfileSkeleton = useSkeleton(visibleProfileLoading);
+
   if (tagListError) {
     pushToast(`${tagListError.message}`, "error");
   }
@@ -61,7 +65,7 @@ export default function MyPage() {
     <S.Container>
       <S.Box>
         <S.Wrapper>
-          {tagListIsLoading && invitedTeamListLoading && visibleProfileLoading ? (
+          {isVisibleTagListSkeleton && isVisibleInvitedTeamListSkeleton && isVisibleVisibleProfileSkeleton ? (
             <UserInfoCardSkeleton page={"mypage"} />
           ) : (
             <MyPageUserInfo visibleProfile={visibleProfileData} />

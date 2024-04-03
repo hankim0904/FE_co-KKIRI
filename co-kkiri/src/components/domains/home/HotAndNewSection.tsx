@@ -8,6 +8,7 @@ import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { Filter, Title } from "@/constants/hotAndNewList";
 import { useFilterSetting } from "@/hooks/useFilterSetting";
 import HomeCardsSkeleton from "@/components/commons/Skeleton/HomeCardsSkeleton";
+import useSkeleton from "@/hooks/useSkeleton";
 
 interface CardsProps {
   category: Title;
@@ -19,6 +20,7 @@ interface CardsProps {
 export default function HotAndNewSection({ category, filter, cardDataList, isLoading }: CardsProps) {
   const isSidebarOpenNarrow = useResponsiveSidebar();
   const { getFilterAction } = useFilterSetting();
+  const isVisibleSkeleton = useSkeleton(isLoading);
 
   return (
     <Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
@@ -26,7 +28,7 @@ export default function HotAndNewSection({ category, filter, cardDataList, isLoa
         <h2>{category}</h2>
         <More onClick={getFilterAction("studyList", filter)} />
       </Wrapper>
-      {isLoading ? <HomeCardsSkeleton /> : <Cards cardDataList={cardDataList} />}
+      {isVisibleSkeleton ? <HomeCardsSkeleton /> : <Cards cardDataList={cardDataList} />}
     </Box>
   );
 }

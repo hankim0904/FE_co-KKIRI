@@ -13,6 +13,7 @@ import { categoryStudyStatusFilter } from "@/constants/categoriesAndFilters";
 import TOAST from "@/constants/toast";
 import { CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
 import CardsSkeleton from "@/components/commons/Skeleton/CardsSkeleton";
+import useSkeleton from "@/hooks/useSkeleton";
 
 const { serverError, unauthorized } = TOAST;
 
@@ -36,6 +37,7 @@ export default function MyStudy() {
     setCurrentCategory(filterKey as CategoryStudyStatus);
   };
 
+  const isVisibleSkeleton = useSkeleton(isLoading);
   const allCards = data?.pages.flatMap((page) => page.data) ?? [];
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export default function MyStudy() {
           filters={Object.values(categoryStudyStatusFilter)}
           onFilterClick={handleCategoryChange}
         />
-        {isLoading ? (
+        {isVisibleSkeleton ? (
           <CardsSkeleton />
         ) : (
           <>

@@ -15,6 +15,7 @@ import { useDebounceValue } from "usehooks-ts";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { useToast } from "@/hooks/useToast";
 import CardsSkeleton from "@/components/commons/Skeleton/CardsSkeleton";
+import useSkeleton from "@/hooks/useSkeleton";
 
 export default function StudyList() {
   const pushToast = useToast();
@@ -50,6 +51,7 @@ export default function StudyList() {
     placeholderData: keepPreviousData,
   });
 
+  const isVisibleSkeleton = useSkeleton(isLoading);
   const list = data?.data || [];
 
   const handleStacksChange = (stacks: string[]) => {
@@ -109,7 +111,7 @@ export default function StudyList() {
           handleProgressWayChange={handleProgressWayChange}
           handleSortByChange={handleSortByChange}
         />
-        {isLoading ? <CardsSkeleton /> : <Cards data={list} page="studyList" />}
+        {isVisibleSkeleton ? <CardsSkeleton /> : <Cards data={list} page="studyList" />}
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPage} />
       </S.Box>
       <CreatePost />

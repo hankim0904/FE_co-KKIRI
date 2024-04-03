@@ -10,6 +10,7 @@ import { useDebounceValue } from "usehooks-ts";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { useToast } from "@/hooks/useToast";
 import ScoutCardsSkeleton from "@/components/commons/Skeleton/ScoutCardsSkeleton";
+import useSkeleton from "@/hooks/useSkeleton";
 
 export interface SelectedFilter {
   position: string;
@@ -47,6 +48,7 @@ export default function Scout() {
     placeholderData: keepPreviousData,
   });
 
+  const isVisibleSkeleton = useSkeleton(isLoading);
   const totalPages = data?.meta.pageCount || 0;
   const scoutCardData = data?.data || [];
 
@@ -76,7 +78,7 @@ export default function Scout() {
           handleStacksChange={handleStacksChange}
           handlePositionChange={handlePositionChange}
         />
-        {isLoading ? <ScoutCardsSkeleton /> : <ScoutCards userProfiles={scoutCardData} />}
+        {isVisibleSkeleton ? <ScoutCardsSkeleton /> : <ScoutCards userProfiles={scoutCardData} />}
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
       </S.Box>
     </S.Container>

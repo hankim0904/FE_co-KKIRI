@@ -4,10 +4,14 @@ import AppliedList from "@/components/domains/manage/AppliedList";
 import { getAppliedMemberList, getStudyManagement } from "@/lib/api/post";
 import { getTeamMember } from "@/lib/api/teamMember";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
 import DetailCardSkeleton from "@/components/commons/Skeleton/DetailCardSkeleton";
 import styled from "styled-components";
+import { ICONS } from "@/constants/icons";
+import DESIGN_TOKEN from "@/styles/tokens";
+import { TitleSkeleton } from "@/components/commons/Skeleton/TextSkeleton";
+import useSkeleton from "@/hooks/useSkeleton";
 
 export default function Manage() {
   const pushToast = useToast();
@@ -22,15 +26,24 @@ export default function Manage() {
     queryKey: ["management", postId],
     queryFn: () => getStudyManagement(postId),
   });
-  const { data: appliedMemberList, error: appliedMemberListError } = useQuery({
+  const {
+    data: appliedMemberList,
+    error: appliedMemberListError,
+    isLoading: appliedMemberListIsLoading,
+  } = useQuery({
     queryKey: ["appliedMemberList", postId],
     queryFn: () => getAppliedMemberList(postId, { page: 1, take: 100 }),
   });
-  const { data: memberList, error: memberListError } = useQuery({
+  const {
+    data: memberList,
+    error: memberListError,
+    isLoading: memberListIsLoading,
+  } = useQuery({
     queryKey: ["memberList", postId],
     queryFn: () => getTeamMember(postId, { page: 1, take: 100 }),
   });
 
+  const isVisibleSkeleton = useSkeleton(detailInfoIsLoading);
   const appliedMemberListData = appliedMemberList?.data || [];
   const memberListData = memberList?.data || [];
 
@@ -60,16 +73,33 @@ export default function Manage() {
   return (
     <S.Container>
       <S.Box>
-        {detailInfoIsLoading && (
-          <DetailCardSkeletonWarper>
-            <DetailCardSkeleton page="mystudy" />
-          </DetailCardSkeletonWarper>
+        <S.TitleSection>
+          <Link to={`/list/${detailInfo?.postId}`}>
+            <S.LinkTitleWrapper>
+              <p>스터디/프로젝트 상세글 보기</p>
+              <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
+            </S.LinkTitleWrapper>
+          </Link>
+          {isVisibleSkeleton ? <TitleSkeleton page="mystudy" /> : <S.Title>{detailInfo?.postTitle}</S.Title>}
+        </S.TitleSection>
+        {isVisibleSkeleton ? (
+          <DetailCardSkeleton page="mystudy" />
+        ) : (
+          detailInfo && <S.DetailCard detailInfo={detailInfo} />
         )}
-
-        {detailInfo && <S.DetailSection detailInfo={detailInfo} />}
         <S.ListSection>
-          <AppliedList detailInfo={appliedMemberListData} isLeader={detailInfo?.isLeader} type={detailInfo?.status} />
-          <MemberList detailInfo={memberListData} isLeader={detailInfo?.isLeader} type={detailInfo?.status} />
+          <AppliedList
+            detailInfo={appliedMemberListData}
+            isLeader={detailInfo?.isLeader}
+            type={detailInfo?.status}
+            isLoading={appliedMemberListIsLoading}
+          />
+          <MemberList
+            detailInfo={memberListData}
+            isLeader={detailInfo?.isLeader}
+            type={detailInfo?.status}
+            isLoading={memberListIsLoading}
+          />
         </S.ListSection>
         {detailInfo && (
           <S.ButtonSection
@@ -83,7 +113,3 @@ export default function Manage() {
     </S.Container>
   );
 }
-
-const DetailCardSkeletonWarper = styled.div`
-  margin-top: 9rem;
-`;

@@ -9,17 +9,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { acceptMember, rejectMember } from "@/lib/api/teamMember";
 import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
+import useSkeleton from "@/hooks/useSkeleton";
+import UserProfileSkeleton from "@/components/commons/Skeleton/UserProfileSkeleton";
 
 interface AppliedListProps {
   detailInfo: AppliedMemberListApiResponseDto["data"];
   isLeader?: boolean;
   type?: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
+  isLoading: boolean;
 }
 
-export default function AppliedList({ detailInfo, isLeader, type }: AppliedListProps) {
+export default function AppliedList({ detailInfo, isLeader, type, isLoading }: AppliedListProps) {
   const pushToast = useToast();
   const queryClient = useQueryClient();
   const detailInfoData = detailInfo || [];
+  const isVisibleSkeleton = useSkeleton(isLoading);
 
   const handleAccept = useMutation({
     mutationFn: (teamMemberId: number) => acceptMember(teamMemberId),
@@ -58,7 +62,14 @@ export default function AppliedList({ detailInfo, isLeader, type }: AppliedListP
         {detailInfoData.map((info) => (
           <Box key={info.memberId}>
             <MemberWrapper>
-              <UserInfo user={{ id: info.memberId, nickname: info.nickname, profileImageUrl: info.profileImageUrl }} />
+              {isVisibleSkeleton ? (
+                <UserProfileSkeleton />
+              ) : (
+                <UserInfo
+                  user={{ id: info.memberId, nickname: info.nickname, profileImageUrl: info.profileImageUrl }}
+                />
+              )}
+
               <PositionChip label={info.position} />
             </MemberWrapper>
             {type === "READY" && isLeader && (

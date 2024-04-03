@@ -7,6 +7,7 @@ import { getScrapList } from "@/lib/api/myPage";
 import NoResultText from "@/components/commons/NoResultText";
 import { useToast } from "@/hooks/useToast";
 import ScrapListSkeleton from "@/components/commons/Skeleton/ScrapListSkeleton";
+import useSkeleton from "@/hooks/useSkeleton";
 
 export default function ScrapList() {
   const pushToast = useToast();
@@ -26,7 +27,8 @@ export default function ScrapList() {
     placeholderData: keepPreviousData,
   });
 
-  const count = data?.pages[0].meta.totalCount ?? NaN;
+  const isVisibleSkeleton = useSkeleton(isLoading);
+  const count = data?.pages[0].meta.totalCount ?? 0;
   const allCards = data?.pages.flatMap((page) => page.data) ?? [];
 
   if (error) {
@@ -36,7 +38,7 @@ export default function ScrapList() {
   return (
     <S.Container>
       <SectionTitle title="스터디/프로젝트 스크랩 목록" count={count} type="cardList" />
-      {isLoading ? (
+      {isVisibleSkeleton ? (
         <ScrapListSkeleton />
       ) : count > 0 ? (
         <>

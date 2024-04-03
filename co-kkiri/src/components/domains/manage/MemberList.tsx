@@ -9,16 +9,21 @@ import { deleteTeamMember } from "@/lib/api/teamMember";
 import { ICONS } from "@/constants/icons";
 import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
+import useSkeleton from "@/hooks/useSkeleton";
+import UserProfileSkeleton from "@/components/commons/Skeleton/UserProfileSkeleton";
 
 interface MemberListProps {
   detailInfo: TeamMemberApiResponseDto["data"];
   isLeader?: boolean;
   type?: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
+  isLoading: boolean;
 }
 
-export default function MemberList({ detailInfo, isLeader, type }: MemberListProps) {
+export default function MemberList({ detailInfo, isLeader, type, isLoading }: MemberListProps) {
   const pushToast = useToast();
   const queryClient = useQueryClient();
+  const isVisibleSkeleton = useSkeleton(isLoading);
+
   const handleOut = useMutation({
     mutationFn: (teamMemberId: number) => deleteTeamMember(teamMemberId),
     onSuccess: () => {
@@ -41,7 +46,14 @@ export default function MemberList({ detailInfo, isLeader, type }: MemberListPro
         {detailInfo?.map((info) => (
           <Box key={info.memberId}>
             <MemberWrapper>
-              <UserInfo user={{ id: info.memberId, nickname: info.nickname, profileImageUrl: info.profileImageUrl }} />
+              {isVisibleSkeleton ? (
+                <UserProfileSkeleton />
+              ) : (
+                <UserInfo
+                  user={{ id: info.memberId, nickname: info.nickname, profileImageUrl: info.profileImageUrl }}
+                />
+              )}
+
               {info.isLeader && (
                 <Leader>
                   <img src={ICONS.leader.src} alt={ICONS.leader.alt} />

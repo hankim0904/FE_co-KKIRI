@@ -10,16 +10,17 @@ interface InvitedTeamListProps {
   count: number;
 }
 
-export default function InvitedTeamList({ count, teamList }: InvitedTeamListProps) {
+export default function InvitedTeamList({ count = 0, teamList }: InvitedTeamListProps) {
   return (
     <Container>
       <SectionTitle title="스터디/프로젝트 초대된 목록" count={count} lineLength="mypage" />
       <Box>
         {teamList.map((team) => (
-          <Link to={`/list/${team.postId}`} key={team.postId}>
+          <Link to={`/list/${team.postId}`} key={team.teamInviteId}>
             <TeamTitle>{team.title}</TeamTitle>
           </Link>
         ))}
+
         {count === 0 && <NoResultText text="초대된 스터디/프로젝트가 없어요." padding={60} color="gray" />}
       </Box>
     </Container>

@@ -1,3 +1,6 @@
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+
 /**
  * 주어진 날짜 문자열을 기반으로 날짜를 포맷팅합니다. 선택적으로 시간 정보도 포함할 수 있습니다.
  * 날짜는 "YYYY.MM.DD" 형식으로 반환되며, 시간 정보를 포함할 경우 "YYYY.MM.DD HH:MM" 형식으로 반환됩니다.
@@ -9,20 +12,12 @@
  * @returns {string} 포맷팅된 날짜 문자열입니다.
  */
 export const formatDate = (createdAt: string, withTime: boolean = false): string => {
-  const originDate = new Date(createdAt);
-  const GMTNow = originDate.getTime() + originDate.getTimezoneOffset() * 60 * 1000; 
+  const date = new Date(createdAt);
 
-  const KoreaTimeDiff = 9 * 60 * 60 * 1000;
-  const date = new Date(GMTNow + KoreaTimeDiff);
-  const year = date.getUTCFullYear();
-  const month = date.getUTCMonth() + 1;
-  const day = date.getUTCDate();
-  let formattedDate = `${year}.${month}.${day}`;
+  let formattedDate = format(date, "yyyy.MM.dd", { locale: ko });
 
   if (withTime) {
-    const hours = date.getUTCHours().toString().padStart(2, "0");
-    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
-    formattedDate += ` ${hours}:${minutes}`;
+    formattedDate = format(date, "yyyy.MM.dd HH:mm", { locale: ko });
   }
 
   return formattedDate;
@@ -46,7 +41,7 @@ export const createTimePassedMessage = (createdDate: string, withTime: boolean =
   const now = Number(new Date());
   const targetDate = Number(new Date(createdDate));
   const timeDiff = now - targetDate;
-
+  
   const SECOND_IN_MILLISECOND = 1000;
   const MINUTE_IN_SECOND = 60;
   const HOUR_IN_MINUTE = 60;

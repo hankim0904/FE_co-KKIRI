@@ -90,7 +90,7 @@ export default function StudyList() {
     setCurrentPage(1);
   };
 
-  const totalPage = data?.meta.pageCount || NaN;
+  const totalPage = data?.meta.pageCount || 0;
 
   return (
     <S.Container>

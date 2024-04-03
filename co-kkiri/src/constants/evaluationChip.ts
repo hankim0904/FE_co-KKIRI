@@ -16,10 +16,10 @@ export const EVALUATION_COMMENT = {
       creative: "아이디어 뱅크 💡",
     },
     team: {
-      communication: "팀원간 소통이 활발했어요",
-      develop: "많이 성장했어요",
-      systematic: "체계적이었어요",
-      deadline: "약속된 기간 안에 끝났어요",
+      communication_com: "팀원간 소통이 활발했어요",
+      develop_com: "많이 성장했어요",
+      systematic_com: "체계적이었어요",
+      deadline_com: "약속된 기간 안에 끝났어요",
     },
   },
 

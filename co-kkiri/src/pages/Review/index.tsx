@@ -3,42 +3,72 @@ import Button from "@/components/commons/Button";
 import MemberReview from "@/components/domains/review/MemberReview";
 import StudyEvaluation from "@/components/domains/review/StudyEvaluation";
 import { ICONS } from "@/constants/icons";
-import { Member, memberData } from "@/lib/mock/review/members";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-
-export interface FormValues {
-  TeamCompliments: string[];
-  TeamImprovements: string[];
-  MemberCompliments: string[];
-  MemberImprovements: string[];
-  ReviewComment?: string;
-}
+import { useToast } from "@/hooks/useToast";
+import { getMemberList, postReview } from "@/lib/api/review";
+import { ReviewFormValues } from "@/lib/api/review/type";
+import useReviewStore from "@/stores/reviewStore";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 export default function Review() {
-  const { control, handleSubmit, watch, setValue } = useForm<FormValues>({
+  const pushToast = useToast();
+  const { selectedMemberId, setSelectedMemberId } = useReviewStore();
+  const queryClient = useQueryClient();
+  const { id } = useParams();
+  const postId = Number(id);
+
+  const { control, handleSubmit, watch, setValue } = useForm<ReviewFormValues>({
     defaultValues: {
-      TeamImprovements: [],
-      TeamCompliments: [],
-      MemberCompliments: [],
-      MemberImprovements: [],
-      ReviewComment: "",
+      postId: postId,
+      postReview: [],
+      memberReview: [],
+      memberReviewComment: [],
+    },
+    mode: "onBlur",
+  });
+
+  const { data: memberList, error } = useQuery({
+    queryKey: [`review/${postId}/member`, selectedMemberId],
+    queryFn: () => getMemberList(postId),
+    placeholderData: keepPreviousData,
+  });
+
+  if (error) {
+    console.error(error);
+  }
+
+  const handleSubmitReview = useMutation({
+    mutationFn: (formData: ReviewFormValues) => postReview(formData),
+    onSuccess: () => {
+      pushToast("리뷰 작성이 완료되었습니다.", "success");
+      queryClient.invalidateQueries();
+    },
+    onError: () => {
+      pushToast("요청에 실패하였습니다.", "error");
     },
   });
-  const [selectedMemberId, setSelectedMember] = useState<Member["teamMemberId"]>(0);
 
-  const commentValue = watch("ReviewComment");
-
-  const onSubmitHandler = (data: FormValues) => {
+  const onSubmitHandler = (data: ReviewFormValues) => {
     console.log(data);
+    handleSubmitReview.mutate(data);
   };
 
-  const handleMemberClick = (memberId: Member["teamMemberId"]) => {
-    setSelectedMember(memberId);
+  const currentComment = watch(`memberReviewComment.${selectedMemberId}.content`);
+
+  const handleMemberClick = (memberId: number) => {
+    setSelectedMemberId(memberId);
   };
+
+  useEffect(() => {
+    setValue(`memberReviewComment.${selectedMemberId}.revieweeMemberId`, selectedMemberId);
+    setValue(`memberReviewComment.${selectedMemberId}.content`, currentComment || "");
+  }, [selectedMemberId, setValue, watch, currentComment]);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue("ReviewComment", e.target.value); // 'ReviewComment' 필드에 값을 설정합니다.
+    setValue(`memberReviewComment.${selectedMemberId}.revieweeMemberId`, selectedMemberId);
+    setValue(`memberReviewComment.${selectedMemberId}.content`, e.target.value);
   };
 
   return (
@@ -57,14 +87,17 @@ export default function Review() {
               <img src={ICONS.number2.src} alt={ICONS.number2.alt} />
               <div>멤버 평가</div>
             </S.Title>
-            <MemberReview
-              member={memberData.result}
-              selectedMemberId={selectedMemberId}
-              onMemberClick={handleMemberClick}
-              control={control}
-              onChange={handleCommentChange}
-              value={commentValue}
-            />
+            {memberList && (
+              <MemberReview
+                member={memberList}
+                selectedMemberId={selectedMemberId}
+                onMemberClick={handleMemberClick}
+                control={control}
+                onChange={handleCommentChange}
+                value={currentComment}
+                isReviewed={true}
+              />
+            )}
           </S.EvaluationWrapper>
         </S.Wrapper>
         <S.ButtonWrapper>

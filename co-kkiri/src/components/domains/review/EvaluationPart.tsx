@@ -1,18 +1,59 @@
 import styled from "styled-components";
 import SelectPositionChip from "@/components/commons/Chips/SelectPositionChip";
+import { MemberReviewType, PostReviewType, ReviewType } from "@/lib/api/review/type";
+import { EVALUATION_COMMENT } from "@/constants/evaluationChip";
 
+export type Option = {
+  label: string;
+  value: unknown;
+};
 interface EvaluationPartProps {
   evaluationCategory: { [key: string]: string };
-  selectedChips: string[];
-  onChange: (updatedOptions: string[]) => void;
+  selectedChips: MemberReviewType[] | PostReviewType[];
+  onChange: (updatedOptions: MemberReviewType[] | PostReviewType[]) => void;
+  selectedMemberId: number;
+  type: "study" | "member";
 }
 
-export default function EvaluationPart({ evaluationCategory, selectedChips, onChange }: EvaluationPartProps) {
-  const onChipClick = (selectedKey: string) => {
-    const updatedOptions = selectedChips.includes(selectedKey)
-      ? selectedChips.filter((option) => option !== selectedKey)
-      : [...selectedChips, selectedKey];
+export default function EvaluationPart({
+  evaluationCategory,
+  selectedChips = [],
+  onChange,
+  selectedMemberId,
+  type,
+}: EvaluationPartProps) {
+  const onChipClick = (content: string) => {
+    const isAlreadySelected = selectedChips?.some((option) => option.content === content);
+    let updatedOptions;
+    if (isAlreadySelected) {
+      updatedOptions = selectedChips.filter((option) => option.content !== content);
+    } else {
+      if (type === "study") {
+        updatedOptions = [...selectedChips, { content: content, type: reviewType(content) }];
+      } else {
+        updatedOptions = [
+          ...selectedChips,
+          { content: content, revieweeMemberId: selectedMemberId, type: reviewType(content) },
+        ];
+      }
+    }
     onChange(updatedOptions);
+  };
+
+  const reviewType = (content: string): ReviewType => {
+    if (
+      Object.keys(EVALUATION_COMMENT.compliments.team).includes(content) ||
+      Object.keys(EVALUATION_COMMENT.compliments.member).includes(content)
+    ) {
+      return "COMPLIMENT";
+    }
+    if (
+      Object.keys(EVALUATION_COMMENT.improvements.team).includes(content) ||
+      Object.keys(EVALUATION_COMMENT.improvements.member).includes(content)
+    ) {
+      return "IMPROVEMENT";
+    }
+    throw new Error("~");
   };
 
   return (
@@ -21,10 +62,8 @@ export default function EvaluationPart({ evaluationCategory, selectedChips, onCh
         <SelectPositionChip
           key={key}
           label={value}
-          isSelected={selectedChips?.includes(key)}
-          onClick={() => {
-            onChipClick(key);
-          }}
+          isSelected={selectedChips.some((option) => option.content === key)}
+          onClick={() => onChipClick(key)}
         />
       ))}
     </Box>

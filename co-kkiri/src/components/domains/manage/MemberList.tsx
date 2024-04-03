@@ -30,8 +30,8 @@ export default function MemberList({ detailInfo, isLeader, type, isLoading }: Me
       pushToast(TOAST.success.message, TOAST.success.type);
       queryClient.invalidateQueries();
     },
-    onError: (error) => {
-      pushToast(`${error.message}`, "error");
+    onError: () => {
+      pushToast(TOAST.servererror.message, TOAST.servererror.type);
     },
   });
 

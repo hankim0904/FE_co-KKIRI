@@ -2,11 +2,11 @@ import FormElement from "@/components/commons/Form/FormElement";
 import { EVALUATION_COMMENT, EVALUATION_TYPE } from "@/constants/evaluationChip";
 import styled from "styled-components";
 import RHFEvaluationPart from "./RHFEvaluationPart";
-import { FormValues } from "@/pages/Review";
 import { Control } from "react-hook-form";
+import { ReviewFormValues } from "@/lib/api/review/type";
 
 interface StudyEvaluationProps {
-  control: Control<FormValues>;
+  control: Control<ReviewFormValues>;
 }
 
 export default function StudyEvaluation({ control }: StudyEvaluationProps) {
@@ -17,8 +17,9 @@ export default function StudyEvaluation({ control }: StudyEvaluationProps) {
           label={EVALUATION_TYPE.compliments}
           FormFieldComponent={
             <RHFEvaluationPart
+              type="study"
               evaluationCategory={EVALUATION_COMMENT.compliments.team}
-              formFieldName="TeamCompliments"
+              formFieldName="postReview"
               control={control}
             />
           }
@@ -27,8 +28,9 @@ export default function StudyEvaluation({ control }: StudyEvaluationProps) {
           label={EVALUATION_TYPE.improvements}
           FormFieldComponent={
             <RHFEvaluationPart
+              type="study"
               evaluationCategory={EVALUATION_COMMENT.improvements.team}
-              formFieldName="TeamImprovements"
+              formFieldName="postReview"
               control={control}
             />
           }

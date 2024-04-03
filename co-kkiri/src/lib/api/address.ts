@@ -113,10 +113,6 @@ export const myPostAddress = {
   completedList: "/my-post/complete/list",
   //patch
   onGoingComplete: "/my-post/on-going/complete",
-  //post
-  review: "/my-post/complete/review",
-  //get
-  reviewInfo: "/my-post/complete/review/info",
 };
 
 export const memberAddress = {
@@ -133,6 +129,15 @@ export const scoutAddress = {
   postsForScout: "/scout/post",
   //post
   inviteScout: "/scout/invite",
+};
+
+export const reviewAddress = {
+  //get
+  memberList: (postId: number) => `/review/${postId}/member`,
+  //post
+  review: "/review/create",
+  //get
+  reviewInfo: "/my-post/complete/review/info",
 };
 
 //post

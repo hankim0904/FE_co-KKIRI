@@ -33,10 +33,10 @@ export const getCompletedList = (qs: PaginationOptions): Promise<CompletedListAp
 // data 추가해야 함
 export const completeOnGoing = () => apiRequest("patch", myPostAddress.onGoingComplete);
 
-/** 피어리뷰 작성하기 */
-//data 추가해야 함
-export const createReview = () => apiRequest("post", myPostAddress.review);
+// /** 피어리뷰 작성하기 */
+// //data 추가해야 함
+// export const createReview = () => apiRequest("post", myPostAddress.review);
 
-/** 피어리뷰 목록 가져오기 */
-// Promise 추가해야 함
-export const getReviewInfo = () => apiRequest("get", myPostAddress.reviewInfo);
+// /** 피어리뷰 목록 가져오기 */
+// // Promise 추가해야 함
+// export const getReviewInfo = () => apiRequest("get", myPostAddress.reviewInfo);

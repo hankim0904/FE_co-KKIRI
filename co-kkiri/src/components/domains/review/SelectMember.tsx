@@ -2,32 +2,36 @@ import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
 import UserInfo from "@/components/commons/UserInfo";
 import { ICONS } from "@/constants/icons";
-import { Member, memberData } from "@/lib/mock/review/members";
+import { TeamMemberListApiResponseDto } from "@/lib/api/review/type";
+import useReviewStore from "@/stores/reviewStore";
 
 interface SelectMemberProps {
-  member: Member[];
+  members: TeamMemberListApiResponseDto;
   selectedMemberId: number;
   onMemberClick: (teamMemberId: number) => void;
+  isReviewed: boolean;
 }
 
-export default function SelectMember({ member, selectedMemberId, onMemberClick }: SelectMemberProps) {
+export default function SelectMember({ members, onMemberClick, isReviewed }: SelectMemberProps) {
+  const { selectedMemberId, setSelectedMemberId } = useReviewStore();
   const handleMemberClick = (teamMemberId: number) => {
     onMemberClick(teamMemberId);
+    setSelectedMemberId(teamMemberId);
   };
 
   return (
     <Container>
-      {member.map((member) => (
-        <Box key={member.teamMemberId} onClick={() => handleMemberClick(member.teamMemberId)}>
-          <MemberWrapper $isSelected={selectedMemberId === member.teamMemberId}>
+      {members.map((member) => (
+        <Box key={member.memberId} onClick={() => handleMemberClick(member.memberId)}>
+          <MemberWrapper $isSelected={selectedMemberId === member.memberId}>
             <UserInfo
-              user={{ id: member.teamMemberId, nickname: member.nickname, profileImageUrl: member.profileImageUrl }}
+              user={{ id: member.memberId, nickname: member.nickname, profileImageUrl: member.profileImageUrl }}
               type="review"
             />
           </MemberWrapper>
           {
             <SelectedMember>
-              {member.isReviewed ? (
+              {isReviewed ? (
                 <CheckImg src={ICONS.checked.src} alt={ICONS.checked.alt} />
               ) : (
                 <CheckImg src={ICONS.unchecked.src} alt={ICONS.unchecked.alt} />

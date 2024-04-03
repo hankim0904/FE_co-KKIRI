@@ -7,7 +7,6 @@ export interface ProjectDetailRowProps extends ProjectDetailRowContentProps {
 }
 
 export default function ProjectDetailRow({ label, content, renderType }: ProjectDetailRowProps) {
-  //positions이랑 stacks은 배열이어야만 정상적으로 render함
   return (
     <Container>
       <Label>

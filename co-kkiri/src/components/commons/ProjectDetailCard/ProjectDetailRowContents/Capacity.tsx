@@ -1,10 +1,9 @@
 import { DROPDOWN_FORM_INFO } from "@/constants/dropDown";
-import { getLabelFromValue } from "@/utils/objectUtils";
 import { RowContent } from "../ProjectDetailRowContent";
 
 export default function Capacity({ content }: { content: number }) {
-  if (!content) {
-    return <RowContent>{getLabelFromValue(DROPDOWN_FORM_INFO.recruitment.capacity, content)}</RowContent>;
+  if (content === DefaultValue) {
+    return <RowContent>{"인원 미정"}</RowContent>;
   }
   return (
     <RowContent>
@@ -12,3 +11,5 @@ export default function Capacity({ content }: { content: number }) {
     </RowContent>
   );
 }
+
+const DefaultValue = 999;

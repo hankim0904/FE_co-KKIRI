@@ -9,12 +9,6 @@ interface ContactWayProps {
 }
 
 export default function ContactWay({ content }: ContactWayProps) {
-  const defaultLabel = "미정";
-
-  if (!content.label) {
-    return <RowContent>{defaultLabel}</RowContent>;
-  }
-
   if (!content.content) {
     return <RowContent>{content.label}</RowContent>;
   }
@@ -40,6 +34,6 @@ export default function ContactWay({ content }: ContactWayProps) {
       );
     }
     default:
-      return <RowContent>{defaultLabel}</RowContent>;
+      return <RowContent></RowContent>;
   }
 }

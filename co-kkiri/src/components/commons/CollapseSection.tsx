@@ -5,19 +5,19 @@ import styled from "styled-components";
 interface CollapseSectionProps {
   title: string;
   children: React.ReactNode;
-  isCollapsed: boolean;
+  isOpen: boolean;
   onClick: () => void;
   className?: string;
 }
 
-export default function CollapseSection({ title, children, isCollapsed, onClick, className }: CollapseSectionProps) {
+export default function CollapseSection({ title, children, isOpen, onClick, className }: CollapseSectionProps) {
   return (
     <Container className={className}>
       <Header onClick={onClick}>
-        <Icon src={ICONS.circleArrow.src} alt={ICONS.circleArrow.alt} $isCollapsed={isCollapsed} />
+        <Icon src={ICONS.circleArrow.src} alt={ICONS.circleArrow.alt} $isOpen={isOpen} />
         <p>{title}</p>
       </Header>
-      {!isCollapsed && <>{children}</>}
+      {isOpen && <>{children}</>}
     </Container>
   );
 }
@@ -48,9 +48,9 @@ const Header = styled.div`
   }
 `;
 
-const Icon = styled.img<{ $isCollapsed: boolean }>`
+const Icon = styled.img<{ $isOpen: boolean }>`
   width: 2.4rem;
   height: 2.4rem;
 
-  ${({ $isCollapsed }) => $isCollapsed && `transform: rotate(180deg);`}
+  ${({ $isOpen }) => $isOpen && `transform: rotate(180deg);`}
 `;

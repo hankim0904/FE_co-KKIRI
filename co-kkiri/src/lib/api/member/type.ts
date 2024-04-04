@@ -1,4 +1,6 @@
+import { TagType } from "@/types/tagtypes";
 import { PageMeta, PaginationOptions } from "../pageMetaType";
+import { ReviewType } from "../review/type";
 
 // 유저 프로필 조회
 export type MemberProfile = {
@@ -36,3 +38,5 @@ export type SearchedMemberProfileApiRequestDto = PaginationOptions & {
   position?: string; // 포지션
   stacks?: string[]; // 스택
 };
+
+export type MemberReviewListApiResponseDto = TagType[];

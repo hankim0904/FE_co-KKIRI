@@ -1,5 +1,6 @@
 import { CategoryList } from "@/types/categoryAndFilterTypes";
 import { PageMeta, PaginationOptions } from "../pageMetaType";
+import { TagType } from "@/types/tagtypes";
 
 // 마이 페이지 유저 정보
 export type UserInfoApiResponseDto = {
@@ -15,11 +16,7 @@ export type UserInfoApiResponseDto = {
 };
 
 // 내가 받은 태그 정보
-type MyPageReview = {
-  type: "COMPLIMENT" | "IMPROVEMENT";
-  content?: string;
-  count: number;
-};
+type MyPageReview = TagType;
 
 export type MyPageReviewApiResponseDto = MyPageReview[];
 

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import NoResultText from "@/components/commons/NoResultText";
 import EvaluationChip from "@/components/commons/Chips/EvaluationChip";
 import { MyPageReviewApiResponseDto } from "@/lib/api/myPage/type";
+import { emptyMessages } from "@/components/commons/UserProfileCard/constants";
 
 interface TagListProps {
   reviewList: MyPageReviewApiResponseDto;
@@ -19,7 +20,7 @@ export default function TagList({ reviewList }: TagListProps) {
       <SectionTitle title="내가 받은 태그" lineLength="mypage" />
       <TagListWrapper>
         {noTags ? (
-          <NoResultText text="받은 태그가 없어요" padding={60} color="gray" />
+          <NoResultText text={emptyMessages.tags} padding={60} color="gray" />
         ) : (
           <>
             {compliments.map((tag, index) => (

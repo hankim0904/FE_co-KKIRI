@@ -122,6 +122,8 @@ export const memberAddress = {
   memberId: (memberId: number) => `/member/${memberId}`,
   //get
   search: "/member/search",
+  //get
+  reviewList: (memberId: number) => `review/review/list/${memberId}`,
 };
 
 export const scoutAddress = {

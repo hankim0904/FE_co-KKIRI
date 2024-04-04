@@ -19,6 +19,7 @@ export default function MyPage() {
     queryKey: ["my-page/review/list"],
     queryFn: () => getReviewTagList(),
     retry: false,
+    staleTime: 1000 * 60,
   });
 
   const {

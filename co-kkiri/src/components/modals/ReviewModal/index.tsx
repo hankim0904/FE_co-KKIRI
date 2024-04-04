@@ -16,7 +16,6 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
   const { id } = useParams();
   const postId = Number(id);
   const selectedEmojisRef = useRef<string[]>([]);
-  const { postTitle, postReviews, memberReviews, memberReviewComments } = TEAM_REVIEW_INFO;
 
   const randomPicker = () => {
     const availableEmojis = emojis.filter((emoji) => !selectedEmojisRef.current.includes(emoji));
@@ -27,6 +26,11 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
 
     return selectedEmoji;
   };
+
+  const { data } = useQuery({
+    queryKey: ["teamReview", postId],
+    queryFn: () => getReview(postId),
+  });
 
   return (
     <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose} isCloseClickOutside>
@@ -40,12 +44,12 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
                 <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
               </h6>
             </Link>
-            <p>{postTitle}</p>
+            <p>{data?.postTitle}</p>
           </S.ContentBox>
           <S.ContentBox>
             <h6>스터디 태그 모음</h6>
             <S.TagBox>
-              {postReviews.map((tag) => (
+              {data?.postReviews.map((tag) => (
                 <EvaluationChip key={tag.content} label={tag.content} evaluationWay={tag.type} />
               ))}
             </S.TagBox>
@@ -53,7 +57,7 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
           <S.ContentBox>
             <h6>내가 받은 태그</h6>
             <S.TagBox>
-              {memberReviews.map((tag) => (
+              {data?.memberReviews.map((tag) => (
                 <EvaluationChip key={tag.content} label={tag.content} evaluationWay={tag.type} />
               ))}
             </S.TagBox>
@@ -61,7 +65,7 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
           <S.ContentBox>
             <h6>팀원들의 한마디</h6>
             <S.CommentBox>
-              {memberReviewComments.map((memberComment) => (
+              {data?.memberReviewComments.map((memberComment) => (
                 <S.EmojiBox key={memberComment.comment}>
                   <S.Emoji>
                     <div>{randomPicker()}</div>

@@ -64,7 +64,7 @@ export default function Buttons({ buttonType, isLeader, postId, studyType, isRev
       {buttonType === "DONE" && (
         <ManageButton text="내가 받은 리뷰 보기" buttonCount={1} variant="ghost" onClick={handleReviewModalOpen} />
       )}
-      {isReviewModalOpen && <ReviewModal onClose={handleReviewModalOpen} />}
+      {isReviewModalOpen && <ReviewModal onClose={handleReviewModalOpen} postId={postId} />}
     </Box>
   );
 }

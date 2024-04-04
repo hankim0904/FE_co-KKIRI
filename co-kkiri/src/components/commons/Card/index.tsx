@@ -97,7 +97,7 @@ export default function Card({ page = "home", cardData }: CardProps) {
           </S.FooterBox>
         </S.Container>
       </Link>
-      {isReviewModalOpen && <ReviewModal onClose={handleReviewModalOpen} />}
+      {isReviewModalOpen && <ReviewModal onClose={handleReviewModalOpen} postId={postId} />}
     </>
   );
 }

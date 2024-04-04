@@ -10,11 +10,10 @@ import { TEAM_REVIEW_INFO, emojis } from "@/lib/mock/review/teamReview.ts";
 
 interface ReviewModalProps {
   onClose: () => void;
+  postId: number;
 }
 
-export default function ReviewModal({ onClose }: ReviewModalProps) {
-  const { id } = useParams();
-  const postId = Number(id);
+export default function ReviewModal({ onClose, postId }: ReviewModalProps) {
   const selectedEmojisRef = useRef<string[]>([]);
 
   const randomPicker = () => {
@@ -38,7 +37,7 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
         <h3>스터디 리뷰</h3>
         <S.Box>
           <S.ContentBox>
-            <Link to={`/list/${id}`}>
+            <Link to={`/list/${postId}`}>
               <h6>
                 스터디/프로젝트
                 <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />

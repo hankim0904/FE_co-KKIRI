@@ -1,5 +1,5 @@
-import { useMemo, useRef } from "react";
-import ReactQuill from "react-quill";
+import { useEffect, useMemo, useRef } from "react";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolbar from "./CustomToolbar";
 import styled from "styled-components";
@@ -23,6 +23,22 @@ const formats = [
 export default function QuillEditor({ onChange, value }: { onChange: (value: string) => void; value: string }) {
   const quillRef = useRef<ReactQuill | null>(null);
   const uploadImage = useImageMutation();
+
+  useEffect(() => {
+    const handleTabKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Tab" && quillRef.current) {
+        event.preventDefault();
+        const quillEditor = quillRef.current.getEditor();
+        quillEditor.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleTabKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleTabKeyPress);
+    };
+  }, []);
 
   const imageHandler = () => {
     const input = document.createElement("input");

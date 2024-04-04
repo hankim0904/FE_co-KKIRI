@@ -10,7 +10,7 @@ import { FieldValues } from "react-hook-form";
 import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
 
-const { serverError, unauthorized } = TOAST;
+const { serverError } = TOAST;
 
 export default function Edit() {
   const [selectedOptions, setSelectedOptions] = useState<RecruitApiRequestDto>({

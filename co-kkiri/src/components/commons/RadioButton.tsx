@@ -12,7 +12,7 @@ interface RadioButtonProps {
 export default function RadioButton({ children, value, checked, onClick }: RadioButtonProps) {
   return (
     <Label>
-      <RadioInput onClick={onClick} type="radio" name="invite" value={value} checked={checked} />
+      <RadioInput onChange={onClick} type="radio" name="invite" value={value} checked={checked} />
       {children}
     </Label>
   );

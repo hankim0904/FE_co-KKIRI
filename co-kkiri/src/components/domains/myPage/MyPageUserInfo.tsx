@@ -1,6 +1,6 @@
 import * as S from "./MyPageUserInfo.styled";
 import ToggleButton from "@/components/commons/ToggleButton";
-import UserProfileCard from "@/components/commons/UserProfileCard";
+import UserProfileCardLayout from "@/components/commons/UserProfileCard/UserProfileCardLayout";
 import ConfirmModal from "@/components/modals/ConfirmModal";
 import TOAST from "@/constants/toast";
 import useOpenToggle from "@/hooks/useOpenToggle";
@@ -37,8 +37,8 @@ export default function MyPageUserInfo({ visibleProfile }: MyPageUserInfoProps) 
     onSuccess: () => {
       queryClient.invalidateQueries();
       navigate("/");
-      // pushToast(TOAST.success.message, TOAST.success.type);
       window.location.reload();
+      pushToast("회원 탈퇴가 정상적으로 처리되었습니다.", "success");
     },
     onError: () => {
       pushToast(TOAST.severError.message, TOAST.severError.type);
@@ -55,18 +55,20 @@ export default function MyPageUserInfo({ visibleProfile }: MyPageUserInfoProps) 
 
   return (
     <S.Container>
-      <UserProfileCard
-        profileImageUrl={user.userInfo?.profileImageUrl || ""}
-        nickname={user.userInfo?.nickname || ""}
-        position={user.userInfo?.position}
-        career={user.userInfo?.career}
-        stack={user.userInfo?.stack || []}
-        score={40}
-        introduce={user.userInfo?.introduce}
-        link={user.userInfo?.link}
-        cardType="mypage"
-      />
-      <S.Box>
+      <S.InfoBox>
+        <UserProfileCardLayout
+          profileImageUrl={user.userInfo?.profileImageUrl || ""}
+          nickname={user.userInfo?.nickname || ""}
+          position={user.userInfo?.position}
+          career={user.userInfo?.career}
+          stack={user.userInfo?.stack || []}
+          score={40}
+          introduce={user.userInfo?.introduce}
+          link={user.userInfo?.link}
+          cardType="mypage"
+        />
+      </S.InfoBox>
+      <S.ButtonBox>
         <S.Scout>
           <ToggleButton
             content="스카우트 동의"
@@ -75,7 +77,7 @@ export default function MyPageUserInfo({ visibleProfile }: MyPageUserInfoProps) 
           />
         </S.Scout>
         <S.DeleteUser onClick={openToggle}>회원 탈퇴하기</S.DeleteUser>
-      </S.Box>
+      </S.ButtonBox>
       {isDeleteUserConfirmModalOpen && (
         <ConfirmModal type="deleteUser" onClose={openToggle} onClick={handleDeleteUser} />
       )}

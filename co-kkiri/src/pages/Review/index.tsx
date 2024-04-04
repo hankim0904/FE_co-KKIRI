@@ -33,7 +33,7 @@ export default function Review() {
   });
 
   const { data: memberList, error } = useQuery({
-    queryKey: [`review/${postId}/member`, selectedMemberId],
+    queryKey: [`review/${postId}/member`],
     queryFn: () => getMemberList(postId),
     placeholderData: keepPreviousData,
   });
@@ -48,8 +48,8 @@ export default function Review() {
       pushToast("리뷰 작성이 완료되었습니다.", "success");
       queryClient.invalidateQueries();
     },
-    onError: () => {
-      pushToast("요청에 실패하였습니다.", "error");
+    onError: (error) => {
+      pushToast(`${error.message}`, "error");
     },
     onSettled: () => {
       navigate(-1);

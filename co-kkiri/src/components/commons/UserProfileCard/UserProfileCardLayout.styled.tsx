@@ -74,4 +74,5 @@ export const ButtonBox = styled.div`
   ${mediaQueries.mobile} {
     width: 28rem;
   }
+  cursor: pointer;
 `;

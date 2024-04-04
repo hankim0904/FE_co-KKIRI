@@ -1,7 +1,7 @@
 import DESIGN_TOKEN from "@/styles/tokens";
 import styled from "styled-components";
 
-const { typography, color, mediaQueries } = DESIGN_TOKEN;
+const { typography, color, mediaQueries, boxShadow } = DESIGN_TOKEN;
 
 export const Container = styled.div`
   width: 43rem;
@@ -16,7 +16,22 @@ export const Container = styled.div`
   }
 `;
 
-export const Box = styled.div`
+export const InfoBox = styled.div`
+  width: 100%;
+  min-width: fit-content;
+
+  padding: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  border-radius: 2rem;
+  box-shadow: ${boxShadow.content};
+`;
+
+export const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: 43rem;

@@ -27,7 +27,7 @@ export default function MyPage() {
     isLoading: invitedTeamListLoading,
   } = useQuery({
     queryKey: ["invite/list"],
-    queryFn: () => getInvitedTeamList({ page: 1, take: 100 }),
+    queryFn: () => getInvitedTeamList({ page: 1, take: 500 }),
     retry: false,
   });
 

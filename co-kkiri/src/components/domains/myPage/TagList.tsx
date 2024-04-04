@@ -10,28 +10,42 @@ interface TagListProps {
 }
 
 export default function TagList({ reviewList }: TagListProps) {
+  const compliments = reviewList.filter((tag) => tag.type === "COMPLIMENT");
+  const improvements = reviewList.filter((tag) => tag.type === "IMPROVEMENT");
+  const noTags = compliments.length === 0 && improvements.length === 0;
+
   return (
     <Container>
       <SectionTitle title="내가 받은 태그" lineLength="mypage" />
       <TagListWrapper>
-        {reviewList.length > 0 ? (
-          reviewList.map((tags) => (
-            <EvaluationChip
-              key={tags.content}
-              label={tags.content || ""}
-              evaluationWay={tags.type}
-              count={tags.count}
-            />
-          ))
+        {noTags ? (
+          <NoResultText text="받은 태그가 없어요" padding={60} color="gray" />
         ) : (
-          <NoResultText text="아직 받은 태그가 없어요" padding={60} color="gray" />
+          <>
+            {compliments.map((tag, index) => (
+              <EvaluationChip
+                key={`compliment-${tag.content}-${index}`}
+                label={tag.content || ""}
+                evaluationWay={tag.type}
+                count={tag.count}
+              />
+            ))}
+            {improvements.map((tag, index) => (
+              <EvaluationChip
+                key={`improvement-${tag.content}-${index}`}
+                label={tag.content || ""}
+                evaluationWay={tag.type}
+                count={tag.count}
+              />
+            ))}
+          </>
         )}
       </TagListWrapper>
     </Container>
   );
 }
 
-const { color, mediaQueries } = DESIGN_TOKEN;
+const { mediaQueries } = DESIGN_TOKEN;
 
 const Container = styled.div`
   display: flex;
@@ -53,5 +67,6 @@ const TagListWrapper = styled.div`
   gap: 0.6rem;
   flex-wrap: wrap;
   overflow-y: auto;
+  align-content: baseline;
   height: 13.9rem;
 `;

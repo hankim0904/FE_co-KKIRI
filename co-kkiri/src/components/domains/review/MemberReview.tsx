@@ -1,10 +1,9 @@
-import MemberEvaluation from "./MemberEvaluation";
+import MemberEvaluationSection from "./MemberEvaluationSection";
 import SelectMember from "./SelectMember";
-import { Control } from "react-hook-form";
+import { Control, FieldArrayWithId } from "react-hook-form";
 import Divider from "@/components/commons/Divider";
 import styled from "styled-components";
 import { ReviewFormValues, TeamMemberListApiResponseDto } from "@/lib/api/review/type";
-import useReviewStore from "@/stores/reviewStore";
 
 interface MemberReviewProps {
   member: TeamMemberListApiResponseDto;
@@ -13,7 +12,6 @@ interface MemberReviewProps {
   onMemberClick: (teamMemberId: number) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
-  isReviewed: boolean;
 }
 
 export default function MemberReview({
@@ -23,18 +21,12 @@ export default function MemberReview({
   onMemberClick,
   onChange,
   value,
-  isReviewed,
 }: MemberReviewProps) {
   return (
     <Container>
-      <SelectMember
-        members={member}
-        selectedMemberId={selectedMemberId}
-        onMemberClick={onMemberClick}
-        isReviewed={isReviewed}
-      />
+      <SelectMember members={member} onMemberClick={onMemberClick} control={control} />
       <Divider />
-      <MemberEvaluation
+      <MemberEvaluationSection
         member={member}
         selectedMemberId={selectedMemberId}
         control={control}

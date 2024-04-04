@@ -7,7 +7,7 @@ type TeamMember = {
 
 export type TeamMemberListApiResponseDto = TeamMember[];
 
-export type PostReviewType = {
+export type StudyReviewType = {
   type: ReviewType;
   content: string;
 };
@@ -20,7 +20,7 @@ export type MemberReviewType = {
 
 type MemberReviewCommentType = {
   revieweeMemberId: number;
-  content: string;
+  comment: string;
 };
 
 export type ReviewType = "COMPLIMENT" | "IMPROVEMENT";
@@ -29,7 +29,7 @@ export const ReviewType = "COMPLIMENT" || "IMPROVEMENT";
 
 export type ReviewFormValues = {
   postId: number;
-  postReview: PostReviewType[];
+  postReview: StudyReviewType[];
   memberReview: MemberReviewType[];
   memberReviewComment: MemberReviewCommentType[];
 };
@@ -46,7 +46,7 @@ export type TeamerReviewType = {
 
 export type TeamReviewInfo = {
   postTitle: string;
-  postReviews: PostReviewType[];
+  postReviews: StudyReviewType[];
   memberReviews: TeamerReviewType[];
   memberReviewComments: MemberReviewComment[];
 };

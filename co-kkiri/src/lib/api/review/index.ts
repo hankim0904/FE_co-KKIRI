@@ -7,7 +7,7 @@ export const getMemberList = (postId: number): Promise<TeamMemberListApiResponse
   apiRequest("get", reviewAddress.memberList(postId));
 
 /** 리뷰 제출하기 */
-export const postReview = (data: ReviewFormValues) => apiRequest("post", reviewAddress.review);
+export const postReview = (data: ReviewFormValues) => apiRequest("post", reviewAddress.review, data);
 
 /** 작성된 리뷰 가져오기 */
 export const getReviewInfo = () => apiRequest("get", reviewAddress.reviewInfo);

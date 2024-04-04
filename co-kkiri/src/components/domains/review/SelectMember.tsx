@@ -2,44 +2,48 @@ import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
 import UserInfo from "@/components/commons/UserInfo";
 import { ICONS } from "@/constants/icons";
-import { TeamMemberListApiResponseDto } from "@/lib/api/review/type";
+import { ReviewFormValues, TeamMemberListApiResponseDto } from "@/lib/api/review/type";
 import useReviewStore from "@/stores/reviewStore";
+import { Control, useWatch } from "react-hook-form";
 
 interface SelectMemberProps {
   members: TeamMemberListApiResponseDto;
-  selectedMemberId: number;
   onMemberClick: (teamMemberId: number) => void;
-  isReviewed: boolean;
+  control: Control<ReviewFormValues>;
 }
 
-export default function SelectMember({ members, onMemberClick, isReviewed }: SelectMemberProps) {
+export default function SelectMember({ members, onMemberClick, control }: SelectMemberProps) {
   const { selectedMemberId, setSelectedMemberId } = useReviewStore();
   const handleMemberClick = (teamMemberId: number) => {
     onMemberClick(teamMemberId);
     setSelectedMemberId(teamMemberId);
   };
+  const currentMemberReview = useWatch({ control, name: `memberReview` });
 
   return (
     <Container>
-      {members.map((member) => (
-        <Box key={member.memberId} onClick={() => handleMemberClick(member.memberId)}>
-          <MemberWrapper $isSelected={selectedMemberId === member.memberId}>
-            <UserInfo
-              user={{ id: member.memberId, nickname: member.nickname, profileImageUrl: member.profileImageUrl }}
-              type="review"
-            />
-          </MemberWrapper>
-          {
-            <SelectedMember>
-              {isReviewed ? (
-                <CheckImg src={ICONS.checked.src} alt={ICONS.checked.alt} />
-              ) : (
-                <CheckImg src={ICONS.unchecked.src} alt={ICONS.unchecked.alt} />
-              )}
-            </SelectedMember>
-          }
-        </Box>
-      ))}
+      {members.map((member) => {
+        const isReviewed = currentMemberReview?.some((option) => option.revieweeMemberId === member.memberId);
+        return (
+          <Box key={member.memberId} onClick={() => handleMemberClick(member.memberId)}>
+            <MemberWrapper $isSelected={selectedMemberId === member.memberId}>
+              <UserInfo
+                user={{ id: member.memberId, nickname: member.nickname, profileImageUrl: member.profileImageUrl }}
+                type="review"
+              />
+            </MemberWrapper>
+            {
+              <SelectedMember>
+                {isReviewed ? (
+                  <CheckImg src={ICONS.checked.src} alt={ICONS.checked.alt} />
+                ) : (
+                  <CheckImg src={ICONS.unchecked.src} alt={ICONS.unchecked.alt} />
+                )}
+              </SelectedMember>
+            }
+          </Box>
+        );
+      })}
     </Container>
   );
 }

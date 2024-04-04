@@ -6,7 +6,7 @@ import EvaluationChip from "@/components/commons/Chips/EvaluationChip";
 import { MyPageReviewApiResponseDto } from "@/lib/api/myPage/type";
 
 interface TagListProps {
-  reviewList: MyPageReviewApiResponseDto["reviewList"];
+  reviewList: MyPageReviewApiResponseDto;
 }
 
 export default function TagList({ reviewList }: TagListProps) {
@@ -15,17 +15,14 @@ export default function TagList({ reviewList }: TagListProps) {
       <SectionTitle title="내가 받은 태그" lineLength="mypage" />
       <TagListWrapper>
         {reviewList.length > 0 ? (
-          reviewList.map(
-            (tags) =>
-              tags && (
-                <EvaluationChip
-                  key={tags.content}
-                  label={tags.content || ""}
-                  evaluationWay={tags.type}
-                  count={tags.count}
-                />
-              ),
-          )
+          reviewList.map((tags) => (
+            <EvaluationChip
+              key={tags.content}
+              label={tags.content || ""}
+              evaluationWay={tags.type}
+              count={tags.count}
+            />
+          ))
         ) : (
           <NoResultText text="아직 받은 태그가 없어요" padding={60} color="gray" />
         )}

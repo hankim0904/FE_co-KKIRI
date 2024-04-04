@@ -41,7 +41,6 @@ export default function MyPage() {
     retry: false,
   });
 
-  const tagListData = tagList?.reviewList || [];
   const invitedTeamListData = invitedTeamList?.data || [];
   const visibleProfileData = visibleProfile || { isVisibleProfile: false };
 
@@ -71,7 +70,7 @@ export default function MyPage() {
             <MyPageUserInfo visibleProfile={visibleProfileData} />
           )}
           <S.Lists>
-            <TagList reviewList={tagListData} />
+            <TagList reviewList={tagList || []} />
             <InvitedTeamList count={invitedTeamListData.length} teamList={invitedTeamListData} />
           </S.Lists>
         </S.Wrapper>

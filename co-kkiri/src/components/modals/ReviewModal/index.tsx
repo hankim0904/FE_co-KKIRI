@@ -1,6 +1,6 @@
 import EvaluationChip from "@/components/commons/Chips/EvaluationChip.tsx";
 import ModalLayout from "@/components/modals/ModalLayout";
-import * as S from "./ReviewModal.styled.ts";
+import * as S from "./ReviewModal.styled";
 import { ICONS } from "@/constants/icons";
 import { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -27,12 +27,6 @@ export default function ReviewModal({ onClose }: ReviewModalProps) {
 
     return selectedEmoji;
   };
-
-  //팀 리뷰 조회요청
-  // const { data } = useQuery({
-  //   queryKey: ["teamReview", postId],
-  //   queryFn: () => getReview(postId),
-  // });
 
   return (
     <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose} isCloseClickOutside>

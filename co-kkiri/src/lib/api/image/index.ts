@@ -8,8 +8,6 @@ export const getImageUploadUrl = (): Promise<ImageUploadApiResponseDto> => apiRe
 
 /** 이미지 업로드하기 */
 export const postImage = async (url: URL, image: File) => {
-  console.log(url);
-
   const response = await fetch(url.href, {
     method: "PUT",
     body: image,

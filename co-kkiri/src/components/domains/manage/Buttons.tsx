@@ -1,7 +1,7 @@
 import useManageButtons from "@/hooks/useManageButtons";
 import useOpenToggle from "@/hooks/useOpenToggle";
 import styled from "styled-components";
-import ReviewModal from "../review/ReviewModal";
+import ReviewModal from "../../modals/ReviewModal";
 import { useQuery } from "@tanstack/react-query";
 import { getTeamMember } from "@/lib/api/teamMember";
 import { useUserInfoStore } from "@/stores/userInfoStore";

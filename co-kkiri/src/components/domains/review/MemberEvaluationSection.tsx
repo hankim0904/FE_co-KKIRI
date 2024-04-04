@@ -1,9 +1,9 @@
 import UserInfo from "@/components/commons/UserInfo";
 import FormElement from "@/components/commons/Form/FormElement";
 import { EVALUATION_COMMENT, EVALUATION_TYPE } from "@/constants/evaluationChip";
-import RHFEvaluationPart from "./RHFEvaluationPart";
+import RHFMemberEvaluation from "./RHFMemberEvaluation";
 import { ReviewFormValues } from "@/lib/api/review/type";
-import { Control } from "react-hook-form";
+import { Control, FieldArrayWithId } from "react-hook-form";
 import styled from "styled-components";
 import PositionChip from "@/components/commons/Chips/PositionChip";
 import { TeamMemberListApiResponseDto } from "@/lib/api/review/type";
@@ -11,13 +11,13 @@ import DESIGN_TOKEN from "@/styles/tokens";
 
 interface MemberEvaluation {
   member: TeamMemberListApiResponseDto;
-  selectedMemberId: number;
+  selectedMemberId?: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   control: Control<ReviewFormValues>;
 }
 
-export default function MemberEvaluation({
+export default function MemberEvaluationSection({
   member,
   selectedMemberId,
   onChange,
@@ -44,8 +44,7 @@ export default function MemberEvaluation({
             <FormElement
               label={EVALUATION_TYPE.compliments}
               FormFieldComponent={
-                <RHFEvaluationPart
-                  type="member"
+                <RHFMemberEvaluation
                   evaluationCategory={EVALUATION_COMMENT.compliments.member}
                   formFieldName="memberReview"
                   control={control}
@@ -56,8 +55,7 @@ export default function MemberEvaluation({
             <FormElement
               label={EVALUATION_TYPE.improvements}
               FormFieldComponent={
-                <RHFEvaluationPart
-                  type="member"
+                <RHFMemberEvaluation
                   evaluationCategory={EVALUATION_COMMENT.improvements.member}
                   formFieldName="memberReview"
                   control={control}

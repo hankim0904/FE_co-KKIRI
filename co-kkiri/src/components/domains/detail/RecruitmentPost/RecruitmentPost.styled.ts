@@ -82,6 +82,21 @@ export const Content = styled.div`
     list-style-type: disc;
   }
 
+  h1 {
+    line-height: 3.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  h2 {
+    line-height: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h3 {
+    line-height: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
   blockquote {
     border-left: 4px solid #ccc;
     margin-bottom: 5px;

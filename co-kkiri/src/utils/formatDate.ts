@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, formatDistance } from "date-fns";
 import { ko } from "date-fns/locale";
 
 /**
@@ -32,42 +32,37 @@ export const formatDate = (createdAt: string, withTime: boolean = false): string
  *                                     true일 경우, 시간을 포함하여 반환하며,
  *                                     false일 경우 또는 생략했을 때는 날짜만 반환합니다.
  * @returns {string} 경과 시간에 따라 다음 중 하나의 형식으로 반환됩니다:
- *                   - 2분 미만인 경우: "1분 전"
+ *                   - 1분 미만인 경우: "방금 전"
  *                   - 1시간 미만인 경우: "X분 전" (X는 경과 분)
  *                   - 24시간 미만인 경우: "X시간 전" (X는 경과 시간)
  *                   - 24시간 이상인 경우: 날짜 포맷 (`withTime` 매개변수에 따라 시간 포함 여부 결정)
  */
 export const createTimePassedMessage = (createdDate: string, withTime: boolean = false) => {
-  const now = Number(new Date());
-  const targetDate = Number(new Date(createdDate));
-  const timeDiff = now - targetDate;
-  
+  const now = Date.now();
+  const targetDate = new Date(createdDate);
+  const timeDiff = now - targetDate.getTime();
+
   const SECOND_IN_MILLISECOND = 1000;
   const MINUTE_IN_SECOND = 60;
   const HOUR_IN_MINUTE = 60;
 
   const MINUTE_IN_MILLISECOND = MINUTE_IN_SECOND * SECOND_IN_MILLISECOND;
   const HOUR_IN_MILLISECOND = HOUR_IN_MINUTE * MINUTE_IN_MILLISECOND;
+  const diffMinutes = timeDiff / MINUTE_IN_MILLISECOND;
+  const diffHours = timeDiff / HOUR_IN_MILLISECOND;
 
-  const diffMinutes = Math.trunc(timeDiff / MINUTE_IN_MILLISECOND);
-  const diffHours = Math.trunc(timeDiff / HOUR_IN_MILLISECOND);
+  if (diffMinutes < 1) {
+    return "방금 전 ";
+  }
 
-  if (diffMinutes < 2) {
-    return "1분 전";
-  }
-  if (diffMinutes <= 59) {
-    return `${diffMinutes}분 전`;
-  }
-  if (diffMinutes >= 60 && diffHours < 2) {
-    return "1시간 전";
-  }
-  if (diffHours <= 23) {
-    return `${diffHours}시간 전`;
+  if (diffHours < 24) {
+    return formatDistance(targetDate, now, { addSuffix: true, locale: ko });
   }
 
   if (diffHours >= 24 && withTime) {
     return formatDate(createdDate, true);
   }
+
   if (diffHours >= 24 && !withTime) {
     return formatDate(createdDate, false);
   }

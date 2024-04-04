@@ -123,7 +123,7 @@ export const memberAddress = {
   //get
   search: "/member/search",
   //get
-  reviewList: (memberId: number) => `review/review/list/${memberId}`,
+  reviewList: (memberId: number) => `review/list/${memberId}`,
 };
 
 export const scoutAddress = {

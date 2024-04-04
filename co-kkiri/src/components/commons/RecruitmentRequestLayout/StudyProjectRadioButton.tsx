@@ -12,7 +12,7 @@ export default function StudyProjectRadioButton({ selectedValue, onChange }: Stu
     <Container>
       <RadioButtonBox>
         <RadioButton
-          defaultChecked={selectedValue === "STUDY" ? true : false}
+          checked={selectedValue === "STUDY"}
           value="STUDY"
           onClick={() => {
             onChange("STUDY");
@@ -22,7 +22,7 @@ export default function StudyProjectRadioButton({ selectedValue, onChange }: Stu
       </RadioButtonBox>
       <RadioButtonBox>
         <RadioButton
-          defaultChecked={selectedValue === "PROJECT" ? true : false}
+          checked={selectedValue === "PROJECT"}
           value="PROJECT"
           onClick={() => {
             onChange("PROJECT");

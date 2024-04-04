@@ -2,7 +2,7 @@ import RecruitmentRequestLayout from "@/components/commons/RecruitmentRequestLay
 import * as S from "@/pages/Recruit/styled";
 import { RecruitApiRequestDto } from "@/lib/api/post/type";
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getPostDetail } from "@/lib/api/post";
 import { useNavigate, useParams } from "react-router-dom";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
@@ -14,7 +14,7 @@ const { serverError, unauthorized } = TOAST;
 
 export default function Edit() {
   const [selectedOptions, setSelectedOptions] = useState<RecruitApiRequestDto>({
-    type: "STUDY",
+    type: "",
     recruitEndAt: "",
     progressPeriod: "",
     capacity: 999,
@@ -32,6 +32,7 @@ export default function Edit() {
   const postId = Number(id);
   const { editMutation } = usePostMutation();
   const pushToast = useToast();
+  const queryClient = useQueryClient();
 
   const { data } = useQuery({
     queryKey: ["postEdit", postId],
@@ -45,6 +46,7 @@ export default function Edit() {
         onSuccess: () => {
           pushToast("포스트가 성공적으로 업로드되었습니다.", "success");
           navigate(`/list/${postId}`);
+          queryClient.invalidateQueries();
         },
         onError: (error) => {
           pushToast(serverError.message, serverError.type);
@@ -78,13 +80,15 @@ export default function Edit() {
   }, [data]);
 
   return (
-    <S.Container>
-      <RecruitmentRequestLayout
-        isLoading={editMutation.isPending}
-        selectedOptions={selectedOptions}
-        onSubmitClick={handleSubmit}
-        buttonText="수정하기"
-      />
-    </S.Container>
+    data && (
+      <S.Container>
+        <RecruitmentRequestLayout
+          isLoading={editMutation.isPending}
+          selectedOptions={selectedOptions}
+          onSubmitClick={handleSubmit}
+          buttonText="수정하기"
+        />
+      </S.Container>
+    )
   );
 }

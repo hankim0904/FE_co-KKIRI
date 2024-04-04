@@ -5,14 +5,14 @@ import styled from "styled-components";
 interface RadioButtonProps {
   children?: ReactNode;
   value: string;
-  defaultChecked?: boolean;
   onClick?: () => void;
+  checked: boolean;
 }
 
-export default function RadioButton({ children, value, defaultChecked, onClick }: RadioButtonProps) {
+export default function RadioButton({ children, value, checked, onClick }: RadioButtonProps) {
   return (
     <Label>
-      <RadioInput onClick={onClick} type="radio" name="invite" value={value} defaultChecked={defaultChecked} />
+      <RadioInput onClick={onClick} type="radio" name="invite" value={value} checked={checked} />
       {children}
     </Label>
   );

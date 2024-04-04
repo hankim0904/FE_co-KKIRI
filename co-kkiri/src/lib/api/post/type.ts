@@ -4,7 +4,7 @@ import { PageMeta, PaginationOptions } from "../pageMetaType";
 
 /**스터디모집하기, 수정하기 (연락 링크 추가 예정)*/
 export type RecruitApiRequestDto = {
-  type: CategoryList;
+  type: CategoryList | "";
   recruitEndAt: string;
   progressPeriod: string;
   capacity: number;

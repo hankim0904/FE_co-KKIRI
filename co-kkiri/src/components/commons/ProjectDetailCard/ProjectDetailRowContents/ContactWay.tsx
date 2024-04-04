@@ -10,7 +10,7 @@ interface ContactWayProps {
 
 export default function ContactWay({ content }: ContactWayProps) {
   if (!content.content) {
-    return <RowContent>{content.label}</RowContent>;
+    return <RowContent>{"-"}</RowContent>;
   }
 
   switch (content.label) {

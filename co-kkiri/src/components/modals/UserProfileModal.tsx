@@ -10,6 +10,7 @@ import { memberProfile } from "@/constants/initialDatas";
 import ScoutModal from "./ScoutModal";
 import { useToast } from "@/hooks/useToast";
 import { useEffect } from "react";
+import DESIGN_TOKEN from "@/styles/tokens";
 
 interface UserProfileModalProps {
   userId: number;
@@ -41,7 +42,7 @@ export default function UserProfileModal({ userId, onClose }: UserProfileModalPr
     }
   }, [isError, pushToast]);
 
-  if(!data) {
+  if (!data) {
     // 스켈레톤 UI 추가
     return null;
   }
@@ -84,6 +85,14 @@ export default function UserProfileModal({ userId, onClose }: UserProfileModalPr
   );
 }
 
+const { mediaQueries } = DESIGN_TOKEN;
+
 const ModalLayout = styled(DefaultModalLayout)`
   padding: 4rem 3rem 3rem;
+
+  min-height: 48.5rem;
+
+  ${mediaQueries.mobile} {
+    min-height: 47.5rem;
+  }
 `;

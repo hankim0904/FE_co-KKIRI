@@ -2,10 +2,11 @@ import useOpenToggle from "@/hooks/useOpenToggle";
 import SquareDropButton from "./commons/SquareDropButton";
 import styled from "styled-components";
 import DefaultSelectLayout from "../StackPopover/SelectLayout";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import DeleteStackChipList from "../StackPopover/DeleteStackChipList";
-import { useResizeObserver } from "usehooks-ts";
+import { useResizeObserver, useToggle } from "usehooks-ts";
 import DESIGN_TOKEN from "@/styles/tokens";
+import PopoverContainer from "../Widgets/Popover/PopoverContainer";
 
 interface MultiselectDropdownProps {
   selectedOptions: string[];
@@ -20,15 +21,19 @@ export default function MultiselectDropdown({
   onSelectChange,
   isError,
 }: MultiselectDropdownProps) {
-  const { isOpen, openToggle, ref } = useOpenToggle();
+  const [isToggled, _, setToggle] = useToggle();
   const dropButtonRef = useRef<HTMLButtonElement>(null);
   const { height } = useResizeObserver({
     ref: dropButtonRef,
     box: "border-box",
   });
 
+  const closePopover = () => {
+    setToggle(false);
+  };
+
   return (
-    <Container ref={ref}>
+    <Container>
       <SquareDropButton
         selectOption={
           <DeleteStackChipList
@@ -40,22 +45,23 @@ export default function MultiselectDropdown({
         }
         onClick={(e) => {
           if (e.target !== e.currentTarget) return;
-
-          openToggle();
+          setToggle((prev) => !prev);
         }}
         $iconType="default"
-        $isSelected={isOpen}
+        $isSelected={isToggled}
         dropButtonRef={dropButtonRef}
         $isError={isError}
       />
-      {isOpen && (
-        <SelectLayout
-          stacks={selectedOptions}
-          //TODO: limit 초과시 error 로직 짜야함
-          limit={limit}
-          onStacksChange={(stacks) => onSelectChange([...stacks])}
-          $top={height ? height : undefined}
-        />
+      {isToggled && (
+        <PopoverContainer triggerRef={dropButtonRef} onClose={closePopover} marginFromTrigger={8}>
+          <SelectLayout
+            stacks={selectedOptions}
+            //TODO: limit 초과시 error 로직 짜야함
+            limit={limit}
+            onStacksChange={(stacks) => onSelectChange([...stacks])}
+            $top={height ? height : undefined}
+          />
+        </PopoverContainer>
       )}
     </Container>
   );

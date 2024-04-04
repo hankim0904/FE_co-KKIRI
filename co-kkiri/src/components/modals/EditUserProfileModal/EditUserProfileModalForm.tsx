@@ -5,7 +5,7 @@ import ModalTextFieldInput from "../ModalTextFieldInput";
 import RHFEditableUserImage from "./RHFEditableUserImage";
 import DESIGN_TOKEN from "@/styles/tokens";
 import styled from "styled-components";
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import { UserInfoEditApiRequestDto } from "@/lib/api/myPage/type";
 import { Control } from "react-hook-form";
 import { DROPDOWN_FORM_INFO } from "@/constants/dropDown";
@@ -94,6 +94,11 @@ const Form = styled.form`
     height: 62rem;
     overflow-y: overlay;
     overflow-x: hidden;
+
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 

@@ -4,7 +4,7 @@ import DefaultFilterList from "../FilterList";
 import DefaultResetButton from "./ResetButton";
 import DefaultStackChipList from "./StackChipList";
 import DefaultDeleteStackChipList from "./DeleteStackChipList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StackPositionFilter, mappedFilter } from "./constants";
 import { getFilterKey } from "@/utils/objectUtils";
 
@@ -18,7 +18,6 @@ interface SelectLayoutProps {
 
 export default function SelectLayout({ stacks, onStacksChange, isDeletedChip, limit, className }: SelectLayoutProps) {
   const [filter, setFilter] = useState<StackPositionFilter>("ALL");
-  useEffect(() => {}, [stacks, onStacksChange]);
 
   return (
     <Container $isSelectedStacks={!!isDeletedChip && stacks.length !== 0} className={className}>
@@ -73,9 +72,6 @@ const Container = styled.div<ContainerProps>`
   padding: 3rem 4rem;
 
   display: grid;
-  position: absolute;
-  top: 4.2rem;
-  z-index: 997;
 
   border-radius: 2rem;
   border: 0.1rem solid ${color.gray[2]};

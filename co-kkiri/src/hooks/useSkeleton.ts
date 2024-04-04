@@ -15,7 +15,7 @@ export default function useSkeleton(isLoading: boolean) {
     if (!isLoading) {
       timer = setTimeout(() => {
         setShowSkeleton(false);
-      }, 1000);
+      }, 800);
     }
 
     return () => clearTimeout(timer);

@@ -17,7 +17,7 @@ export default function StacksPopover({ onStacksChange, stacks }: StacksPopoverP
   return (
     <Container ref={stacksPopoverRef}>
       <FilterButton selectOption={selectOption} isSelected={!!stacksCount} onClick={openToggle} isOpen={isOpen} />
-      {isOpen && <SelectLayout triggerRef = {stacksPopoverRef} stacks={stacks} onStacksChange={onStacksChange} isDeletedChip />}
+      {isOpen && <SelectLayout stacks={stacks} onStacksChange={onStacksChange} isDeletedChip />}
     </Container>
   );
 }

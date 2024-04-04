@@ -1,7 +1,7 @@
 import MemberList from "@/components/domains/manage/MemberList";
 import * as S from "./styled";
 import AppliedList from "@/components/domains/manage/AppliedList";
-import { getAppliedMemberList, getStudyManagement } from "@/lib/api/post";
+import { getAppliedMemberList, getInvitedMemberList, getStudyManagement } from "@/lib/api/post";
 import { getTeamMember } from "@/lib/api/teamMember";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
@@ -12,6 +12,7 @@ import { ICONS } from "@/constants/icons";
 import DESIGN_TOKEN from "@/styles/tokens";
 import { TitleSkeleton } from "@/components/commons/Skeleton/TextSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
+import InvitedList from "@/components/domains/manage/InvitedList";
 
 export default function Manage() {
   const pushToast = useToast();
@@ -42,10 +43,19 @@ export default function Manage() {
     queryKey: ["memberList", postId],
     queryFn: () => getTeamMember(postId, { page: 1, take: 100 }),
   });
+  const {
+    data: invitedMemberList,
+    error: invitedMemberListError,
+    isLoading: invitedMemberListIsLoading,
+  } = useQuery({
+    queryKey: ["invitedMemberList", postId],
+    queryFn: () => getInvitedMemberList(postId, { page: 1, take: 100 }),
+  });
 
   const isVisibleSkeleton = useSkeleton(detailInfoIsLoading);
   const appliedMemberListData = appliedMemberList?.data || [];
   const memberListData = memberList?.data || [];
+  const invitedMemberListData = invitedMemberList?.data || [];
 
   if (detailInfoError) {
     pushToast(`${detailInfoError.message}`, "error");
@@ -93,6 +103,12 @@ export default function Manage() {
             isLeader={detailInfo?.isLeader}
             type={detailInfo?.status}
             isLoading={appliedMemberListIsLoading}
+          />
+          <InvitedList
+            detailInfo={invitedMemberListData}
+            isLeader={detailInfo?.isLeader}
+            type={detailInfo?.status}
+            isLoading={invitedMemberListIsLoading}
           />
           <MemberList
             detailInfo={memberListData}

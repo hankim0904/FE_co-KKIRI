@@ -1,44 +1,29 @@
-import SectionTitle from "./SectionTitle";
-import UserInfo from "@/components/commons/UserInfo";
 import styled from "styled-components";
-import PositionChip from "@/components/commons/Chips/PositionChip";
 import DESIGN_TOKEN from "@/styles/tokens";
+import { InvitedMemberListApiResponseDto } from "@/lib/api/post/type";
+import UserInfo from "@/components/commons/UserInfo";
+import SectionTitle from "./SectionTitle";
+import PositionChip from "@/components/commons/Chips/PositionChip";
 import { ICONS } from "@/constants/icons";
-import { AppliedMemberListApiResponseDto } from "@/lib/api/post/type";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { acceptMember, rejectMember } from "@/lib/api/teamMember";
 import { useToast } from "@/hooks/useToast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { rejectMember } from "@/lib/api/teamMember";
 import TOAST from "@/constants/toast";
 import useSkeleton from "@/hooks/useSkeleton";
 import UserProfileSkeleton from "@/components/commons/Skeleton/UserProfileSkeleton";
 
-interface AppliedListProps {
-  detailInfo: AppliedMemberListApiResponseDto["data"];
+interface InviteListProps {
+  detailInfo: InvitedMemberListApiResponseDto["data"];
   isLeader?: boolean;
   type?: "READY" | "PROGRESS" | "PROGRESS_END" | "DONE";
   isLoading: boolean;
 }
 
-export default function AppliedList({ detailInfo, isLeader, type, isLoading }: AppliedListProps) {
+export default function InvitedList({ detailInfo, isLeader, type, isLoading }: InviteListProps) {
+  const invitedMemberListData = detailInfo || [];
   const pushToast = useToast();
   const queryClient = useQueryClient();
-  const detailInfoData = detailInfo || [];
   const isVisibleSkeleton = useSkeleton(isLoading);
-
-  const handleAccept = useMutation({
-    mutationFn: (teamMemberId: number) => acceptMember(teamMemberId),
-    onSuccess: () => {
-      pushToast(TOAST.success.message, TOAST.success.type);
-      queryClient.invalidateQueries();
-    },
-    onError: (error) => {
-      pushToast(`${error.message}`, "error");
-    },
-  });
-
-  const handleAcceptMember = (teamMemberId: number) => {
-    handleAccept.mutate(teamMemberId);
-  };
 
   const handleReject = useMutation({
     mutationFn: (teamMemberId: number) => rejectMember(teamMemberId),
@@ -55,30 +40,27 @@ export default function AppliedList({ detailInfo, isLeader, type, isLoading }: A
     handleReject.mutate(teamMemberId);
   };
 
-  return type === "READY" && isLeader ? (
+  return isLeader && type === "READY" ? (
     <Container>
-      <SectionTitle title="신청 목록" count={detailInfoData.length} />
+      <SectionTitle title="초대 목록" count={invitedMemberListData.length} />
       <Members>
-        {detailInfoData.map((info) => (
-          <Box key={info.memberId}>
+        {invitedMemberListData.map((member) => (
+          <Box>
             <MemberWrapper>
               {isVisibleSkeleton ? (
                 <UserProfileSkeleton />
               ) : (
                 <UserInfo
-                  user={{ id: info.memberId, nickname: info.nickname, profileImageUrl: info.profileImageUrl }}
+                  user={{ id: member.memberId, nickname: member.nickname, profileImageUrl: member.profileImageUrl }}
                 />
               )}
-              <PositionChip label={info.position} />
+              <PositionChip label={member.position} />
             </MemberWrapper>
-            <AcceptWrapper>
-              <button onClick={() => handleAcceptMember(info.teamMemberId)}>
-                <img src={ICONS.accept.src} alt={ICONS.accept.alt} />
-              </button>
-              <button onClick={() => handleRejectMember(info.teamMemberId)}>
+            <DeleteWrapper>
+              <button onClick={() => handleRejectMember(member.teamMemberId)}>
                 <img src={ICONS.reject.src} alt={ICONS.reject.alt} />
               </button>
-            </AcceptWrapper>
+            </DeleteWrapper>
           </Box>
         ))}
       </Members>
@@ -116,7 +98,7 @@ const MemberWrapper = styled.div`
   align-items: center;
 `;
 
-const AcceptWrapper = styled.div`
+const DeleteWrapper = styled.div`
   display: flex;
   gap: 2.4rem;
 `;

@@ -1,7 +1,6 @@
 import { useState, useEffect, RefObject } from "react";
 import useSkeleton from "./useSkeleton";
 
-// T는 사용하는 곳에서 지정할 데이터 타입입니다.
 function useComponentHeight<T>(
   data: T,
   componentRef: RefObject<HTMLElement>,

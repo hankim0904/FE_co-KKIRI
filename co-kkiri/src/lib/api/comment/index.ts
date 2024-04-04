@@ -1,9 +1,10 @@
 import { commentAddress } from "../address";
 import { apiRequest } from "../axios";
-import { CommentApiRequestDto, CommentApiResponseDto, CommentPageMetaApiRequestDto } from "./type";
+import { PaginationOptions } from "../pageMetaType";
+import { CommentApiRequestDto, CommentApiResponseDto } from "./type";
 
 /** 댓글 목록 가져오기 */
-export const getCommentList = (postId: number, qs: CommentPageMetaApiRequestDto): Promise<CommentApiResponseDto> =>
+export const getCommentList = (postId: number, qs: PaginationOptions): Promise<CommentApiResponseDto> =>
   apiRequest("get", commentAddress.list(postId), null, qs);
 
 /** 댓글 달기 */

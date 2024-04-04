@@ -1,8 +1,10 @@
 import { postAddress } from "../address";
 import { apiRequest } from "../axios";
+import { PaginationOptions } from "../pageMetaType";
 import {
   AppliedMemberListApiRequestDto,
   AppliedMemberListApiResponseDto,
+  InvitedMemberListApiResponseDto,
   ListApiRequestDto,
   ListApiResponseDto,
   PostDetailApiResponseDto,
@@ -51,6 +53,14 @@ export const getAppliedMemberList = (
   postId: number,
   qs: AppliedMemberListApiRequestDto,
 ): Promise<AppliedMemberListApiResponseDto> => apiRequest("get", postAddress.apply(postId), null, qs);
+
+/** 초대한 유저 목록 가져오기
+ *
+ *@param {number} postId
+ *@param {PaginationOptions}  qs  쿼리스트링을 객체로 받습니다.
+ */
+export const getInvitedMemberList = (postId: number, qs: PaginationOptions): Promise<InvitedMemberListApiResponseDto> =>
+  apiRequest("get", postAddress.invite(postId), null, qs);
 
 /** 스터디 프로젝트 정보  */
 export const getStudyManagement = (postId: number): Promise<StudyManagementApiResponseDto> =>

@@ -29,6 +29,8 @@ export const postAddress = {
   postId: (postId: number) => `/post/${postId}`,
   //get, post
   apply: (postId: number) => `/post/${postId}/apply`,
+  //get
+  invite: (postId: number) => `/post/${postId}/invite`,
   //delete
   cancel: (postId: number) => `/post/${postId}/apply/cancel`,
   //patch
@@ -43,8 +45,6 @@ export const postAddress = {
   reviewEnd: (postId: number) => `/post/${postId}/review-end`,
   //patch ???
   recruitStart: (postId: number) => `/post/${postId}/recruit-start`, // 백엔드 확인 요망
-  //post
-  invite: "/post/invite",
   //post
   viewCountIncrease: (postId: number) => `/post/${postId}/view-count/increase`,
 };

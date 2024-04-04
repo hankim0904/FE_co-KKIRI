@@ -60,6 +60,7 @@ const SideBarWrapper = styled.div<SideBarWrapperProps>`
   ${zIndex.modal}
   position: fixed;
   animation: ${(props) => (props.$isOpen ? slideIn : slideOut)} 0.5s forwards;
+  height: 100%;
 `;
 
 const OutletWrapper = styled.div<{ $isOpen: boolean }>`

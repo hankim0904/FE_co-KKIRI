@@ -7,11 +7,12 @@ export const Background = styled.div`
   position: sticky;
   top: 8rem;
   left: 0;
+  height: 100%;
 `;
 
 export const Container = styled.div`
   width: 21rem;
-  height: 80vh;
+  height: calc(100% - 9rem);
   box-shadow: ${boxShadow.content};
   border-top-right-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;

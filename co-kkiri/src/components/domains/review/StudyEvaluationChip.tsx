@@ -40,7 +40,7 @@ export default function EvaluationPart({ evaluationCategory, selectedChips = [],
     ) {
       return "IMPROVEMENT";
     }
-    throw new Error("~");
+    throw new Error("");
   };
 
   return (

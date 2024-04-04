@@ -58,7 +58,6 @@ export default function UserProfileModal({ userId, onClose }: UserProfileModalPr
   }, [isMemberProfileError, isTagsError, pushToast]);
 
   if (!MemberProfileData) {
-    // 스켈레톤 UI 추가
     return null;
   }
 
@@ -66,7 +65,7 @@ export default function UserProfileModal({ userId, onClose }: UserProfileModalPr
     <>
       {!isInvitedModalOpen && (
         <ModalLayout desktopWidth={430} tabletWidth={430} mobileWidth={320} onClose={onClose} isCloseClickOutside>
-          <UserProfileCardLayout {...MemberProfileData} score={MemberProfileData.gauge} />
+          <UserProfileCardLayout {...MemberProfileData} gauge={MemberProfileData.gauge} />
           <Divider />
           <CollapseSection title="유저가 받은 태그" isOpen={isToggled} onClick={() => setIsToggled(!isToggled)}>
             <UserProfileTagList reviewList={TagsData || []} />
@@ -96,9 +95,9 @@ const { mediaQueries } = DESIGN_TOKEN;
 const ModalLayout = styled(DefaultModalLayout)`
   padding: 4rem 3rem 3rem;
 
-  min-height: 48.5rem;
+  min-height: 57rem;
 
   ${mediaQueries.mobile} {
-    min-height: 47.5rem;
+    min-height: 56rem;
   }
 `;

@@ -17,7 +17,7 @@ export default function ShareAndScrap({ isScraped, className, postId, kakaoShare
   return (
     <Container className={className}>
       <Share kakaoShareInfo={kakaoShareInfo} />
-      <ScrapSection isScraped={isScraped} postId={postId} />
+      <ScrapSection isScraped={isScraped} postId={postId}/>
     </Container>
   );
 }

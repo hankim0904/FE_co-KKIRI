@@ -9,4 +9,5 @@ export const memberProfile: MemberProfileApiResponseDto = {
   stacks: [],
   gauge: 0,
   isVisibleProfile: false,
+  isMine: false,
 };

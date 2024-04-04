@@ -8,7 +8,7 @@ interface CardCornerButtonProps {
   cardCornerType?: CardCornerButtonType;
   isScraped?: boolean;
   postId: number;
-  onModalClick: () => void;
+  onModalClick?: () => void;
   className?: string;
 }
 
@@ -53,7 +53,9 @@ export default function CardCornerButton({
         navigate(`/mystudy/${postId}/review`);
         break;
       case "view":
-        onModalClick();
+        if (onModalClick) {
+          onModalClick();
+        }
     }
   };
 

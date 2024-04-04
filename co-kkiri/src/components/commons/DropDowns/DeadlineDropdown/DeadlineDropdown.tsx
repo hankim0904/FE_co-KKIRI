@@ -30,6 +30,7 @@ export default function DeadlineDropdown({ placeholder, selectedOption, onChange
         selectOption={selectedOption ? format(selectedOption, "yyyy.MM.dd") : placeholder || ""}
         $isSelected={!!selectedOption}
         $isError={$isError}
+        isOpen={isOpen}
       />
       {isOpen && (
         <CalendarWrapper>

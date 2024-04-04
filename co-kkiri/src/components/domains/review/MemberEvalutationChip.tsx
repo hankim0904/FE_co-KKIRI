@@ -53,7 +53,7 @@ export default function MemberEvaluationChip({
     ) {
       return "IMPROVEMENT";
     }
-    throw new Error("~");
+    throw new Error("");
   };
 
   return (

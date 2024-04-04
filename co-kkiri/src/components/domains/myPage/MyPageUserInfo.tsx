@@ -62,7 +62,7 @@ export default function MyPageUserInfo({ visibleProfile }: MyPageUserInfoProps) 
           position={user.userInfo?.position}
           career={user.userInfo?.career}
           stack={user.userInfo?.stack || []}
-          score={40}
+          gauge={user.userInfo?.gauge || 0}
           introduce={user.userInfo?.introduce}
           link={user.userInfo?.link}
           cardType="mypage"

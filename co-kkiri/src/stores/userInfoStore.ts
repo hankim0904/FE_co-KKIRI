@@ -5,7 +5,7 @@ import { create } from "zustand";
 
 interface UserInfoState {
   userId: number | null;
-  userInfo: UserInfoEditApiRequestDto | null;
+  userInfo: UserInfoApiResponseDto | null;
   isLoading: boolean;
   isVisible: boolean;
 }
@@ -38,7 +38,7 @@ export const useUserInfoStore = create<UserInfoStore>((set) => ({
     let userProfile: UserInfoApiResponseDto | null = null;
     try {
       const data: UserInfoApiResponseDto = await getUserInfo();
-      const { nickname, profileImageUrl, position, career, introduce, link } = data;
+      const { nickname, profileImageUrl, position, career, introduce, link, gauge } = data;
       userProfile = {
         nickname,
         profileImageUrl,
@@ -47,6 +47,7 @@ export const useUserInfoStore = create<UserInfoStore>((set) => ({
         introduce,
         stack: data.stack,
         link,
+        gauge,
       };
     } catch (error) {
       console.error("Failed to fetch user info:", error);

@@ -28,11 +28,6 @@ export default function EditUserProfileModal({ onClose }: EditUserProfileModalPr
   );
 }
 
-const { mediaQueries } = DESIGN_TOKEN;
-
 const ModalLayout = styled(DefaultModalLayout)`
   padding: 4rem 3rem 3rem 3rem;
-
-  ${mediaQueries.mobile} {
-  }
 `;

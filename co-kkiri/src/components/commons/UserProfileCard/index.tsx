@@ -4,7 +4,6 @@ import DESIGN_TOKEN from "@/styles/tokens";
 import { UserInfoApiResponseDto } from "@/lib/api/myPage/type";
 
 interface UserProfileCardProps extends UserInfoApiResponseDto {
-  score: number;
   cardType?: "mypage" | "scout";
 }
 

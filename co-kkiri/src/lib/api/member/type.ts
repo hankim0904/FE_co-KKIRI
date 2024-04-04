@@ -10,7 +10,7 @@ export type MemberProfile = {
   stacks: string[];
   gauge: number;
   isVisibleProfile: boolean;
-  // tage: Tag // TODO: 추후 작업예정
+	isMine: boolean;
 };
 
 export type MemberProfileApiResponseDto = MemberProfile;
@@ -23,7 +23,7 @@ export type SearchedMemberProfile = {
   position: string;
   career: number;
   stacks: string[];
-  score: number;
+  gauge: number;
 };
 
 export type SearchedMemberProfileApiResponseDto = {

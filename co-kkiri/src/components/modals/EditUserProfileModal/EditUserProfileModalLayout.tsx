@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useUserInfoStore } from "@/stores/userInfoStore";
-import { UserInfoEditApiRequestDto } from "@/lib/api/myPage/type";
+import { UserInfoApiResponseDto, UserInfoEditApiRequestDto } from "@/lib/api/myPage/type";
 import EditUserProfileModalForm from "./EditUserProfileModalForm";
 import { useState } from "react";
 import { useImageMutation } from "@/hooks/useMutation/useImageMutation";
@@ -20,7 +20,7 @@ export default function EditUserProfileModalLayout({ onSubmit }: EditUserProfile
   });
 
   const onSubmitHandler = async (data: UserInfoEditApiRequestDto) => {
-    const submitData = { ...data };
+    const { gauge, ...submitData } = { ...data } as UserInfoApiResponseDto;
 
     let imageUrl = userInfo?.profileImageUrl;
 

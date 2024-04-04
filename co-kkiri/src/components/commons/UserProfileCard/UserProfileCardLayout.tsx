@@ -9,7 +9,6 @@ import { UserInfoApiResponseDto } from "@/lib/api/myPage/type";
 import { emptyMessages } from "./constants";
 
 interface UserProfileCardProps extends UserInfoApiResponseDto {
-  score: number;
   cardType?: "mypage" | "scout";
 }
 
@@ -20,7 +19,7 @@ export default function UserProfileCardLayout({
   career,
   stack,
   stacks,
-  score,
+  gauge,
   introduce,
   link,
   cardType,
@@ -34,7 +33,7 @@ export default function UserProfileCardLayout({
     <S.Container>
       <S.InfoBox>
         <S.ProgressWrapper>
-          <CircularProgressBar size={130} strokeWidth={8} percentage={score} animationDuration={1} />
+          <CircularProgressBar size={130} strokeWidth={8} percentage={gauge} animationDuration={1} />
           <S.UserImage profileImgUrl={profileImageUrl} onSelect={() => {}} />
         </S.ProgressWrapper>
         <S.PositionChip label={isEmptyValue(position) ? emptyMessages.position : position!} />

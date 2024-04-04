@@ -17,7 +17,7 @@ export default function ScoutCards({ userProfiles }: ScoutCardsProps) {
         <NoResultText text="검색 결과가 없어요." padding={120} color="black" />
       ) : (
         <Wrapper $isSidebarOpenNarrow={isSidebarOpenNarrow}>
-          {userProfiles?.map(({ memberId, profileImageUrl, nickname, position, career, stacks: stacks, score }) => (
+          {userProfiles?.map(({ memberId, profileImageUrl, nickname, position, career, stacks: stacks, gauge }) => (
             <ScoutCard
               key={memberId}
               memberId={memberId}
@@ -26,7 +26,7 @@ export default function ScoutCards({ userProfiles }: ScoutCardsProps) {
               position={position}
               career={career}
               stacks={stacks}
-              score={score}
+              gauge={gauge}
             />
           ))}
         </Wrapper>

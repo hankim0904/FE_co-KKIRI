@@ -1,6 +1,6 @@
 import { HexColor } from "@/types/styledUtilTypes";
 import { isValidHexColor } from "@/utils/validationUtils";
-import { useId } from "react";
+import { useEffect, useId, useLayoutEffect } from "react";
 import styled from "styled-components";
 
 interface CircularProgressBarProps {
@@ -26,6 +26,7 @@ export default function CircularProgressBar({
 }: CircularProgressBarProps) {
   const id = useId();
 
+  
   return (
     <Container className={className} $strokeWidth={strokeWidth}>
       <svg xmlns="http://www.w3.org/2000/svg" width={`${size / 10}rem`} height={`${size / 10}rem`}>
@@ -86,7 +87,7 @@ interface ProgressProps {
 }
 
 const Progress = styled.circle<ProgressProps>`
-  @keyframes ${({ $percentage }) => `progress-${$percentage}`} {
+  @keyframes ${({ $percentage }) => `progress-${Math.trunc($percentage)}`} {
     from {
       stroke-dashoffset: 100;
     }
@@ -95,6 +96,6 @@ const Progress = styled.circle<ProgressProps>`
     }
   }
 
-  animation: ${({ $percentage }) => `progress-${$percentage}`} ${({ $animationDuration }) => ($animationDuration ? `${$animationDuration}s` : `0.8s`)} ease-out
-    forwards 1;
+  animation: ${({ $percentage }) => `progress-${Math.trunc($percentage)}`}
+    ${({ $animationDuration }) => ($animationDuration ? `${$animationDuration}s` : `0.8s`)} ease-out forwards 1;
 `;

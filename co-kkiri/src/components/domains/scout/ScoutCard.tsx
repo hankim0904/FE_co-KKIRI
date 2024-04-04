@@ -18,7 +18,7 @@ export default function ScoutCard(props: ScoutCardProps) {
           position={props.position}
           career={props.career}
           stack={props.stacks}
-          score={props.score}
+          gauge={props.gauge}
           cardType="scout"
         />
       </Container>

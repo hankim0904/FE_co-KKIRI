@@ -11,6 +11,7 @@ export type UserInfoApiResponseDto = {
   stack?: string[];
   stacks?: string[];
   link?: string;
+  gauge: number;
 };
 
 // 내가 받은 태그 정보

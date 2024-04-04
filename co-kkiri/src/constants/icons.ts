@@ -37,6 +37,8 @@ import number1 from "@/assets/icons/number_1.svg";
 import number2 from "@/assets/icons/number_2.svg";
 import checked from "@/assets/icons/checked.svg";
 import unchecked from "@/assets/icons/unchecked.svg";
+import arrowRightOrange from "@/assets/icons/arrow_right_orange.svg";
+import penGray from "@/assets/icons/pen_gray.svg";
 import { Images } from "@/types/imageTypes";
 
 export const ICONS: Images = {
@@ -193,4 +195,6 @@ export const ICONS: Images = {
     src: unchecked,
     alt: "선택하지 않음",
   },
+  penGray: { src: penGray, alt: "리뷰 작성 아이콘" },
+  arrowRightOrange: { src: arrowRightOrange, alt: "이동" },
 };

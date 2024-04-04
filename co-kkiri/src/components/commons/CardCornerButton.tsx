@@ -8,6 +8,7 @@ interface CardCornerButtonProps {
   cardCornerType?: CardCornerButtonType;
   isScraped?: boolean;
   postId: number;
+  onModalClick: () => void;
   className?: string;
 }
 
@@ -26,6 +27,7 @@ export default function CardCornerButton({
   cardCornerType = "scrap",
   isScraped = false,
   postId,
+  onModalClick,
   className,
 }: CardCornerButtonProps) {
   const navigate = useNavigate();
@@ -50,6 +52,8 @@ export default function CardCornerButton({
       case "write":
         navigate(`/mystudy/${postId}/review`);
         break;
+      case "view":
+        onModalClick();
     }
   };
 
@@ -70,14 +74,22 @@ const Wrapper = styled.div<{ $cardCornerType: CardCornerButtonType | null; $isLo
   display: flex;
   align-items: center;
   gap: 0.2rem;
-  ${({ $isLoading }) => ($isLoading ? "cursor: wait" : "cursor: pointer;")};
+  ${({ $isLoading, $cardCornerType }) =>
+    $isLoading ? "cursor: wait" : $cardCornerType === "complete" ? "cursor: default;" : "cursor: pointer;"};
   ${({ $cardCornerType }) =>
-    $cardCornerType === "write" || $cardCornerType === "view" ? `padding-top:0.5rem; padding-bottom: 1.5rem;` : ""};
+    $cardCornerType === "write" || $cardCornerType === "view" || $cardCornerType === "complete"
+      ? `padding-top:0.5rem; padding-bottom: 1.5rem;`
+      : ""};
 `;
 
 const Text = styled.span<{ $cardCornerType: CardCornerButtonType | null }>`
   ${font12Bold}
-  color: ${({ $cardCornerType }) => ($cardCornerType === "write" ? `${color.primary[1]}` : `${color.gray[1]}`)};
+  color: ${({ $cardCornerType }) =>
+    $cardCornerType === "write"
+      ? `${color.primary[1]}`
+      : $cardCornerType === "view"
+        ? `${color.secondary}`
+        : `${color.gray[1]}`};
 `;
 
 const Icon = styled.img<{ $width?: number }>`

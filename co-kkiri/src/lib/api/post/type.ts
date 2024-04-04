@@ -33,6 +33,7 @@ export type PostInfo = {
   profileImageUrl?: string; // 타입 혼재로 추가 API명세 확정시 삭제 필요
   viewCount: number;
   commentCount: number;
+  isReviewed?: boolean;
 };
 
 /**스터디 목록*/

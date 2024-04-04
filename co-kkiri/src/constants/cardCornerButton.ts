@@ -1,6 +1,6 @@
 import { ICONS } from "./icons";
 
-export type CardCornerButtonType = "scrap" | "manage" | "write" | "view";
+export type CardCornerButtonType = "scrap" | "manage" | "write" | "view" | "complete";
 
 export type CardCornerButton = {
   [key in CardCornerButtonType]: {
@@ -24,9 +24,14 @@ export const CARD_CORNER_BUTTON: CardCornerButton = {
     icon: () => ICONS.pen,
     width: 16,
   },
+  complete: {
+    text: "리뷰 작성 완료",
+    icon: () => ICONS.penGray,
+    width: 16,
+  },
   view: {
     text: "리뷰 보기",
-    icon: () => ICONS.arrowRightGray,
+    icon: () => ICONS.arrowRightOrange,
     width: 14,
   },
 };

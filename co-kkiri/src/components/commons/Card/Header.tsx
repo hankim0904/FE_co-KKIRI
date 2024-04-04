@@ -2,7 +2,6 @@ import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
 import { formatDate } from "@/utils/formatDate";
 
-//임시
 interface HeaderProps {
   deadline: string;
   progressWay: string;

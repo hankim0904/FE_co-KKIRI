@@ -10,7 +10,6 @@ interface StackProps {
 }
 
 export default function Stack({ stack, className }: StackProps) {
-  //임시
   const icon: Image =
     stack && stack.img
       ? {

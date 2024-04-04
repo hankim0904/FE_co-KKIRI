@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import DESIGN_TOKEN from "@/styles/tokens";
 
-//임시
 interface TitleProps {
   title: string;
 }

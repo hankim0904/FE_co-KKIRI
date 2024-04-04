@@ -44,3 +44,8 @@ export const CategoryWrapper = styled.div`
     align-items: flex-start;
   }
 `;
+
+export const CardsSkeletonWarper = styled.div`
+  display: flex;
+  justify-content: center;
+`;

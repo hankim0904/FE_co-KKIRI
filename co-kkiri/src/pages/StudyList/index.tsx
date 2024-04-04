@@ -16,6 +16,7 @@ import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { useToast } from "@/hooks/useToast";
 import CardsSkeleton from "@/components/commons/Skeleton/CardsSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
+import styled from "styled-components";
 
 export default function StudyList() {
   const pushToast = useToast();
@@ -111,7 +112,13 @@ export default function StudyList() {
           handleProgressWayChange={handleProgressWayChange}
           handleSortByChange={handleSortByChange}
         />
-        {isVisibleSkeleton ? <CardsSkeleton /> : <Cards data={list} page="studyList" />}
+        {isVisibleSkeleton ? (
+          <S.CardsSkeletonWarper>
+            <CardsSkeleton />
+          </S.CardsSkeletonWarper>
+        ) : (
+          <Cards data={list} page="studyList" />
+        )}
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPage} />
       </S.Box>
       <CreatePost />

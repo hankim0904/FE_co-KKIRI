@@ -71,7 +71,7 @@ export default function QuillEditor({ onChange, value }: { onChange: (value: str
           formats={formats}
           onChange={onChange}
           className="custom-quill-editor"
-          placeholder="프로젝트를 소개해주세요!"
+          placeholder="2000자내로 입력해주세요."
         />
       </ReactQuillWrapper>
     </>

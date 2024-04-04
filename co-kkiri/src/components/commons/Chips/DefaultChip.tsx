@@ -16,7 +16,7 @@ interface DefaultChipProps {
 
   isSelected?: boolean;
   onClick?: (e: MouseEvent<HTMLDivElement>) => void;
-  onIconClick?: (e: MouseEvent<HTMLImageElement>) => void;
+  onIconClick?: (e: MouseEvent<HTMLDivElement>) => void;
   isVertical?: boolean;
   className?: string;
 }
@@ -38,12 +38,16 @@ export default function DefaultChip({
       className={className}
       $isVertical={isVertical}
       $isSelected={isSelected}
-      $isClickable={onClick || onIconClick ? true : false}
+      $isClickable={!!onClick}
       onClick={!icon ? onClick : undefined}>
       {imgUrl && <Image stack={{ name: label || "", img: imgUrl }} />}
       {label && <span className="label">{label}</span>}
       {count && <span className="label">{count}</span>}
-      {icon && <img className="icon" src={icon.src} alt={icon.alt} onClick={onIconClick} />}
+      {icon && (
+        <ICONWrapper $isClickable={!onIconClick} onClick={onIconClick}>
+          <img src={icon.src} alt={icon.alt} />
+        </ICONWrapper>
+      )}
     </Container>
   );
 }
@@ -81,12 +85,6 @@ const Container = styled.div<DefaultChipContainerStyleProps>`
     text-align: center;
   }
 
-  & .icon {
-    width: 1.05rem;
-    height: 1.05rem;
-    ${({ $isClickable }) => $isClickable && `cursor: pointer;`}
-  }
-
   ${({ $isVertical }) =>
     $isVertical
       ? `
@@ -112,6 +110,17 @@ const Container = styled.div<DefaultChipContainerStyleProps>`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+`;
+
+const ICONWrapper = styled.div<{ $isClickable?: boolean }>`
+  width: 1.05rem;
+  height: 1.05rem;
+  ${({ $isClickable }) => $isClickable && `cursor: pointer;`}
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Image = styled(Stack)`

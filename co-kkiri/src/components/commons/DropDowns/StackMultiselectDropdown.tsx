@@ -51,6 +51,7 @@ export default function MultiselectDropdown({
         $isSelected={isToggled}
         dropButtonRef={dropButtonRef}
         $isError={isError}
+        isOpen={isToggled}
       />
       {isToggled && (
         <PopoverContainer triggerRef={dropButtonRef} onClose={closePopover} marginFromTrigger={8}>

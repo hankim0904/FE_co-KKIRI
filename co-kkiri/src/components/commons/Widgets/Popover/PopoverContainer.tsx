@@ -1,7 +1,8 @@
-import { RefObject, useEffect, useLayoutEffect, useRef } from "react";
+import { RefObject, useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import PopoverPortal from "./PopoverPortal";
 import { useOnClickOutside, useResizeObserver, useWindowSize } from "usehooks-ts";
 import styled from "styled-components";
+import DESIGN_TOKEN from "@/styles/tokens";
 
 interface PopoverContainerProps {
   triggerRef: RefObject<HTMLElement>;
@@ -23,9 +24,9 @@ export default function PopoverContainer({ triggerRef, children, marginFromTrigg
     box: "border-box",
   });
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     if (onClose) onClose();
-  };
+  }, [onClose]);
 
   useOnClickOutside([popoverRef, triggerRef], (e) => {
     handleClose();
@@ -38,7 +39,7 @@ export default function PopoverContainer({ triggerRef, children, marginFromTrigg
     // Trigger한 element의 위치를 가지고옴
     const triggerBoundary = triggerRef.current.getBoundingClientRect();
 
-    if (popoverHeight <= 0) popoverRef.current.style.visibility = "hidden";
+    popoverRef.current.style.visibility = "hidden";
 
     if (windowHeight - triggerBoundary.bottom > popoverHeight) {
       popoverRef.current.style.top = `${triggerBoundary.bottom + (marginFromTrigger || 0)}px`;
@@ -51,6 +52,7 @@ export default function PopoverContainer({ triggerRef, children, marginFromTrigg
     } else {
       popoverRef.current.style.right = `0`;
     }
+    
     if (popoverHeight > 0) {
       popoverRef.current.style.visibility = "visible";
     }
@@ -73,7 +75,7 @@ export default function PopoverContainer({ triggerRef, children, marginFromTrigg
       window.removeEventListener("resize", handleClose);
       window.removeEventListener("scroll", handleClose, true);
     };
-  }, [onClose]);
+  }, [handleClose]);
 
   return (
     <PopoverPortal>
@@ -82,7 +84,9 @@ export default function PopoverContainer({ triggerRef, children, marginFromTrigg
   );
 }
 
+const { zIndex } = DESIGN_TOKEN;
+
 const Container = styled.div`
   position: fixed;
-  z-index: 9999;
+  ${zIndex.popoverPortal}
 `;

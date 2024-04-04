@@ -37,6 +37,7 @@ export default function Dropdown({
         $iconType="default"
         dropButtonRef={dropdownRef}
         $isError={isError}
+        isOpen={isOpen}
       />
       <DropMenu isOpen={isOpen} handleSelectOption={handleSelectOption} $borderType="square" options={options} />
     </Container>

@@ -11,6 +11,7 @@ interface DropdownButtonProps {
   $isSelected: boolean;
   $isError?: boolean;
   dropButtonRef?: RefObject<HTMLButtonElement> | RefCallBack;
+  isOpen: boolean;
 }
 
 interface ContainerProps {
@@ -30,6 +31,7 @@ interface ContainerProps {
  */
 
 export default function SquareDropButton({
+  isOpen,
   selectOption,
   onClick,
   $iconType,
@@ -52,7 +54,7 @@ export default function SquareDropButton({
       $isError={$isError}
       ref={dropButtonRef}>
       <Box>{selectOption}</Box>
-      <img src={iconSources[$iconType].src} alt={iconSources[$iconType].alt} />
+      <Icon src={iconSources[$iconType].src} alt={iconSources[$iconType].alt} $isOpen={isOpen} />
     </Container>
   );
 }
@@ -73,10 +75,6 @@ const Container = styled.button<ContainerProps>`
   color : ${({ $isSelected }) => ($isSelected ? color.black[1] : color.black[3])};
   border: 0.1rem solid ${color.gray[2]};
 
-  & img {
-    width: 1.8rem;
-  }
-
   ${({ $isError }) =>
     $isError &&
     `  border-color: ${color.red};
@@ -85,4 +83,9 @@ const Container = styled.button<ContainerProps>`
 
 const Box = styled.div`
   flex-shrink: 1;
+`;
+
+const Icon = styled.img<{ $isOpen: boolean }>`
+  width: 1.8rem;
+  transform: ${({ $isOpen }) => ($isOpen ? `rotate(180deg)` : `rotate(0deg)`)};
 `;

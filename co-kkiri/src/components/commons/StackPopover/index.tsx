@@ -1,7 +1,8 @@
 import FilterButton from "@/components/commons/DropDowns/commons/FilterButton";
-import SelectLayout from "./SelectLayout";
+import DefaultSelectLayout from "./SelectLayout";
 import styled from "styled-components";
 import useOpenToggle from "@/hooks/useOpenToggle";
+import DESIGN_TOKEN from "@/styles/tokens";
 
 interface StacksPopoverProps {
   stacks: string[];
@@ -22,6 +23,16 @@ export default function StacksPopover({ onStacksChange, stacks }: StacksPopoverP
   );
 }
 
+const { zIndex } = DESIGN_TOKEN;
+
 const Container = styled.div`
   position: relative;
+`;
+
+const SelectLayout = styled(DefaultSelectLayout)`
+  margin-top: 0.8rem;
+  
+  position: absolute;
+  ${zIndex.popover}
+
 `;

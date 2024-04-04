@@ -12,6 +12,7 @@ export const Container = styled.div`
 export const Box = styled.div`
   background-color: ${color.white};
   width: 100%;
+  min-height: 8rem;
   display: flex;
   justify-content: space-between;
   padding: 2.2rem 4rem;

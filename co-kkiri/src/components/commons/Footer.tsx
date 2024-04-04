@@ -1,3 +1,4 @@
+import FOOTER_LINK from "@/constants/footerLink";
 import DESIGN_TOKEN from "@/styles/tokens";
 import styled from "styled-components";
 
@@ -6,17 +7,17 @@ export default function Footer() {
     <Container>
       <LinkBox>
         {/* TODO: 노션 작성 후 링크 연결 */}
-        <Link href="/" target="_blank" rel="noopener noreferrer">
+        <Link href={FOOTER_LINK.introduce} target="_blank" rel="noopener noreferrer">
           코끼리 소개
         </Link>
-        <Link href="/" target="_blank" rel="noopener noreferrer">
-          이용약관
+        <Link href={FOOTER_LINK.feedBack} target="_blank" rel="noopener noreferrer">
+          사용자 피드백
         </Link>
-        <Link href="/" target="_blank" rel="noopener noreferrer">
-          개인정보처리방침
+        <Link href={FOOTER_LINK.github} target="_blank" rel="noopener noreferrer">
+          GitHub
         </Link>
       </LinkBox>
-      <Organization>© 2024 COKKIRI</Organization>
+      <Organization>© 2024 CO-KKIRI</Organization>
     </Container>
   );
 }

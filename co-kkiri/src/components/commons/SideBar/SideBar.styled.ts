@@ -51,6 +51,12 @@ export const Box = styled.div`
 `;
 
 export const CategoryBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4.4rem;
+`;
+
+export const CategoryWrapper = styled.div`
   ${typography.font14Semibold}
   display: flex;
   flex-direction: column;

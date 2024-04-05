@@ -37,7 +37,7 @@ export default function MyPage() {
     error: visibleProfileError,
     isLoading: visibleProfileLoading,
   } = useQuery({
-    queryKey: ["my-page/visigle-profile"],
+    queryKey: ["my-page/visible-profile"],
     queryFn: () => getVisibleProfileStatus(),
     retry: false,
   });

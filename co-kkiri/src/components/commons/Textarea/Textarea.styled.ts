@@ -11,13 +11,13 @@ const {
 
 const TEXTAREA_TYPE: VariantStyle<TextareaType> = {
   comment: css`
-    ${font14Medium}
+    ${font16Medium}
     border: none;
     border-radius: 1.5rem;
     box-shadow: ${content};
     color: ${color.black[1]};
     width: 100%;
-    height: 10.3rem;
+    min-height: 10.3rem;
     padding: 2rem 2.4rem;
   `,
   modal: css`

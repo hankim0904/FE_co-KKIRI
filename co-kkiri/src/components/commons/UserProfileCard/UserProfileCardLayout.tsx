@@ -39,7 +39,7 @@ export default function UserProfileCardLayout({
         <S.PositionChip label={isEmptyValue(position) ? emptyMessages.position : position!} />
         <S.Nickname>{nickname}</S.Nickname>
         <S.Career>{isEmptyValue(position) ? emptyMessages.career : `경력 ${career}년차`}</S.Career>
-        <Stacks stacks={stack || stacks || []} variant="profile"/>
+        <Stacks stacks={stack || stacks || []} variant="profile" />
       </S.InfoBox>
       {!(cardType === "scout") && (
         <S.IntroduceBox>
@@ -52,7 +52,7 @@ export default function UserProfileCardLayout({
       {cardType === "mypage" && (
         <S.ButtonBox>
           <Button variant="ghost" onClick={handleEditModalOpen}>
-            수정 하기
+            수정하기
           </Button>
         </S.ButtonBox>
       )}

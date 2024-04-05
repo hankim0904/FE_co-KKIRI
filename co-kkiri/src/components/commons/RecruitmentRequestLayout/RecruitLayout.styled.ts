@@ -176,6 +176,7 @@ export const TitleInput = styled.input`
   border-radius: 0.5rem;
   padding: 0 1.885rem;
   margin-bottom: 1.2rem;
+  font-size: 1.6rem;
 
   &:focus {
     outline: none;

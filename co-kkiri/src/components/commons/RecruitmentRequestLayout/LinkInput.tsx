@@ -33,6 +33,7 @@ const Input = styled.input<{ $isError?: boolean }>`
   width: 100%;
   height: 4.8rem;
   border-radius: 0.5rem;
+  font-size: 1.6rem;
   border: 0.1rem solid ${({ $isError }) => ($isError ? color.red : color.gray[2])};
   padding: 1.858rem;
 

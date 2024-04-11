@@ -88,7 +88,7 @@
 |:---:|:---:|:---:|:---:|:---:|
 | [김주현](https://github.com/kimbobby) | [김하은](https://github.com/hankim0904) | [이나경](https://github.com/nakyoung98) | [이윤경](https://github.com/Yoon-kyungLee) | [한지수](https://github.com/JIS0098) |
 
-### DE
+### BE
 | ![전용후](https://github.com/co-KKIRI/FE_co-KKIRI/assets/114739219/bec0bb3c-de43-400e-adbc-52abe9d451eb)| ![고은태](https://github.com/co-KKIRI/FE_co-KKIRI/assets/114739219/4b422792-4eb5-4718-9e54-e6741cbd15ed) | ![임채욱](https://github.com/co-KKIRI/FE_co-KKIRI/assets/114739219/baa84fad-8ef2-4cef-9120-a86e49101671) |
 |:---:|:---:|:---:|
 | [전용후](https://github.com/jyh0521) | [고은태](https://github.com/Kontae) |[임채욱](https://github.com/rockpell) 

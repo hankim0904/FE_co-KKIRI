@@ -3,25 +3,36 @@
 <br>
 <br>
   <div></div>
-  <p>✨나와 함께 할 팀원을 직접 스카우트 해보아요!✨</p>
-  <p>프로필과 활동 게이지를 통해 팀 구성에 필요한 팀원을 직접 초대할 수 있어요</P>
-  <p>💪활동을 마친 후 팀원들의 리뷰평가로 더욱 성장해봅시다💪</p>
+  <p><strong>🌟 팀원 모집이 어렵다고 느껴지시나요? 걱정 마세요!</strong></p>
+  <p><strong>🔍 함께할 팀원을 직접 초대할 수 있어요</strong></P>
+  <p><strong>📈 활동을 마친 후에는 팀원들의 리뷰로 더욱 성장해봅시다!</strong></p>
   <br/>
-  <a href="http://dev.co-kkiri.com/"><p>CO-KKIRI에서 팀원 모집하러 가기👩‍👧‍👦</p></a>
-  <a href="https://www.notion.so/CO-KKIRI-2a9caa4c19274d298c57e716e57f8f13"><p>notion 바로가기🔗</p></a>
+  <a href="http://dev.co-kkiri.com/"><p><strong>🚀 CO-KKIRI에서 시작하는 팀원 모집, 지금 바로 여기에서 시작해보세요!</strong></p></a>
+  <a href="https://www.notion.so/CO-KKIRI-2a9caa4c19274d298c57e716e57f8f13"><p><strong>📋 프로젝트 과정이 궁금하다면, 노션 페이지를 확인해보세요!</strong></p></a>
+  <p><strong>함께 성장하며 꿈을 이루어가는 여정에 당신도 함께해보세요! 🚀🌟</strong></p>
 </div>
 <br>
 
 # 프로젝트 소개
-### CO-KKIRI 제작 계기 
 > 스터디, 프로젝트를 모집 할 때 팀에 적합한 분야와 열정을 가진 팀원을 찾을 순 없을까?
-<p>저희는 개발자 간의 팀(프로젝트/스터디) 모집에 효율적인 매칭을 도모하는 구인 플랫폼을 제작하고 싶었습니다.<br>
-<p>또한, 리뷰 평가 기능을 통해 팀 활동을 완주하는데 있어 더욱 의미있는 서비스 제공을 위해<p>
-<p><strong>코더끼리 이용하는 팀 모집 플랫폼, CO-KKIRI</strong>를 만들게 되었습니다.<p>
+<p>팀 활동의 성공은 팀원들의 역량과 성향에 크게 좌우됩니다.</p>
+<p>이러한 이유로, 저희는 개발자들이 팀(프로젝트/스터디)을 모집할 때 보다 효율적으로 팀원을 구할 수 있도록 돕는 플랫폼, CO-KKIRI를 만들게 되었습니다.<br>
+<p>또한, 팀 활동을 완주한 후에는 동료들의 피드백을 통해 유저들이 성장할 수 있는 기회를 제공하고자 했습니다.<p>
 <br>
 <br>
 
-# CO-KKIRI 주요 기능
+# 기술 스택
+| 카테고리       | 스택           |
+|--------------|-----------------|
+| 주요 기술     |![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white&style=flat-square&labelColor=61DAFB&color=61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white&style=flat-square&labelColor=3178C6&color=3178C6)|
+| 스타일     |![Styled Components](https://img.shields.io/badge/Styled_Components-DB7093?logo=styled-components&logoColor=white&style=flat-square&labelColor=DB7093&color=DB7093)|
+| 상태 관리    |![React Query](https://img.shields.io/badge/React_Query-FF4154?logo=react-query&logoColor=white&style=flat-square&labelColor=FF4154&color=FF4154) ![Zustand](https://img.shields.io/badge/Zustand-000?logo=zustand&logoColor=white&style=flat-square&labelColor=ed5f00&color=ed5f00&logo=zustand) |
+| CI/CD        |![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white&style=flat-square&labelColor=646CFF&color=646CFF) ![Git & GitHub](https://img.shields.io/badge/Git_&_GitHub-F05032?logo=github&logoColor=white&style=flat-square&labelColor=F05032&color=F05032) ![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazon-aws&logoColor=white&style=flat-square&labelColor=232F3E&color=232F3E)|
+| 라이브러리 |![EsLint](https://img.shields.io/badge/EsLint-4B32C3?logo=eslint&logoColor=white&style=flat-square&labelColor=4B32C3&color=4B32C3) ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?logo=prettier&logoColor=white&style=flat-square&labelColor=F7B93E&color=F7B93E) [![UseHooks-ts](https://img.shields.io/badge/UseHooks_ts-007ACC?logo=typescript&logoColor=white&style=flat-square&labelColor=007ACC&color=007ACC)](https://github.com/your-link-here) [![Axios](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white&style=flat-square&labelColor=5A29E4&color=5A29E4)](https://axios-http.com/) ![React Router](https://img.shields.io/badge/React_Router-CA4245?logo=react-router&logoColor=white&style=flat-square&labelColor=CA4245&color=CA4245) [![React Hook Form](https://img.shields.io/badge/React_Hook_Form-EC5990?logo=reacthookform&logoColor=white&style=flat-square&labelColor=EC5990&color=EC5990)](https://react-hook-form.com/) ![React Quill](https://img.shields.io/badge/React_Quill-5ED3F3?logo=react&logoColor=white&style=flat-square&labelColor=5ED3F3&color=5ED3F3)|
+<br>
+<br>
+
+# 주요 기능
 #### ✍️모집글 작성 및 수정
 > 팀 모집글을 작성하고 수정할 수 있습니다.
 
@@ -70,16 +81,6 @@
 <br>
 
 ![스터디 리뷰 혹인](https://github.com/JIS0098/react-todo/assets/114739219/3a2c7434-abdf-4560-ac47-21ca2c6b2062)
-<br>
-
-# 기술 스택
-| 카테고리       | 스택           |
-|--------------|-----------------|
-| 주요 기술     |![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white&style=flat-square&labelColor=61DAFB&color=61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white&style=flat-square&labelColor=3178C6&color=3178C6) ![Styled Components](https://img.shields.io/badge/Styled_Components-DB7093?logo=styled-components&logoColor=white&style=flat-square&labelColor=DB7093&color=DB7093)|
-| 상태 관리    |![React Query](https://img.shields.io/badge/React_Query-FF4154?logo=react-query&logoColor=white&style=flat-square&labelColor=FF4154&color=FF4154) ![Zustand](https://img.shields.io/badge/Zustand-000?logo=zustand&logoColor=white&style=flat-square&labelColor=ed5f00&color=ed5f00&logo=zustand) [![React Hook Form](https://img.shields.io/badge/React_Hook_Form-EC5990?logo=react&logoColor=white&style=flat-square&labelColor=EC5990&color=EC5990)](https://react-hook-form.com/)|
-| CI/CD        |![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white&style=flat-square&labelColor=646CFF&color=646CFF) ![Git & GitHub](https://img.shields.io/badge/Git_&_GitHub-F05032?logo=github&logoColor=white&style=flat-square&labelColor=F05032&color=F05032) ![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazon-aws&logoColor=white&style=flat-square&labelColor=232F3E&color=232F3E)|
-| 라이브러리 |![EsLint](https://img.shields.io/badge/EsLint-4B32C3?logo=eslint&logoColor=white&style=flat-square&labelColor=4B32C3&color=4B32C3) ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?logo=prettier&logoColor=white&style=flat-square&labelColor=F7B93E&color=F7B93E) [![UseHooks-ts](https://img.shields.io/badge/UseHooks_ts-007ACC?logo=typescript&logoColor=white&style=flat-square&labelColor=007ACC&color=007ACC)](https://github.com/your-link-here) [![Axios](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white&style=flat-square&labelColor=5A29E4&color=5A29E4)](https://axios-http.com/) ![React Router](https://img.shields.io/badge/React_Router-CA4245?logo=react-router&logoColor=white&style=flat-square&labelColor=CA4245&color=CA4245) ![React Quill](https://img.shields.io/badge/React_Quill-5ED3F3?logo=react&logoColor=white&style=flat-square&labelColor=5ED3F3&color=5ED3F3)|
-<br>
 <br>
 
 # 팀원 소개

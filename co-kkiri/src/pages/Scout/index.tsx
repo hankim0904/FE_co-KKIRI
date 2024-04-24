@@ -8,9 +8,9 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getSearchedMemberProfile } from "@/lib/api/member";
 import { useDebounceValue } from "usehooks-ts";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
-import { useToast } from "@/hooks/useToast";
 import ScoutCardsSkeleton from "@/components/commons/Skeleton/ScoutCardsSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
+import NoResultText from "@/components/commons/NoResultText";
 
 export interface SelectedFilter {
   position: string;
@@ -18,7 +18,6 @@ export interface SelectedFilter {
 }
 
 export default function Scout() {
-  const pushToast = useToast();
   const isSidebarOpenNarrow = useResponsiveSidebar();
   const [selectedFilter, setSelectedFilter] = useState<SelectedFilter>({
     position: "",
@@ -27,7 +26,7 @@ export default function Scout() {
   const [searchNickname, setSearchNickname] = useDebounceValue("", 500);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { data, error, isError, isLoading } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: [
       "/member/search",
       {
@@ -52,10 +51,6 @@ export default function Scout() {
   const totalPages = data?.meta.pageCount || 0;
   const scoutCardData = data?.data || [];
 
-  if (isError) {
-    pushToast(`${error.message}`, "error");
-  }
-
   const handlePositionChange = (position: string) => setSelectedFilter((prev) => ({ ...prev, position }));
 
   const handleStacksChange = (stacks: string[]) => setSelectedFilter((prev) => ({ ...prev, stacks }));
@@ -78,7 +73,13 @@ export default function Scout() {
           handleStacksChange={handleStacksChange}
           handlePositionChange={handlePositionChange}
         />
-        {isVisibleSkeleton ? <ScoutCardsSkeleton /> : <ScoutCards userProfiles={scoutCardData} />}
+        {isVisibleSkeleton ? (
+          <ScoutCardsSkeleton />
+        ) : isError ? (
+          <NoResultText text="로그인하시면 스카우트를 시작할 수 있어요! 🌟" padding={120} color="black" />
+        ) : (
+          <ScoutCards userProfiles={scoutCardData} />
+        )}
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
       </S.Box>
     </S.Container>

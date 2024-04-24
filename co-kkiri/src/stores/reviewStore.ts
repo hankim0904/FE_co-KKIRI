@@ -1,4 +1,4 @@
-import MemberReview from "@/components/domains/review/MemberReview";
+import MemberReview from "@/components/domains/review/memberReview/MemberReview";
 import { create } from "zustand";
 
 interface MemberReview {

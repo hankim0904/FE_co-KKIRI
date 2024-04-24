@@ -23,7 +23,7 @@ export default function RHFMemberEvaluation({
         <MemberEvaluationChip
           evaluationCategory={evaluationCategory}
           selectedChips={field.value as MemberReviewType[]}
-          onChange={field.onChange}
+          onOptionChange={field.onChange}
           selectedMemberId={selectedMemberId || 0}
         />
       )}

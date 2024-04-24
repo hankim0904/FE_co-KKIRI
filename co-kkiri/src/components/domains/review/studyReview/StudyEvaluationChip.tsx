@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import SelectPositionChip from "@/components/commons/Chips/SelectPositionChip";
-import { StudyReviewType, ReviewType } from "@/lib/api/review/type";
-import { EVALUATION_COMMENT } from "@/constants/evaluationChip";
+import { StudyReviewType } from "@/lib/api/review/type";
+import { reviewType } from "@/utils/reviewType";
 
 export type Option = {
   label: string;
@@ -25,22 +25,6 @@ export default function EvaluationPart({ evaluationCategory, selectedChips = [],
     }
 
     onChange(updatedOptions);
-  };
-
-  const reviewType = (content: string): ReviewType => {
-    if (
-      Object.values(EVALUATION_COMMENT.compliments.team).includes(content) ||
-      Object.values(EVALUATION_COMMENT.compliments.member).includes(content)
-    ) {
-      return "COMPLIMENT";
-    }
-    if (
-      Object.values(EVALUATION_COMMENT.improvements.team).includes(content) ||
-      Object.values(EVALUATION_COMMENT.improvements.member).includes(content)
-    ) {
-      return "IMPROVEMENT";
-    }
-    throw new Error("");
   };
 
   return (

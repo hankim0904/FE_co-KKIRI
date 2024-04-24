@@ -6,7 +6,8 @@ import { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getReview } from "@/lib/api/review/index.ts";
-import { TEAM_REVIEW_INFO, emojis } from "@/lib/mock/review/teamReview.ts";
+import { emojis } from "@/lib/mock/review/teamReview.ts";
+import { MemberReviewType, StudyReviewType } from "@/lib/api/review/type";
 
 interface ReviewModalProps {
   onClose: () => void;
@@ -31,6 +32,33 @@ export default function ReviewModal({ onClose, postId }: ReviewModalProps) {
     queryFn: () => getReview(postId),
   });
 
+  const handleUniqueTags = (tagList: { type: string; content: string }[] | undefined) => {
+    const uniqueTags = new Map();
+
+    tagList?.forEach((tag) => {
+      const key = `${tag.type}-${tag.content}`;
+      if (uniqueTags.has(key)) {
+        uniqueTags.get(key).count++;
+      } else {
+        uniqueTags.set(key, { type: tag.type, content: tag.content, count: 1 });
+      }
+    });
+
+    const uniqueTagArray = Array.from(uniqueTags.values());
+
+    uniqueTagArray.sort((a, b) => {
+      if (a.type === "COMPLIMENT" && b.type !== "COMPLIMENT") {
+        return -1;
+      } else if (a.type !== "COMPLIMENT" && b.type === "COMPLIMENT") {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return uniqueTagArray;
+  };
+
   return (
     <ModalLayout desktopWidth={430} mobileWidth={320} onClose={onClose} isCloseClickOutside>
       <S.Container>
@@ -48,16 +76,16 @@ export default function ReviewModal({ onClose, postId }: ReviewModalProps) {
           <S.ContentBox>
             <h6>스터디 태그 모음</h6>
             <S.TagBox>
-              {data?.postReviews.map((tag) => (
-                <EvaluationChip key={tag.content} label={tag.content} evaluationWay={tag.type} />
+              {handleUniqueTags(data?.postReviews).map((tag, index) => (
+                <EvaluationChip key={index} label={tag.content} evaluationWay={tag.type} count={tag.count} />
               ))}
             </S.TagBox>
           </S.ContentBox>
           <S.ContentBox>
             <h6>내가 받은 태그</h6>
             <S.TagBox>
-              {data?.memberReviews.map((tag) => (
-                <EvaluationChip key={tag.content} label={tag.content} evaluationWay={tag.type} />
+              {handleUniqueTags(data?.memberReviews).map((tag, index) => (
+                <EvaluationChip key={index} label={tag.content} evaluationWay={tag.type} count={tag.count} />
               ))}
             </S.TagBox>
           </S.ContentBox>

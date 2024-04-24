@@ -2,6 +2,7 @@ import { getImageUploadUrl, postImage } from "@/lib/api/image";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { useToast } from "../useToast";
+import compressImage, { ImageOptionType } from "@/utils/compressImage";
 
 export const useImageMutation = () => {
   const pushToast = useToast();
@@ -17,8 +18,10 @@ export const useImageMutation = () => {
   });
 
   const uploadImage = useCallback(
-    async (image: File) => {
+    async (image: File, type: ImageOptionType = "profile") => {
       const response = await getImageUploadUrl();
+
+      const convertedImg = await compressImage(image, type);
 
       if (!response.uploadURL) {
         pushToast("이미지 업로드에 실패했습니다", "error"); // URL을 가져오지 못한 경우, 여기서 중단합니다.
@@ -26,7 +29,7 @@ export const useImageMutation = () => {
 
       const uploadURL = new URL(response.uploadURL);
 
-      const mutateResponse = await postImageMutate({ uploadURL, image });
+      const mutateResponse = await postImageMutate({ uploadURL, image: convertedImg });
 
       if (!mutateResponse.ok) {
         return;

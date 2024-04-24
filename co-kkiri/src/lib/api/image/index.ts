@@ -7,7 +7,7 @@ import { ImageUploadApiResponseDto } from "./type";
 export const getImageUploadUrl = (): Promise<ImageUploadApiResponseDto> => apiRequest("post", imageAddress);
 
 /** 이미지 업로드하기 */
-export const postImage = async (url: URL, image: File) => {
+export const postImage = async (url: URL, image: Blob) => {
   const response = await fetch(url.href, {
     method: "PUT",
     body: image,

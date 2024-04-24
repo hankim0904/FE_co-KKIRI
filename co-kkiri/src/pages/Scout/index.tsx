@@ -4,13 +4,14 @@ import ScoutFilters from "@/components/domains/scout/ScoutFilters";
 import ScoutCards from "@/components/domains/scout/ScoutCards";
 import SearchInput from "@/components/commons/SearchInput";
 import Pagination from "@/components/commons/Pagination";
+import NoResultText from "@/components/commons/NoResultText";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getSearchedMemberProfile } from "@/lib/api/member";
 import { useDebounceValue } from "usehooks-ts";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import ScoutCardsSkeleton from "@/components/commons/Skeleton/ScoutCardsSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
-import NoResultText from "@/components/commons/NoResultText";
+import { useUserInfoStore } from "@/stores/userInfoStore";
 
 export interface SelectedFilter {
   position: string;
@@ -18,6 +19,7 @@ export interface SelectedFilter {
 }
 
 export default function Scout() {
+  const { userInfo } = useUserInfoStore();
   const isSidebarOpenNarrow = useResponsiveSidebar();
   const [selectedFilter, setSelectedFilter] = useState<SelectedFilter>({
     position: "",
@@ -26,7 +28,7 @@ export default function Scout() {
   const [searchNickname, setSearchNickname] = useDebounceValue("", 500);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { data, isError, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [
       "/member/search",
       {
@@ -45,6 +47,7 @@ export default function Scout() {
         take: 12,
       }),
     placeholderData: keepPreviousData,
+    enabled: !!userInfo,
   });
 
   const isVisibleSkeleton = useSkeleton(isLoading);
@@ -73,10 +76,10 @@ export default function Scout() {
           handleStacksChange={handleStacksChange}
           handlePositionChange={handlePositionChange}
         />
-        {isVisibleSkeleton ? (
-          <ScoutCardsSkeleton />
-        ) : isError ? (
+        {!userInfo ? (
           <NoResultText text="로그인하시면 스카우트를 시작할 수 있어요! 🌟" padding={120} color="black" />
+        ) : isVisibleSkeleton ? (
+          <ScoutCardsSkeleton />
         ) : (
           <ScoutCards userProfiles={scoutCardData} />
         )}

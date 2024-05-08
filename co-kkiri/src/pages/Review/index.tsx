@@ -12,7 +12,6 @@ import { useToast } from "@/hooks/useToast";
 import useOpenToggle from "@/hooks/useOpenToggle";
 import useReviewStore from "@/stores/reviewStore";
 import TOAST from "@/constants/toast";
-import { memberData } from "@/lib/mock/review/members";
 
 export default function Review() {
   const { isOpen: isSubmitModalOpen, openToggle } = useOpenToggle();
@@ -30,7 +29,6 @@ export default function Review() {
       memberReview: [],
       memberReviewComment: [],
     },
-    mode: "onBlur",
   });
 
   const { data: memberList, error } = useQuery({
@@ -63,13 +61,12 @@ export default function Review() {
 
   const onSubmitHandler = (formData: ReviewFormValues) => {
     const { postId, postReview, memberReview, memberReviewComment } = formData;
-    // const filteredReviewComment = memberReviewComment.filter((item) => item && item.comment);
+    const filteredReviewComment = memberReviewComment.filter((item) => item.comment);
     const formatedForm: ReviewFormValues = {
       postId,
       postReview,
       memberReview,
-      memberReviewComment,
-      // memberReviewCommnet: filteredReviewComment
+      memberReviewComment: filteredReviewComment,
     };
     if (formatedForm.memberReview.length === 0 || formatedForm.postReview.length === 0) {
       const errorMessage = "스터디 리뷰와 멤버 리뷰를 모두 선택해주세요.";
@@ -87,7 +84,7 @@ export default function Review() {
     handleSubmitReview.mutate(formatedForm);
   };
 
-  const memberReviewCommentIndex = memberData.findIndex((member) => member.memberId === selectedMemberId);
+  const memberReviewCommentIndex = memberListData.findIndex((member) => selectedMemberId === member.memberId);
   const currentComment = watch(`memberReviewComment.${memberReviewCommentIndex}.comment`);
 
   const handleMemberClick = (memberId: number) => {
@@ -95,10 +92,9 @@ export default function Review() {
   };
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (memberReviewCommentIndex !== -1) {
-      setValue(`memberReviewComment.${memberReviewCommentIndex}.revieweeMemberId`, selectedMemberId);
-      setValue(`memberReviewComment.${memberReviewCommentIndex}.comment`, e.target.value);
-    }
+    const newComment = e.target.value;
+    setValue(`memberReviewComment.${memberReviewCommentIndex}.revieweeMemberId`, selectedMemberId);
+    setValue(`memberReviewComment.${memberReviewCommentIndex}.comment`, newComment);
   };
 
   const handleModalConfirm = () => {

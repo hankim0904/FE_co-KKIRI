@@ -6,15 +6,15 @@ import { Quill } from "react-quill";
 const { color, mediaQueries } = DESIGN_TOKEN;
 
 const icons = Quill.import("ui/icons");
-icons["header"]["1"] = `<img src=${QUILL_ICONS.header1.src} className="fm_editor_icon">`;
-icons["header"]["2"] = `<img src=${QUILL_ICONS.header2.src} className="fm_editor_icon">`;
-icons["header"]["3"] = `<img src=${QUILL_ICONS.header3.src} className="fm_editor_icon">`;
-icons["blockquote"] = `<img src=${QUILL_ICONS.quote.src} className="fm_editor_icon">`;
-icons["bold"] = `<img src=${QUILL_ICONS.bold.src} className="fm_editor_icon">`;
-icons["italic"] = `<img src=${QUILL_ICONS.italic.src} className="fm_editor_icon">`;
-icons["underline"] = `<img src=${QUILL_ICONS.underline.src} className="fm_editor_icon">`;
-icons["image"] = `<img src=${QUILL_ICONS.image.src} className="fm_editor_icon">`;
-icons["link"] = `<img src=${QUILL_ICONS.link.src} className="fm_editor_icon">`;
+icons["header"]["1"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.header1.src} /></svg>`;
+icons["header"]["2"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.header2.src} /></svg>`;
+icons["header"]["3"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.header3.src} /></svg>`;
+icons["blockquote"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.header1.src} /></svg>`;
+icons["bold"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.bold.src} /></svg>`;
+icons["italic"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.italic.src} /></svg>`;
+icons["underline"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.underline.src} /></svg>`;
+icons["image"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.image.src} /></svg>`;
+icons["link"] = `<svg class="fm_editor_icon"><use href=${QUILL_ICONS.link.src} /></svg>`;
 
 export default function CustomToolbar() {
   return (

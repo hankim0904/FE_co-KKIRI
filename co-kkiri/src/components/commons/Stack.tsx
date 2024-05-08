@@ -20,7 +20,9 @@ export default function Stack({ stack, className }: StackProps) {
 
   return (
     <Background className={className}>
-      <Icon src={icon.src} alt={icon.alt} />
+      <Icon>
+        <use href={icon.src} />
+      </Icon>
     </Background>
   );
 }
@@ -40,7 +42,7 @@ const Background = styled.div`
   justify-content: center;
 `;
 
-const Icon = styled.img`
+const Icon = styled.svg`
   width: 100%; /* 컨테이너 너비에 맞춤 */
   height: 100%; /* 컨테이너 높이에 맞춤 */
   object-fit: contain;

@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/globals";
 import PageRouter from "./PageRouter";
 import Toasts from "./components/commons/Widgets/Toast";
+import { GlobalStackSvgSprite } from "./components/commons/GlobalStackSvgSprite";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,8 @@ function App() {
         <GlobalStyles />
         <ReactQueryDevtools initialIsOpen={false} />
         <PageRouter />
-        <Toasts/>
+        <GlobalStackSvgSprite />
+        <Toasts />
       </QueryClientProvider>
     </>
   );

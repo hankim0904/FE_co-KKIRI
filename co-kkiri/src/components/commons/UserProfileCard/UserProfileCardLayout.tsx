@@ -7,6 +7,7 @@ import { useState } from "react";
 import EditUserProfileModal from "@/components/modals/EditUserProfileModal";
 import { UserInfoApiResponseDto } from "@/lib/api/myPage/type";
 import { emptyMessages } from "./constants";
+import ToolTip from "../ToolTip";
 
 interface UserProfileCardProps extends UserInfoApiResponseDto {
   cardType?: "mypage" | "scout";
@@ -32,10 +33,12 @@ export default function UserProfileCardLayout({
   return (
     <S.Container>
       <S.InfoBox>
-        <S.ProgressWrapper>
-          <CircularProgressBar size={130} strokeWidth={8} percentage={gauge} animationDuration={1} />
-          <S.UserImage profileImgUrl={profileImageUrl} onSelect={() => {}} />
-        </S.ProgressWrapper>
+        <ToolTip message={`활동지수: ${gauge}%`}>
+          <S.ProgressWrapper>
+            <CircularProgressBar size={130} strokeWidth={8} percentage={gauge} animationDuration={1} />
+            <S.UserImage profileImgUrl={profileImageUrl} onSelect={() => {}} />
+          </S.ProgressWrapper>
+        </ToolTip>
         <S.PositionChip label={isEmptyValue(position) ? emptyMessages.position : position!} />
         <S.Nickname>{nickname}</S.Nickname>
         <S.Career>{isEmptyValue(position) ? emptyMessages.career : `경력 ${career}년차`}</S.Career>

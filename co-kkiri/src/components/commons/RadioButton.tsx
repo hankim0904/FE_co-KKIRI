@@ -25,7 +25,7 @@ const Label = styled.label`
   justify-content: space-between;
   align-items: center;
   gap: 0.8rem;
-`; // 폰트는 디자인 추가되면 더 수정해야 할 듯
+`;
 
 const RadioInput = styled.input`
   -webkit-appearance: none;
@@ -44,27 +44,3 @@ const RadioInput = styled.input`
     box-shadow: 0 0 0 0.1rem ${color.secondary};
   }
 `;
-
-// 아래 예시처럼 사용하면 됩니다.
-
-// import RadioButton from "@/components/commons/RadioButton";
-
-// //mock 데이터
-// import { recruitedStudyList } from "@/lib/mock/recruiteStudyList";
-
-// export default function StudyList() {
-//   const [firstItem, ...otherItems] = recruitedStudyList.result.recruitedStudyList;
-
-//   return (
-//     <div>
-//       <RadioButton value={firstItem.title} defaultChecked>
-//         {firstItem.title}
-//       </RadioButton>
-//       {otherItems.map(({ postId, title }) => (
-//         <RadioButton key={postId} value={title}>
-//           {title}
-//         </RadioButton>
-//       ))}
-//     </div>
-//   );
-// }

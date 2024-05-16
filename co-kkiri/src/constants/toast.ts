@@ -17,6 +17,7 @@ const TOAST: Toast = {
   copyLink: { message: "링크가 복사되었습니다", type: "success" },
   scrapContent: { message: "스크랩이 완료되었습니다", type: "success" },
   notScrapContent: { message: "스크랩이 취소되었습니다", type: "success" },
+  imageType: { message: "JPG, JPEG, PNG, WEBP 형식의 이미지 파일을 선택해주세요.", type: "error" },
 };
 
 export default TOAST;

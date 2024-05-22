@@ -29,6 +29,9 @@ export default function AuthModal({ onClose }: AuthModalProps) {
           <LoginButton $padding={1.3} onClick={() => openLoginPopup(authAddress.github.login)}>
             <img src={IMAGES.githubLogo.src} alt={IMAGES.githubLogo.alt} />
           </LoginButton>
+          <LoginButton $padding={1.3} onClick={() => openLoginPopup(authAddress.kakao.login)}>
+            <img src={IMAGES.kakaoLogo.src} alt={IMAGES.kakaoLogo.alt} />
+          </LoginButton>
         </LoginButtonBox>
       </Container>
     </ModalLayout>

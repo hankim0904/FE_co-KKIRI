@@ -15,6 +15,7 @@ import Navigation from "./layouts/Navigation";
 import GoogleAuth from "./pages/Auth/GoogleAuth";
 import AuthListener from "./components/commons/AuthListener";
 import GithubAuth from "./pages/Auth/GithubAuth";
+import KakaoAuth from "./pages/Auth/KakaoAuth";
 import PageScrollTop from "./components/commons/PageScrollTop";
 
 const {
@@ -30,6 +31,7 @@ const {
   MANAGE,
   GOOGLE_REDIRECT,
   GITHUB_REDIRECT,
+  KAKAO_REDIRECT,
 } = ROUTER_PATH;
 
 const PageRouter = () => {
@@ -53,6 +55,7 @@ const PageRouter = () => {
         </Route>
         <Route path={GOOGLE_REDIRECT} element={<GoogleAuth />} />
         <Route path={GITHUB_REDIRECT} element={<GithubAuth />} />
+        <Route path={KAKAO_REDIRECT} element={<KakaoAuth />} />
       </Routes>
     </Router>
   );

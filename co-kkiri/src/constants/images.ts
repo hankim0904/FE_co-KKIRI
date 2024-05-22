@@ -3,6 +3,7 @@ import profileImg from "@/assets/images/profileImg.svg";
 import profileImgBig from "@/assets/images/profileImg_big.svg";
 import google from "@/assets/images/google_logo.svg";
 import github from "@/assets/images/github_logo.svg";
+import kakao from "@/assets/images/kakao_logo.svg";
 import logoAnimation from "@/assets/images/logo_animation.svg";
 import recruitDesktopWide from "@/assets/images/homeBannerImages/recruit_desktop_wide.svg";
 import recruitDesktopNarrow from "@/assets/images/homeBannerImages/recruit_desktop_narrow.svg";
@@ -37,6 +38,10 @@ export const IMAGES = {
   githubLogo: {
     src: github,
     alt: "깃허브 로고",
+  },
+  kakaoLogo: {
+    src: kakao,
+    alt: "카카오 로고",
   },
   logoAnimation: {
     src: logoAnimation,

@@ -11,4 +11,5 @@ export const ROUTER_PATH = {
   MANAGE: "/mystudy/:id",
   GOOGLE_REDIRECT: "/auth/google/redirect",
   GITHUB_REDIRECT: "/auth/github/redirect",
+  KAKAO_REDIRECT: "/auth/kakao/redirect",
 };

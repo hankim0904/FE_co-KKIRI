@@ -76,10 +76,10 @@ export default function Scout() {
           handleStacksChange={handleStacksChange}
           handlePositionChange={handlePositionChange}
         />
-        {!userInfo ? (
-          <NoResultText text="로그인하시면 스카우트를 시작할 수 있어요! 🌟" padding={120} color="black" />
-        ) : isVisibleSkeleton ? (
+        {isVisibleSkeleton ? (
           <ScoutCardsSkeleton />
+        ) : !userInfo ? (
+          <NoResultText text="로그인하시면 스카우트를 시작할 수 있어요! 🌟" padding={120} color="black" />
         ) : (
           <ScoutCards userProfiles={scoutCardData} />
         )}

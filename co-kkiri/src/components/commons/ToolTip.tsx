@@ -1,6 +1,6 @@
 import DESIGN_TOKEN from "@/styles/tokens";
 import { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 interface ToolTip {
   children: React.ReactNode;
@@ -13,22 +13,14 @@ export default function ToolTip({ children, message }: ToolTip) {
   return (
     <Container onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       {children}
-      <Message $hover={hover}>{message}</Message>
+      <Message className="toolTip" $hover={hover}>
+        {message}
+      </Message>
     </Container>
   );
 }
 
 const { color, typography, zIndex, boxShadow, mediaQueries } = DESIGN_TOKEN;
-
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
-
-const fadeOut = keyframes`
-  from { opacity: 1; }
-  to { opacity: 0; }
-`;
 
 const Container = styled.div`
   position: relative;
@@ -47,8 +39,8 @@ const Message = styled.div<{ $hover: boolean }>`
   padding: 0.5rem 1rem;
   width: max-content;
   box-shadow: ${boxShadow.content};
-  opacity: 0;
-  animation: ${({ $hover }) => ($hover ? fadeIn : fadeOut)} 0.5s ease-in-out forwards;
+  opacity: ${({ $hover }) => ($hover ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
 
   ${mediaQueries.mobile} {
     left: 11.5rem;

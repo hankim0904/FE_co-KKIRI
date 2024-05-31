@@ -9,6 +9,7 @@ import usePostMutation from "@/hooks/useMutation/usePostMutation";
 import { FieldValues } from "react-hook-form";
 import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
+import MetaTag from "@/components/commons/MetaTag";
 
 const { serverError } = TOAST;
 
@@ -81,14 +82,17 @@ export default function Edit() {
 
   return (
     data && (
-      <S.Container>
-        <RecruitmentRequestLayout
-          isLoading={editMutation.isPending}
-          selectedOptions={selectedOptions}
-          onSubmitClick={handleSubmit}
-          buttonText="수정하기"
-        />
-      </S.Container>
+      <>
+        <MetaTag title={`${data.postDetails.postTitle} 수정 | CO-KKIRI`} />
+        <S.Container>
+          <RecruitmentRequestLayout
+            isLoading={editMutation.isPending}
+            selectedOptions={selectedOptions}
+            onSubmitClick={handleSubmit}
+            buttonText="수정하기"
+          />
+        </S.Container>
+      </>
     )
   );
 }

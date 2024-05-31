@@ -11,6 +11,7 @@ import { ICONS } from "@/constants/icons";
 import { TitleSkeleton } from "@/components/commons/Skeleton/TextSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
 import InvitedList from "@/components/domains/manage/InvitedList";
+import MetaTag from "@/components/commons/MetaTag";
 
 export default function Manage() {
   const pushToast = useToast();
@@ -86,51 +87,54 @@ export default function Manage() {
   };
 
   return (
-    <S.Container>
-      <S.Box>
-        <S.TitleSection>
-          <Link to={`/list/${detailInfo?.postId}`}>
-            <S.LinkTitleWrapper>
-              <p>스터디/프로젝트 상세글 보기</p>
-              <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
-            </S.LinkTitleWrapper>
-          </Link>
-          {isVisibleSkeleton ? <TitleSkeleton page="mystudy" /> : <S.Title>{detailInfo?.postTitle}</S.Title>}
-        </S.TitleSection>
-        {isVisibleSkeleton ? (
-          <DetailCardSkeleton page="mystudy" />
-        ) : (
-          detailInfo && <S.DetailCard detailInfo={detailInfo} />
-        )}
-        <S.ListSection>
-          <AppliedList
-            detailInfo={appliedMemberListData}
-            isLeader={detailInfo?.isLeader}
-            type={detailInfo?.status}
-            isLoading={appliedMemberListIsLoading}
-          />
-          <InvitedList
-            detailInfo={invitedMemberListData}
-            isLeader={detailInfo?.isLeader}
-            type={detailInfo?.status}
-            isLoading={invitedMemberListIsLoading}
-          />
-          <MemberList
-            detailInfo={memberListData}
-            isLeader={detailInfo?.isLeader}
-            type={detailInfo?.status}
-            isLoading={memberListIsLoading}
-          />
-        </S.ListSection>
-        {detailInfo && (
-          <S.ButtonSection
-            buttonType={detailInfo.status}
-            isLeader={detailInfo.isLeader}
-            postId={postId}
-            studyType={changeName(detailInfo.type)}
-          />
-        )}
-      </S.Box>
-    </S.Container>
+    <>
+      <MetaTag title="스터디/프로젝트 관리 | CO-KKIRI" />
+      <S.Container>
+        <S.Box>
+          <S.TitleSection>
+            <Link to={`/list/${detailInfo?.postId}`}>
+              <S.LinkTitleWrapper>
+                <p>스터디/프로젝트 상세글 보기</p>
+                <img src={ICONS.arrowRightGray.src} alt={ICONS.arrowRightGray.alt} />
+              </S.LinkTitleWrapper>
+            </Link>
+            {isVisibleSkeleton ? <TitleSkeleton page="mystudy" /> : <S.Title>{detailInfo?.postTitle}</S.Title>}
+          </S.TitleSection>
+          {isVisibleSkeleton ? (
+            <DetailCardSkeleton page="mystudy" />
+          ) : (
+            detailInfo && <S.DetailCard detailInfo={detailInfo} />
+          )}
+          <S.ListSection>
+            <AppliedList
+              detailInfo={appliedMemberListData}
+              isLeader={detailInfo?.isLeader}
+              type={detailInfo?.status}
+              isLoading={appliedMemberListIsLoading}
+            />
+            <InvitedList
+              detailInfo={invitedMemberListData}
+              isLeader={detailInfo?.isLeader}
+              type={detailInfo?.status}
+              isLoading={invitedMemberListIsLoading}
+            />
+            <MemberList
+              detailInfo={memberListData}
+              isLeader={detailInfo?.isLeader}
+              type={detailInfo?.status}
+              isLoading={memberListIsLoading}
+            />
+          </S.ListSection>
+          {detailInfo && (
+            <S.ButtonSection
+              buttonType={detailInfo.status}
+              isLeader={detailInfo.isLeader}
+              postId={postId}
+              studyType={changeName(detailInfo.type)}
+            />
+          )}
+        </S.Box>
+      </S.Container>
+    </>
   );
 }

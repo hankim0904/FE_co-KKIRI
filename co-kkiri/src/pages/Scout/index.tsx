@@ -12,6 +12,7 @@ import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import ScoutCardsSkeleton from "@/components/commons/Skeleton/ScoutCardsSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
 import { useUserInfoStore } from "@/stores/userInfoStore";
+import MetaTag from "@/components/commons/MetaTag";
 
 export interface SelectedFilter {
   position: string;
@@ -65,26 +66,29 @@ export default function Scout() {
   }, [selectedFilter, searchNickname]);
 
   return (
-    <S.Container>
-      <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
-        <S.TitleWrapper>
-          <S.Title>스카우트</S.Title>
-          <SearchInput placeholder="멤버를 찾아보세요!" handleValueChange={handleNicknameChange} />
-        </S.TitleWrapper>
-        <ScoutFilters
-          selectedFilter={selectedFilter}
-          handleStacksChange={handleStacksChange}
-          handlePositionChange={handlePositionChange}
-        />
-        {isVisibleSkeleton ? (
-          <ScoutCardsSkeleton />
-        ) : !userInfo ? (
-          <NoResultText text="로그인하시면 스카우트를 시작할 수 있어요! 🌟" padding={120} color="black" />
-        ) : (
-          <ScoutCards userProfiles={scoutCardData} />
-        )}
-        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
-      </S.Box>
-    </S.Container>
+    <>
+      <MetaTag title="스카우트 | CO-KKIRI" />
+      <S.Container>
+        <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
+          <S.TitleWrapper>
+            <S.Title>스카우트</S.Title>
+            <SearchInput placeholder="멤버를 찾아보세요!" handleValueChange={handleNicknameChange} />
+          </S.TitleWrapper>
+          <ScoutFilters
+            selectedFilter={selectedFilter}
+            handleStacksChange={handleStacksChange}
+            handlePositionChange={handlePositionChange}
+          />
+          {isVisibleSkeleton ? (
+            <ScoutCardsSkeleton />
+          ) : !userInfo ? (
+            <NoResultText text="로그인하시면 스카우트를 시작할 수 있어요! 🌟" padding={120} color="black" />
+          ) : (
+            <ScoutCards userProfiles={scoutCardData} />
+          )}
+          <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+        </S.Box>
+      </S.Container>
+    </>
   );
 }

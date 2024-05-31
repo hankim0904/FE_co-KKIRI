@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/useToast";
 import useOpenToggle from "@/hooks/useOpenToggle";
 import useReviewStore from "@/stores/reviewStore";
 import TOAST from "@/constants/toast";
+import MetaTag from "@/components/commons/MetaTag";
 
 export default function Review() {
   const { isOpen: isSubmitModalOpen, openToggle } = useOpenToggle();
@@ -103,22 +104,25 @@ export default function Review() {
   };
 
   return (
-    <S.Container>
-      <S.Box>
-        <S.Wrapper>
-          <StudyReview control={control} />
-          <MemberReview
-            member={memberListData}
-            selectedMemberId={selectedMemberId}
-            onMemberClick={handleMemberClick}
-            control={control}
-            onChange={handleCommentChange}
-            value={currentComment}
-          />
-        </S.Wrapper>
-        <SubmitButton onClick={openToggle} />
-      </S.Box>
-      {isSubmitModalOpen && <ConfirmModal type="review" onClick={handleModalConfirm} onClose={openToggle} />}
-    </S.Container>
+    <>
+      <MetaTag title="스터디/프로젝트 평가 | CO-KKIRI" />
+      <S.Container>
+        <S.Box>
+          <S.Wrapper>
+            <StudyReview control={control} />
+            <MemberReview
+              member={memberListData}
+              selectedMemberId={selectedMemberId}
+              onMemberClick={handleMemberClick}
+              control={control}
+              onChange={handleCommentChange}
+              value={currentComment}
+            />
+          </S.Wrapper>
+          <SubmitButton onClick={openToggle} />
+        </S.Box>
+        {isSubmitModalOpen && <ConfirmModal type="review" onClick={handleModalConfirm} onClose={openToggle} />}
+      </S.Container>
+    </>
   );
 }

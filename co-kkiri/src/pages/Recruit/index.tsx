@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/useToast";
 import TOAST from "@/constants/toast";
 import { useUserInfoStore } from "@/stores/userInfoStore";
 import useOpenToggle from "@/hooks/useOpenToggle";
+import MetaTag from "@/components/commons/MetaTag";
 
 const { serverError, unauthorized } = TOAST;
 
@@ -49,13 +50,16 @@ export default function Recruit() {
   };
 
   return (
-    <S.Container>
-      <RecruitmentRequestLayout
-        isLoading={uploadMutation.isPending}
-        selectedOptions={selectedOptions}
-        onSubmitClick={handleSubmit}
-        buttonText="글 등록하기"
-      />
-    </S.Container>
+    <>
+      <MetaTag title="스터디/프로젝트 모집하기 | CO-KKIRI" />
+      <S.Container>
+        <RecruitmentRequestLayout
+          isLoading={uploadMutation.isPending}
+          selectedOptions={selectedOptions}
+          onSubmitClick={handleSubmit}
+          buttonText="글 등록하기"
+        />
+      </S.Container>
+    </>
   );
 }

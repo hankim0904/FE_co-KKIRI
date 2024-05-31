@@ -14,6 +14,7 @@ import TOAST from "@/constants/toast";
 import { CategoryStudyStatus } from "@/types/categoryAndFilterTypes";
 import CardsSkeleton from "@/components/commons/Skeleton/CardsSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
+import MetaTag from "@/components/commons/MetaTag";
 
 const { serverError, unauthorized } = TOAST;
 
@@ -58,29 +59,32 @@ export default function MyStudy() {
   }, [error, pushToast]);
 
   return (
-    <S.Container>
-      <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
-        <S.Title>나의 스터디/프로젝트</S.Title>
-        <S.FilterListSection
-          type="category"
-          currentFilter={categoryStudyStatusFilter[currentCategory]}
-          filters={Object.values(categoryStudyStatusFilter)}
-          onFilterClick={handleCategoryChange}
-        />
-        {isVisibleSkeleton ? (
-          <CardsSkeleton />
-        ) : (
-          <>
-            <S.CardsSection data={allCards} page="myStudy" />
-            {hasNextPage && (
-              <S.ButtonSection variant="ghost" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
-                더보기
-              </S.ButtonSection>
-            )}
-          </>
-        )}
-        <ScrollToTop />
-      </S.Box>
-    </S.Container>
+    <>
+      <MetaTag title="나의 스터디 | CO-KKIRI" />
+      <S.Container>
+        <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
+          <S.Title>나의 스터디/프로젝트</S.Title>
+          <S.FilterListSection
+            type="category"
+            currentFilter={categoryStudyStatusFilter[currentCategory]}
+            filters={Object.values(categoryStudyStatusFilter)}
+            onFilterClick={handleCategoryChange}
+          />
+          {isVisibleSkeleton ? (
+            <CardsSkeleton />
+          ) : (
+            <>
+              <S.CardsSection data={allCards} page="myStudy" />
+              {hasNextPage && (
+                <S.ButtonSection variant="ghost" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+                  더보기
+                </S.ButtonSection>
+              )}
+            </>
+          )}
+          <ScrollToTop />
+        </S.Box>
+      </S.Container>
+    </>
   );
 }

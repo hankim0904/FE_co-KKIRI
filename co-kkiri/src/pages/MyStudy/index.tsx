@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useMyStudyStore from "@/stores/myStudyStore";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -20,6 +20,7 @@ const { serverError, unauthorized } = TOAST;
 export default function MyStudy() {
   const { currentCategory, setCurrentCategory } = useMyStudyStore();
   const isSidebarOpenNarrow = useResponsiveSidebar();
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
   const fetchListWithCategory = ({ pageParam = 1 }) => fetchList(currentCategory, { pageParam });
   const pushToast = useToast();
 
@@ -37,7 +38,13 @@ export default function MyStudy() {
     setCurrentCategory(filterKey as CategoryStudyStatus);
   };
 
-  const isVisibleSkeleton = useSkeleton(isLoading);
+  useEffect(() => {
+    if (!isLoading) {
+      setIsFirstLoading(false);
+    }
+  }, [isLoading]);
+
+  const isVisibleSkeleton = useSkeleton(isFirstLoading);
   const allCards = data?.pages.flatMap((page) => page.data) ?? [];
 
   useEffect(() => {

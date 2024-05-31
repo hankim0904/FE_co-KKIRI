@@ -52,7 +52,11 @@ export default function AppliedList({ detailInfo, isLeader, type, isLoading }: A
   });
 
   const handleRejectMember = (teamMemberId: number) => {
-    handleReject.mutate(teamMemberId);
+    if (window.confirm("삭제하시겠습니까?")) {
+      return handleReject.mutate(teamMemberId);
+    } else {
+      return;
+    }
   };
 
   return type === "READY" && isLeader ? (

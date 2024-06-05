@@ -20,9 +20,13 @@ export default function Stack({ stack, className }: StackProps) {
 
   return (
     <Background className={className}>
-      <Icon>
-        <use href={icon.src} />
-      </Icon>
+      {stack && stack.img ? (
+        <Icon>
+          <use href={icon.src} />
+        </Icon>
+      ) : (
+        <img src={icon.src} alt={icon.alt} width={12} />
+      )}
     </Background>
   );
 }

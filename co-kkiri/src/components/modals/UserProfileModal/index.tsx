@@ -15,17 +15,22 @@ import Divider from "../../commons/Divider";
 import CollapseSection from "../../commons/CollapseSection";
 import UserProfileTagList from "./UserProfileTagList";
 import { useToggle } from "usehooks-ts";
+import { useUserInfoStore } from "@/stores/userInfoStore";
+import TOAST from "@/constants/toast";
 
 interface UserProfileModalProps {
   userId: number;
   onClose: () => void;
 }
 
+const { unauthorized } = TOAST;
+
 export default function UserProfileModal({ userId, onClose }: UserProfileModalProps) {
   const pushToast = useToast();
   const { isOpen: isInvitedModalOpen, setIsOpen: setIsInvitedModalOpen } = useOpenToggle();
   const [isToggled, _, setIsToggled] = useToggle(false);
   const queryClient = useQueryClient();
+  const { userInfo } = useUserInfoStore();
 
   const { data: MemberProfileData, isError: isMemberProfileError } = useQuery<MemberProfileApiResponseDto>({
     queryKey: ["memberProfile", userId],
@@ -35,6 +40,7 @@ export default function UserProfileModal({ userId, onClose }: UserProfileModalPr
       return data || memberProfile;
     },
     staleTime: 1000 * 60,
+    enabled: !!userInfo,
   });
 
   const { data: TagsData, isError: isTagsError } = useQuery<MemberReviewListApiResponseDto>({
@@ -45,6 +51,7 @@ export default function UserProfileModal({ userId, onClose }: UserProfileModalPr
       return data || [];
     },
     staleTime: 1000 * 60,
+    enabled: !!userInfo,
   });
 
   const onScoutClickHandler = () => {
@@ -52,10 +59,16 @@ export default function UserProfileModal({ userId, onClose }: UserProfileModalPr
   };
 
   useEffect(() => {
-    if (isMemberProfileError || isTagsError) {
+    if (!userInfo) {
+      pushToast(unauthorized.message, unauthorized.type);
+    }
+
+    if (userInfo && (isMemberProfileError || isTagsError)) {
       pushToast("유저 정보를 불러오는 중 오류가 발생했습니다", "error");
     }
-  }, [isMemberProfileError, isTagsError, pushToast]);
+  }, [isMemberProfileError, isTagsError, pushToast, userInfo]);
+
+  if (!userInfo) return null;
 
   if (!MemberProfileData) {
     return null;
@@ -95,9 +108,9 @@ const { mediaQueries } = DESIGN_TOKEN;
 const ModalLayout = styled(DefaultModalLayout)`
   padding: 4rem 3rem 3rem;
 
-  min-height: 57rem;
+  min-height: 52.2rem;
 
   ${mediaQueries.mobile} {
-    min-height: 56rem;
+    min-height: 51.2rem;
   }
 `;

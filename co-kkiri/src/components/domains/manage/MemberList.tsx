@@ -36,7 +36,11 @@ export default function MemberList({ detailInfo, isLeader, type, isLoading }: Me
   });
 
   const handleOutMember = (teamMemberId: number) => {
-    handleOut.mutate(teamMemberId);
+    if (window.confirm("삭제하시겠습니까?")) {
+      return handleOut.mutate(teamMemberId);
+    } else {
+      return;
+    }
   };
 
   return (

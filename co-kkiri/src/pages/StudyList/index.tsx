@@ -17,6 +17,7 @@ import { useToast } from "@/hooks/useToast";
 import CardsSkeleton from "@/components/commons/Skeleton/CardsSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
 import styled from "styled-components";
+import MetaTag from "@/components/commons/MetaTag";
 
 export default function StudyList() {
   const pushToast = useToast();
@@ -94,34 +95,37 @@ export default function StudyList() {
   const totalPage = data?.meta.pageCount || 0;
 
   return (
-    <S.Container>
-      <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
-        <S.CategoryWrapper>
-          <FilterList
-            type="category"
-            currentFilter={categoryListFilter[currentCategory]}
-            filters={Object.values(categoryListFilter)}
-            onFilterClick={handleCategoryChange}
+    <>
+      <MetaTag title="스터디/프로젝트 찾기 | CO-KKIRI" />
+      <S.Container>
+        <S.Box $isSidebarOpenNarrow={isSidebarOpenNarrow}>
+          <S.CategoryWrapper>
+            <FilterList
+              type="category"
+              currentFilter={categoryListFilter[currentCategory]}
+              filters={Object.values(categoryListFilter)}
+              onFilterClick={handleCategoryChange}
+            />
+            <SearchInput placeholder="제목을 검색해보세요!" handleValueChange={handleTitleChange} />
+          </S.CategoryWrapper>
+          <Filters
+            selectedFilter={selectedFilter}
+            handleStacksChange={handleStacksChange}
+            handlePositionChange={handlePositionChange}
+            handleProgressWayChange={handleProgressWayChange}
+            handleSortByChange={handleSortByChange}
           />
-          <SearchInput placeholder="제목을 검색해보세요!" handleValueChange={handleTitleChange} />
-        </S.CategoryWrapper>
-        <Filters
-          selectedFilter={selectedFilter}
-          handleStacksChange={handleStacksChange}
-          handlePositionChange={handlePositionChange}
-          handleProgressWayChange={handleProgressWayChange}
-          handleSortByChange={handleSortByChange}
-        />
-        {isVisibleSkeleton ? (
-          <S.CardsSkeletonWarper>
-            <CardsSkeleton />
-          </S.CardsSkeletonWarper>
-        ) : (
-          <Cards data={list} page="studyList" />
-        )}
-        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPage} />
-      </S.Box>
-      <CreatePost />
-    </S.Container>
+          {isVisibleSkeleton ? (
+            <S.CardsSkeletonWarper>
+              <CardsSkeleton />
+            </S.CardsSkeletonWarper>
+          ) : (
+            <Cards data={list} page="studyList" />
+          )}
+          <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPage} />
+        </S.Box>
+        <CreatePost />
+      </S.Container>
+    </>
   );
 }

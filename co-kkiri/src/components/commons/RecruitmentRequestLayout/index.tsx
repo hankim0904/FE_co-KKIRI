@@ -51,6 +51,12 @@ export default function RecruitmentRequestLayout({
     navigate(-1);
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) {
+      e.stopPropagation();
+    }
+  };
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (!validateFormData(errors)) {
       onSubmitClick(data);
@@ -142,6 +148,7 @@ export default function RecruitmentRequestLayout({
           {...register("title", { required: true })}
           placeholder="제목을 입력해주세요!"
           onChange={(e) => setValue("title", e.target.value)}
+          onKeyDown={onKeyDown}
           value={titleValue}
         />
         <RHFQuill formFieldName="content" control={control} />

@@ -31,7 +31,7 @@ export const Container = styled.div`
   }
 
   ${mediaQueries.mobile} {
-    padding: 0 2rem 4rem;
+    padding: 0 2rem 10rem;
     width: 21rem;
     height: 100vh;
     box-shadow: none;

@@ -54,7 +54,7 @@ export default function QuillEditor({ onChange, value }: { onChange: (value: str
         if (editor) {
           const range = editor.getSelection();
           if (range) {
-            const result = await uploadImage(file);
+            const result = await uploadImage(file, "editor");
             const IMG_URL = result;
             editor.insertEmbed(range.index, "image", IMG_URL);
           }

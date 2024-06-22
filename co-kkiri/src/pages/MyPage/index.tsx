@@ -8,6 +8,7 @@ import { getInvitedTeamList, getReviewTagList, getVisibleProfileStatus } from "@
 import { useToast } from "@/hooks/useToast";
 import UserInfoCardSkeleton from "@/components/commons/Skeleton/UserInfoCardSkeleton";
 import useSkeleton from "@/hooks/useSkeleton";
+import MetaTag from "@/components/commons/MetaTag";
 
 export default function MyPage() {
   const pushToast = useToast();
@@ -62,21 +63,24 @@ export default function MyPage() {
   }
 
   return (
-    <S.Container>
-      <S.Box>
-        <S.Wrapper>
-          {isVisibleTagListSkeleton && isVisibleInvitedTeamListSkeleton && isVisibleVisibleProfileSkeleton ? (
-            <UserInfoCardSkeleton page={"mypage"} />
-          ) : (
-            <MyPageUserInfo visibleProfile={visibleProfileData} />
-          )}
-          <S.Lists>
-            <TagList reviewList={tagList || []} />
-            <InvitedTeamList count={invitedTeamListData.length} teamList={invitedTeamListData} />
-          </S.Lists>
-        </S.Wrapper>
-        <ScrapList />
-      </S.Box>
-    </S.Container>
+    <>
+      <MetaTag title="마이페이지 | CO-KKIRI" />
+      <S.Container>
+        <S.Box>
+          <S.Wrapper>
+            {isVisibleTagListSkeleton && isVisibleInvitedTeamListSkeleton && isVisibleVisibleProfileSkeleton ? (
+              <UserInfoCardSkeleton page={"mypage"} />
+            ) : (
+              <MyPageUserInfo visibleProfile={visibleProfileData} />
+            )}
+            <S.Lists>
+              <TagList reviewList={tagList || []} />
+              <InvitedTeamList count={invitedTeamListData.length} teamList={invitedTeamListData} />
+            </S.Lists>
+          </S.Wrapper>
+          <ScrapList />
+        </S.Box>
+      </S.Container>
+    </>
   );
 }

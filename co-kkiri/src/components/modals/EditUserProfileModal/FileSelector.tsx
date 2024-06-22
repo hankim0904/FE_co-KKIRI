@@ -1,7 +1,9 @@
 import DESIGN_TOKEN from "@/styles/tokens";
 import { Image } from "@/types/imageTypes";
-import { ChangeEvent, KeyboardEvent, MouseEvent, useRef } from "react";
+import { ChangeEvent, useRef } from "react";
 import styled from "styled-components";
+import { useToast } from "@/hooks/useToast";
+import TOAST from "@/constants/toast";
 
 interface FileSelectorProps {
   name: string;
@@ -12,9 +14,11 @@ interface FileSelectorProps {
   className?: string;
 }
 
+const { imageType } = TOAST;
+
 export default function FileSelector({ name, type, isMultiple, onChange, icon, className }: FileSelectorProps) {
   const InputRef = useRef<HTMLInputElement>(null);
-
+  const pushToast = useToast();
   const onClickHandler = () => {
     if (!InputRef.current) return;
 
@@ -22,11 +26,18 @@ export default function FileSelector({ name, type, isMultiple, onChange, icon, c
   };
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
+    const selectedFiles = e.target.files;
 
-    if (files) {
-      if (isMultiple) onChange(files);
-      else onChange(files[0]);
+    if (!selectedFiles || selectedFiles.length === 0) return;
+
+    const firstSelectedFile = selectedFiles[0];
+    const fileType = firstSelectedFile.type;
+
+    if (fileType.startsWith("image/") && fileType !== "image/gif") {
+      const selectedFileValue = isMultiple ? selectedFiles : firstSelectedFile;
+      onChange(selectedFileValue);
+    } else {
+      pushToast(imageType.message, imageType.type);
     }
   };
 

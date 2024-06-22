@@ -1,48 +1,40 @@
-import header1 from "@/assets/icons/reactQuillIcons/header1.svg";
-import header2 from "@/assets/icons/reactQuillIcons/header2.svg";
-import header3 from "@/assets/icons/reactQuillIcons/header3.svg";
-import quote from "@/assets/icons/reactQuillIcons/quote.svg";
-import bold from "@/assets/icons/reactQuillIcons/bold.svg";
-import italic from "@/assets/icons/reactQuillIcons/italic.svg";
-import underline from "@/assets/icons/reactQuillIcons/underline.svg";
-import link from "@/assets/icons/reactQuillIcons/link.svg";
-import image from "@/assets/icons/reactQuillIcons/image.svg";
+import reactQuillSvgSprite from "@/assets/svgSprite/reactQuillIcons.svg";
 
 export const QUILL_ICONS = {
   header1: {
-    src: header1,
+    src: `${reactQuillSvgSprite}#header1`,
     alt: "제목1 아이콘",
   },
   header2: {
-    src: header2,
+    src: `${reactQuillSvgSprite}#header2`,
     alt: "제목2 아이콘",
   },
   header3: {
-    src: header3,
+    src: `${reactQuillSvgSprite}#header3`,
     alt: "제목3 아이콘",
   },
   quote: {
-    src: quote,
+    src: `${reactQuillSvgSprite}#quote`,
     alt: "인용구 아이콘",
   },
   bold: {
-    src: bold,
+    src: `${reactQuillSvgSprite}#bold`,
     alt: "굵기 아이콘",
   },
   italic: {
-    src: italic,
+    src: `${reactQuillSvgSprite}#italic`,
     alt: "이태릭 아이콘",
   },
   underline: {
-    src: underline,
+    src: `${reactQuillSvgSprite}#underline`,
     alt: "밑줄 아이콘",
   },
   link: {
-    src: link,
+    src: `${reactQuillSvgSprite}#link`,
     alt: "링크 아이콘",
   },
   image: {
-    src: image,
+    src: `${reactQuillSvgSprite}#image`,
     alt: "이미지 아이콘",
   },
 };

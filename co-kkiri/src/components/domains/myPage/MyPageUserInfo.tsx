@@ -21,6 +21,7 @@ export default function MyPageUserInfo({ visibleProfile }: MyPageUserInfoProps) 
   const { isOpen: isDeleteUserConfirmModalOpen, openToggle } = useOpenToggle();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { message, type } = TOAST.serverError;
 
   const editVisibleProfile = useMutation({
     mutationFn: (data: VisibleProfileStatusApiRequestDto) => editVisibleProfileStatus(data),
@@ -28,7 +29,7 @@ export default function MyPageUserInfo({ visibleProfile }: MyPageUserInfoProps) 
       queryClient.invalidateQueries();
     },
     onError: () => {
-      pushToast(TOAST.severError.message, TOAST.severError.type);
+      pushToast(message, type);
     },
   });
 
@@ -41,7 +42,7 @@ export default function MyPageUserInfo({ visibleProfile }: MyPageUserInfoProps) 
       pushToast("회원 탈퇴가 정상적으로 처리되었습니다.", "success");
     },
     onError: () => {
-      pushToast(TOAST.severError.message, TOAST.severError.type);
+      pushToast(message, type);
     },
   });
 

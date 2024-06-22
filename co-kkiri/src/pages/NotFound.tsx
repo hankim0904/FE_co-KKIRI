@@ -1,4 +1,5 @@
 import Button from "@/components/commons/Button";
+import MetaTag from "@/components/commons/MetaTag";
 import { IMAGES } from "@/constants/images";
 import DESIGN_TOKEN from "@/styles/tokens";
 import { useNavigate } from "react-router-dom";
@@ -7,21 +8,24 @@ import styled from "styled-components";
 export default function NotFound() {
   const navigate = useNavigate();
   return (
-    <Container>
-      <img src={IMAGES.logoAnimation.src} alt={IMAGES.logoAnimation.alt} />
-      <Box>
-        <Wrapper>
-          <Title>404 ERROR</Title>
-          <Description>
-            페이지를 찾을 수 없습니다. <br />
-            올바른 URL을 입력하였는지 확인해주세요.
-          </Description>
-        </Wrapper>
-        <Button variant="ghost" width={240} onClick={() => navigate("/")}>
-          메인으로 돌아가기
-        </Button>
-      </Box>
-    </Container>
+    <>
+      <MetaTag title="404 ERROR | CO-KKIRI" />
+      <Container>
+        <img src={IMAGES.logoAnimation.src} alt={IMAGES.logoAnimation.alt} />
+        <Box>
+          <Wrapper>
+            <Title>404 ERROR</Title>
+            <Description>
+              페이지를 찾을 수 없습니다. <br />
+              올바른 URL을 입력하였는지 확인해주세요.
+            </Description>
+          </Wrapper>
+          <Button variant="ghost" width={240} onClick={() => navigate("/")}>
+            메인으로 돌아가기
+          </Button>
+        </Box>
+      </Container>
+    </>
   );
 }
 

@@ -5,7 +5,8 @@ import DESIGN_TOKEN from "@/styles/tokens";
 import useResponsiveSidebar from "@/hooks/useResponsiveSideBar";
 import { Pages } from "@/types/pagesTypes";
 import NoResultText from "./NoResultText";
-import CardSkeleton from "./Skeleton/elements/CardSkeleton";
+import useMyStudyStore from "@/stores/myStudyStore";
+import { categoryStudyStatusFilter, categoryStudyStatusPhrase } from "@/constants/categoriesAndFilters";
 
 interface CardsProps {
   data: ListApiResponseDto["data"];
@@ -14,6 +15,8 @@ interface CardsProps {
 }
 
 export default function Cards({ data, page, className }: CardsProps) {
+  const { currentCategory } = useMyStudyStore();
+
   const isSidebarOpenNarrow = useResponsiveSidebar();
   return (
     <Container className={className}>
@@ -25,6 +28,8 @@ export default function Cards({ data, page, className }: CardsProps) {
             </div>
           ))}
         </CardList>
+      ) : page === "myStudy" ? (
+        <NoResultText text={categoryStudyStatusPhrase[currentCategory]} padding={120} color="black" />
       ) : (
         <NoResultText text="검색 결과가 없어요." padding={120} color="black" />
       )}

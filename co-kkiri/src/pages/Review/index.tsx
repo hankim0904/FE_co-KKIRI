@@ -1,45 +1,47 @@
 import * as S from "./styled";
-import Button from "@/components/commons/Button";
-import MemberReview from "@/components/domains/review/MemberReview";
-import StudyEvaluationSection from "@/components/domains/review/StudyEvaluationSection";
-import { ICONS } from "@/constants/icons";
-import { useHandleError } from "@/hooks/useHandleError";
-import { useToast } from "@/hooks/useToast";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import StudyReview from "@/components/domains/review/studyReview/StudyReview";
+import MemberReview from "@/components/domains/review/memberReview/MemberReview";
+import SubmitButton from "@/components/domains/review/SubmitButton";
+import ConfirmModal from "@/components/modals/ConfirmModal";
 import { getMemberList, postReview } from "@/lib/api/review";
 import { ReviewFormValues } from "@/lib/api/review/type";
+import { useToast } from "@/hooks/useToast";
+import useOpenToggle from "@/hooks/useOpenToggle";
 import useReviewStore from "@/stores/reviewStore";
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import TOAST from "@/constants/toast";
+import MetaTag from "@/components/commons/MetaTag";
 
 export default function Review() {
+  const { isOpen: isSubmitModalOpen, openToggle } = useOpenToggle();
   const pushToast = useToast();
   const navigate = useNavigate();
-  const handleError = useHandleError();
-  const { selectedMemberId, setSelectedMemberId } = useReviewStore();
   const queryClient = useQueryClient();
+  const { selectedMemberId, setSelectedMemberId } = useReviewStore();
   const { id } = useParams();
   const postId = Number(id);
 
-  const { control, handleSubmit, watch, setValue } = useForm<ReviewFormValues>({
+  const { control, handleSubmit, watch, setValue, setError } = useForm<ReviewFormValues>({
     defaultValues: {
       postId: postId,
       postReview: [],
       memberReview: [],
       memberReviewComment: [],
     },
-    mode: "onBlur",
   });
 
   const { data: memberList, error } = useQuery({
     queryKey: [`review/${postId}/member`],
     queryFn: () => getMemberList(postId),
     placeholderData: keepPreviousData,
+    retry: false,
   });
 
   if (error) {
-    handleError(error);
+    navigate("/");
+    pushToast(TOAST.serverError.message, "error");
   }
 
   const handleSubmitReview = useMutation({
@@ -49,80 +51,78 @@ export default function Review() {
       queryClient.invalidateQueries();
     },
     onError: (error) => {
-      pushToast(`${error.message}`, "error");
+      pushToast(error.message, "error");
     },
     onSettled: () => {
       navigate(-1);
     },
   });
 
+  const memberListData = memberList || [];
+
   const onSubmitHandler = (formData: ReviewFormValues) => {
     const { postId, postReview, memberReview, memberReviewComment } = formData;
-    const filteredReviewComment = memberReviewComment.filter((item) => item && item.comment);
+    const filteredReviewComment = memberReviewComment.filter((item) => item.comment);
     const formatedForm: ReviewFormValues = {
       postId,
       postReview,
       memberReview,
       memberReviewComment: filteredReviewComment,
     };
+    if (formatedForm.memberReview.length === 0 || formatedForm.postReview.length === 0) {
+      const errorMessage = "스터디 리뷰와 멤버 리뷰를 모두 선택해주세요.";
+      setError("postReview", {
+        type: "manual",
+        message: errorMessage,
+      });
+      setError("memberReview", {
+        type: "manual",
+        message: errorMessage,
+      });
+      pushToast(errorMessage, "error");
+      return;
+    }
     handleSubmitReview.mutate(formatedForm);
   };
 
-  const currentComment = watch(`memberReviewComment.${selectedMemberId}.comment`);
+  const memberReviewCommentIndex = memberListData.findIndex((member) => selectedMemberId === member.memberId);
+  const currentComment = watch(`memberReviewComment.${memberReviewCommentIndex}.comment`);
 
   const handleMemberClick = (memberId: number) => {
     setSelectedMemberId(memberId);
   };
 
-  useEffect(() => {
-    setValue(`memberReviewComment.${selectedMemberId}.revieweeMemberId`, selectedMemberId);
-    setValue(`memberReviewComment.${selectedMemberId}.comment`, currentComment);
-  }, [selectedMemberId, setValue, watch, currentComment]);
-
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (selectedMemberId !== 0) {
-      setValue(`memberReviewComment.${selectedMemberId}.revieweeMemberId`, selectedMemberId);
-      setValue(`memberReviewComment.${selectedMemberId}.comment`, e.target.value);
-    }
+    const newComment = e.target.value;
+    setValue(`memberReviewComment.${memberReviewCommentIndex}.revieweeMemberId`, selectedMemberId);
+    setValue(`memberReviewComment.${memberReviewCommentIndex}.comment`, newComment);
+  };
+
+  const handleModalConfirm = () => {
+    handleSubmit(onSubmitHandler)();
+    openToggle();
   };
 
   return (
-    <S.Container onSubmit={handleSubmit(onSubmitHandler)}>
-      <S.Box>
-        <S.Wrapper>
-          <S.EvaluationWrapper>
-            <S.Title>
-              <img src={ICONS.number1.src} alt={ICONS.number1.alt} />
-              <div>스터디 전체 평가</div>
-            </S.Title>
-            <StudyEvaluationSection control={control} />
-          </S.EvaluationWrapper>
-          <S.EvaluationWrapper>
-            <S.Title>
-              <img src={ICONS.number2.src} alt={ICONS.number2.alt} />
-              <div>멤버 평가</div>
-            </S.Title>
-            {memberList && (
-              <MemberReview
-                member={memberList}
-                selectedMemberId={selectedMemberId}
-                onMemberClick={handleMemberClick}
-                control={control}
-                onChange={handleCommentChange}
-                value={currentComment}
-              />
-            )}
-          </S.EvaluationWrapper>
-        </S.Wrapper>
-        <S.ButtonWrapper>
-          <Button type="reset" variant="primaryLight" width={156}>
-            취소하기
-          </Button>
-          <Button type="submit" variant="primary" width={156}>
-            리뷰 등록하기
-          </Button>
-        </S.ButtonWrapper>
-      </S.Box>
-    </S.Container>
+    <>
+      <MetaTag title="스터디/프로젝트 평가 | CO-KKIRI" />
+      <S.Container>
+        <S.Box>
+          <S.Wrapper>
+            <StudyReview control={control} />
+            <MemberReview
+              member={memberListData}
+              selectedMemberId={selectedMemberId}
+              onMemberClick={handleMemberClick}
+              control={control}
+              onChange={handleCommentChange}
+              value={currentComment}
+            />
+          </S.Wrapper>
+          <SubmitButton onClick={openToggle} />
+        </S.Box>
+        {isSubmitModalOpen && <ConfirmModal type="review" onClick={handleModalConfirm} onClose={openToggle} />}
+      </S.Container>
+    </>
   );
 }

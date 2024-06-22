@@ -16,19 +16,29 @@ export default function Banner({ image, path, onClick }: BannerProps) {
 
   return (
     <Link to={path}>
-      <AnimatedBackground $image={image}>
-        <Background
-          $isSidebarOpenNarrow={isSidebarOpenNarrow}
-          onClick={onClick}
-          $image={image}
-          aria-label={image.desktopWide.alt}></Background>
-      </AnimatedBackground>
+      <AnimatedPicture $isSidebarOpenNarrow={isSidebarOpenNarrow}>
+        <picture>
+          <source media="(max-width: 767px)" srcSet={image.mobile.src} />
+          <source media="(max-width: 1199px)" srcSet={image.tablet.src} />
+          {isSidebarOpenNarrow ? (
+            <source media="(min-width: 1024px)" srcSet={image.desktopNarrow.src} />
+          ) : (
+            <source media="(min-width: 1024px)" srcSet={image.desktopWide.src} />
+          )}
+          <img
+            src={image.desktopWide.src}
+            alt={image.desktopWide.alt}
+            onClick={onClick}
+            aria-label={image.desktopWide.alt}
+          />
+        </picture>
+      </AnimatedPicture>
     </Link>
   );
 }
 
 const {
-  mediaQueries: { tablet, mobile },
+  mediaQueries: { mobile },
 } = DESIGN_TOKEN;
 
 const fadeIn = keyframes`
@@ -41,38 +51,15 @@ const fadeIn = keyframes`
   }
 `;
 
-const AnimatedBackground = styled.div<{ $image: BannerImage }>`
-  animation: ${fadeIn} 0.5s ease-out;
-  background-image: ${({ $image }) => `url(${$image.desktopWide.src})`};
-  background-size: cover;
-  background-position: center;
-  border-radius: 2rem;
-`;
-
-const Background = styled.figure<{ $isSidebarOpenNarrow: boolean; $image: BannerImage }>`
-  border-radius: 2rem;
-  width: ${({ $isSidebarOpenNarrow }) => ($isSidebarOpenNarrow ? 29 : 36)}rem;
-  height: 24rem;
-  background-image: ${({ $isSidebarOpenNarrow, $image }) =>
-    $isSidebarOpenNarrow ? `url(${$image.desktopNarrow.src})` : `url(${$image.desktopWide.src})`};
-  background-size: cover;
-  background-position: center;
-
-  ${tablet} {
-    background-image: url(${({ $image }) => $image.tablet.src});
-    width: 22.6rem;
-    height: 22.6rem;
-  }
+const AnimatedPicture = styled.div<{ $isSidebarOpenNarrow: boolean }>`
+  animation: ${fadeIn} 0.5s ease-in-out;
 
   ${mobile} {
-    background-image: url(${({ $image }) => $image.mobile.src});
     max-width: 22.6rem;
     width: 100%;
-    height: 100%;
-    &::after {
-      content: "";
-      display: block;
-      padding-bottom: 100%;
+    img {
+      width: 100%;
+      height: auto;
     }
   }
 `;

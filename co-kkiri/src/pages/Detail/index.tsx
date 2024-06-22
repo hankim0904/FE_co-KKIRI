@@ -9,6 +9,7 @@ import { PostDetailApiResponseDto } from "@/lib/api/post/type";
 import usePostMutation from "@/hooks/useMutation/usePostMutation";
 import { postDetailInitialData } from "@/lib/initialData/detail";
 import { useHandleError } from "@/hooks/useHandleError";
+import MetaTag from "@/components/commons/MetaTag";
 
 export default function Detail() {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -50,22 +51,25 @@ export default function Detail() {
   const kakaoShareInfo = { title: postDetails.postTitle, name: postDetails.userNickname, postType };
 
   return (
-    <S.Container>
-      <S.Box>
-        <S.GoBackButton />
-        <S.ShareAndScrapButton isScraped={postDetails.isScraped} postId={postId} kakaoShareInfo={kakaoShareInfo} />
-        <S.PostSection postDetails={postDetails} postApplyStatus={postApplyStatus} isLoading={isLoading} />
-        <S.DetailCardSection cardRef={cardRef} postDetails={postDetails} isLoading={isLoading} />
-        <S.CommentsSection postId={postId} />
-        <S.ButtonSection
-          $cardHeight={cardHeight}
-          postApplyStatus={postApplyStatus}
-          postId={postId}
-          teamInviteId={teamInviteId}
-          isLoading={isLoading}
-        />
-        <ScrollToTop />
-      </S.Box>
-    </S.Container>
+    <>
+      <MetaTag title={`${postDetails.postTitle} | CO-KKIRI`} />
+      <S.Container>
+        <S.Box>
+          <S.GoBackButton />
+          <S.ShareAndScrapButton isScraped={postDetails.isScraped} postId={postId} kakaoShareInfo={kakaoShareInfo} />
+          <S.PostSection postDetails={postDetails} postApplyStatus={postApplyStatus} isLoading={isLoading} />
+          <S.DetailCardSection cardRef={cardRef} postDetails={postDetails} isLoading={isLoading} />
+          <S.CommentsSection postId={postId} />
+          <S.ButtonSection
+            $cardHeight={cardHeight}
+            postApplyStatus={postApplyStatus}
+            postId={postId}
+            teamInviteId={teamInviteId}
+            isLoading={isLoading}
+          />
+          <ScrollToTop />
+        </S.Box>
+      </S.Container>
+    </>
   );
 }

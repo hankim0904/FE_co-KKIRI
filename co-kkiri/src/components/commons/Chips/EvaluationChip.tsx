@@ -25,6 +25,8 @@ const EvaluationChipStyle = css`
   padding: 0.35rem 1.2rem;
   height: 2.2rem;
   border-radius: 9.9rem;
+  dispaly: flex;
+  gap: 0.4rem;
 `;
 
 const VARIANT_STYLE: VariantStyle<ReviewType> = {

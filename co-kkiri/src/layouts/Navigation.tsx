@@ -65,6 +65,7 @@ const SideBarWrapper = styled.div<SideBarWrapperProps>`
 
 const OutletWrapper = styled.div<{ $isOpen: boolean }>`
   padding-left: ${(props) => (props.$isOpen ? "21rem" : 0)};
+  transition: padding-left 0.5s ease-in-out;
 
   ${mediaQueries.tablet} {
     padding-left: 0;

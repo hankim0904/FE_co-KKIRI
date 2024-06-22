@@ -3,19 +3,20 @@ import profileImg from "@/assets/images/profileImg.svg";
 import profileImgBig from "@/assets/images/profileImg_big.svg";
 import google from "@/assets/images/google_logo.svg";
 import github from "@/assets/images/github_logo.svg";
+import kakao from "@/assets/images/kakao_logo.svg";
 import logoAnimation from "@/assets/images/logo_animation.svg";
 import recruitDesktopWide from "@/assets/images/homeBannerImages/recruit_desktop_wide.svg";
 import recruitDesktopNarrow from "@/assets/images/homeBannerImages/recruit_desktop_narrow.svg";
 import recruitTablet from "@/assets/images/homeBannerImages/recruit_tablet.svg";
-import recruitMobile from "@/assets/images/homeBannerImages/recruit_mobile.png";
+import recruitMobile from "@/assets/images/homeBannerImages/recruit_mobile.svg";
 import studyListDesktopWide from "@/assets/images/homeBannerImages/studyList_desktop_wide.svg";
 import studyListDesktopNarrow from "@/assets/images/homeBannerImages/studyList_desktop_narrow.svg";
 import studyListTablet from "@/assets/images/homeBannerImages/studyList_tablet.svg";
-import studyListMobile from "@/assets/images/homeBannerImages/studyList_mobile.png";
+import studyListMobile from "@/assets/images/homeBannerImages/studyList_mobile.svg";
 import scoutDesktopWide from "@/assets/images/homeBannerImages/scout_desktop_wide.svg";
 import scoutDesktopNarrow from "@/assets/images/homeBannerImages/scout_desktop_narrow.svg";
 import scoutTablet from "@/assets/images/homeBannerImages/scout_tablet.svg";
-import scoutMobile from "@/assets/images/homeBannerImages/scout_mobile.png";
+import scoutMobile from "@/assets/images/homeBannerImages/scout_mobile.svg";
 
 export const IMAGES = {
   logo: {
@@ -37,6 +38,10 @@ export const IMAGES = {
   githubLogo: {
     src: github,
     alt: "깃허브 로고",
+  },
+  kakaoLogo: {
+    src: kakao,
+    alt: "카카오 로고",
   },
   logoAnimation: {
     src: logoAnimation,

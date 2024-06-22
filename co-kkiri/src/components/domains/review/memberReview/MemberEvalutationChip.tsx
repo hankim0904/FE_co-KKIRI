@@ -1,27 +1,27 @@
 import styled from "styled-components";
 import SelectPositionChip from "@/components/commons/Chips/SelectPositionChip";
-import { MemberReviewType, ReviewType } from "@/lib/api/review/type";
-import { EVALUATION_COMMENT } from "@/constants/evaluationChip";
+import { MemberReviewType } from "@/lib/api/review/type";
 import { Option } from "lucide-react";
+import { reviewType } from "@/utils/reviewType";
 
 export type Option = {
   label: string;
   value: unknown;
 };
 
-interface EvaluationPartProps {
+interface MemberEvaluationChipProps {
   evaluationCategory: { [key: string]: string };
   selectedChips: MemberReviewType[];
-  onChange: (updatedOptions: MemberReviewType[]) => void;
+  onOptionChange: (updatedOptions: MemberReviewType[]) => void;
   selectedMemberId: number;
 }
 
 export default function MemberEvaluationChip({
   evaluationCategory,
   selectedChips = [],
-  onChange,
+  onOptionChange,
   selectedMemberId,
-}: EvaluationPartProps) {
+}: MemberEvaluationChipProps) {
   const onChipClick = (content: string) => {
     const isAlreadySelected = selectedChips?.some(
       (option) => option.content === content && option.revieweeMemberId === selectedMemberId,
@@ -37,23 +37,7 @@ export default function MemberEvaluationChip({
         { content: content, revieweeMemberId: selectedMemberId, type: reviewType(content) },
       ];
     }
-    onChange(updatedOptions);
-  };
-
-  const reviewType = (content: string): ReviewType => {
-    if (
-      Object.values(EVALUATION_COMMENT.compliments.team).includes(content) ||
-      Object.values(EVALUATION_COMMENT.compliments.member).includes(content)
-    ) {
-      return "COMPLIMENT";
-    }
-    if (
-      Object.values(EVALUATION_COMMENT.improvements.team).includes(content) ||
-      Object.values(EVALUATION_COMMENT.improvements.member).includes(content)
-    ) {
-      return "IMPROVEMENT";
-    }
-    throw new Error("");
+    onOptionChange(updatedOptions);
   };
 
   return (

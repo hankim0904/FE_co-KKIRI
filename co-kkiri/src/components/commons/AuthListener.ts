@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { githubLogin, googleLogin } from "@/lib/api/auth";
+import { githubLogin, googleLogin, kakaoLogin } from "@/lib/api/auth";
 import useAuthModalToggleStore from "@/stores/authModalToggle";
 import { useUserInfoStore } from "@/stores/userInfoStore";
 import { useQueryClient } from "@tanstack/react-query";
@@ -17,6 +17,10 @@ const AuthListener = () => {
     await githubLogin(code);
   };
 
+  const getKakaoAccessToken = async (code: string) => {
+    await kakaoLogin(code);
+  };
+
   const updateUserInfo = useCallback(async () => {
     await fetchUserInfo();
     setIsAuthModalOpen(false);
@@ -28,8 +32,17 @@ const AuthListener = () => {
       if (event.data && event.data.type === "googleOAuthSuccess") {
         await getGoogleAccessToken(event.data.code);
         await updateUserInfo();
-      } else if (event.data && event.data.type === "githubOAuthSuccess") {
+        return;
+      }
+
+      if (event.data && event.data.type === "githubOAuthSuccess") {
         await getGithubAccessToken(event.data.code);
+        await updateUserInfo();
+        return;
+      }
+
+      if (event.data && event.data.type === "kakaoOAuthSuccess") {
+        await getKakaoAccessToken(event.data.code);
         await updateUserInfo();
       }
     };
@@ -45,6 +58,3 @@ const AuthListener = () => {
 };
 
 export default AuthListener;
-function googleLogins() {
-  throw new Error("Function not implemented.");
-}

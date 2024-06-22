@@ -15,6 +15,12 @@ export const authAddress = {
     //post
     redirect: (code: string) => `/auth/github/redirect?code=${code}`,
   },
+  kakao: {
+    //get
+    login: `${BASE_URL}/auth/kakao/login`,
+    //post
+    redirect: (code: string) => `/auth/kakao/redirect?code=${code}`,
+  },
   logout: `/member/logout`,
 };
 

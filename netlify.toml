@@ -1,6 +1,6 @@
 [build]
 command = "npm run build" 
-publish = "dist" 
+publish = "co-kkiri" 
 
 [[redirects]]
   from = "/api/*"

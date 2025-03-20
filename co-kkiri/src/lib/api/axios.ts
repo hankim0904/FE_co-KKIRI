@@ -7,10 +7,10 @@ export interface ApiRequestResponse<T> {
   errorMessage?: string | null;
 }
 
-export const BASE_URL = import.meta.env.VITE_BASE_API_URL;
+export const BASE_URL = "/api";
 
 export const axiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 

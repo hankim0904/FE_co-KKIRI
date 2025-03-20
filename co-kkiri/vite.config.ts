@@ -13,8 +13,12 @@ export default defineConfig({
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }] as Alias[],
   },
   server: {
-    host: "0.0.0.0",
-    port: 80,
+    proxy: {
+      "/api": {
+        target: "https://api.co-kkiri.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
 });
-``;

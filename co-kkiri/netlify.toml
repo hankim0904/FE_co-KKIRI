@@ -1,9 +1,0 @@
-[[redirects]]
-  from = "/api/*"
-  to = "https://api.co-kkiri.com/:splat"
-  status = 200
-  force = true
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-    Content-Type = "text/javascript"

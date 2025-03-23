@@ -29,10 +29,6 @@ export async function apiRequest<T, U>(
       params,
       ...config,
     };
-
-    const fullUrl = `${axiosInstance.defaults.baseURL}${url}`;
-    console.log("Request URL:", fullUrl);
-    console.log("Full request config:", request);
     const response: AxiosResponse<T> = await axiosInstance(request);
     return response.data;
   } catch (error) {

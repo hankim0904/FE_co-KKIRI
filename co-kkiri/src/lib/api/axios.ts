@@ -7,7 +7,7 @@ export interface ApiRequestResponse<T> {
   errorMessage?: string | null;
 }
 
-export const BASE_URL = "/api";
+export const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -29,6 +29,10 @@ export async function apiRequest<T, U>(
       params,
       ...config,
     };
+
+    const fullUrl = `${axiosInstance.defaults.baseURL}${url}`;
+    console.log("Request URL:", fullUrl);
+    console.log("Full request config:", request);
     const response: AxiosResponse<T> = await axiosInstance(request);
     return response.data;
   } catch (error) {

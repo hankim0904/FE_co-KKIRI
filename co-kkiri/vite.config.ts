@@ -12,13 +12,4 @@ export default defineConfig({
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }] as Alias[],
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://api.co-kkiri.com",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
-  },
 });

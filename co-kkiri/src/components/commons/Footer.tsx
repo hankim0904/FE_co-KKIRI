@@ -16,6 +16,9 @@ export default function Footer() {
         <Link href={FOOTER_LINK.github} target="_blank" rel="noopener noreferrer">
           GitHub
         </Link>
+        <Link href={FOOTER_LINK.term} target="_blank" rel="noopener noreferrer">
+          개인정보처리방침
+        </Link>
       </LinkBox>
       <Organization>© 2024 CO-KKIRI</Organization>
     </Container>

@@ -7,7 +7,7 @@
   <p><strong>🔍 함께할 팀원을 직접 초대할 수 있어요</strong></P>
   <p><strong>📈 활동을 마친 후에는 팀원들의 리뷰로 더욱 성장해봅시다!</strong></p>
   <br/>
-  <a href="http://dev.co-kkiri.com/"><p><strong>🚀 CO-KKIRI에서 시작하는 팀원 모집, 지금 바로 여기에서 시작해보세요!</strong></p></a>
+  <a href="https://co-kkiri-api.com/"><p><strong>🚀 CO-KKIRI에서 시작하는 팀원 모집, 지금 바로 여기에서 시작해보세요!</strong></p></a>
   <a href="https://www.notion.so/CO-KKIRI-2a9caa4c19274d298c57e716e57f8f13"><p><strong>📋 프로젝트 과정이 궁금하다면, 노션 페이지를 확인해보세요!</strong></p></a>
   <p><strong>함께 성장하며 꿈을 이루어가는 여정에 당신도 함께해보세요! 🚀🌟</strong></p>
 </div>
